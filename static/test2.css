@@ -1,0 +1,78 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 0.8fr 1fr;
+  grid-template-rows: 0.3fr 1fr 0.3fr 2fr 0.3fr 1fr 0.3fr 1fr;
+  grid-template-areas: "Sidebar Alerts Alerts Alerts" "Sidebar AlertsText AlertsText AlertsText" "Sidebar Title1 Title1 Title1" "Sidebar Graph Graph Graph" "Sidebar Title2 Title2 Title2" "Sidebar Assignments Assignments Assignments" "Sidebar Title3 Title3 Title3" "Sidebar Previous Previous Previous";
+
+  padding: 1vw;
+}
+
+.AlertsText{ grid-area: AlertsText;
+border: 1px solid black;
+}
+.Alerts { grid-area: Alerts;
+border: 1px solid black;}
+
+.Title1 { grid-area: Title1;
+border: 1px solid black;}
+
+.Graph { grid-area: Graph;
+border: 1px solid black;}
+
+.Title2 { grid-area: Title2;
+border: 1px solid black;}
+
+.Assignments { grid-area: Assignments;
+border: 1px solid black;}
+
+.Title3 { grid-area: Title3;
+border: 1px solid black;}
+
+.Sidebar { grid-area: Sidebar;
+border: 1px solid black;}
+
+.Previous { grid-area: Previous;
+border: 1px solid black;}
+
+#logo {
+  max-width: 25vw;
+    width: 25vw;
+    padding: 1vw;
+}
+
+#stuFace{
+    max-width: 15vw;
+    border: 2px solid grey;
+}
+
+#controlB{
+    padding-top: 1vw;
+    padding-bottom: 2vw;
+}
+
+#icon{
+    align: center;
+    max-width: 3vw;
+    padding-bottom: 5px;
+}
+#alerthead{
+    display: inline;
+    padding-left: 2vw;
+}
+#alerttext{
+    float: right;
+    padding-right: 5vw;
+}
+
+.inline-block {
+   display: inline-block;
+}
+
+#button{
+    padding-top: 2vw;
+}
+
+.inputHeadings{
+    color: #5379fa;
+    padding-left:1vw;
+}

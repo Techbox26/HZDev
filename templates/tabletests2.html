@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table Tests</title>
+
+    <!--Code Begins Here!-->
+
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!Css File>
+     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <link href="../static/test2.css" rel="stylesheet">
+
+    <!--Modal Stuff-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="grid-container">
+    <!--Alerts Title Section with useful info-->
+  <div class="Alerts">
+      <div id="alerthead" align="left">You have completed XXXX since September</div>
+      <div id="alerttext" align="center">Your average mark is XXXX</div>
+  </div>
+    <!--Alerts Content with useful info-->
+    <div class="AlertsText">
+    <div align="center">BIG MASSIVE ALERT THINGS</div>
+    </div>
+
+<!--Graphs Title Section with useful info-->
+  <div class="Title1">
+      <div align=left"><h5>Your Performance...Graphed</h5></div>
+      <div id="alerthead" align="left">Graph Here</div>
+      <div id="alerttext" align="center">ASSESSMENT FOR SUBJECT X</div>
+  </div>
+
+    <!--Graphs Content Section with useful info-->
+    <div class="Graph"><h5>Graphs Here</h5>
+        <div align="left">Average Grade</div>
+        <p>XX%</p>
+        <div align="left">Strongest Subject</div>
+        <p>Maths%</p>
+        <div align="left">Weakest Subject</div>
+        <p>Physical Education</p>
+    </div>
+
+
+<!--Current Assignment Content Section with useful info-->
+    <div class="Title2">Assignments</div>
+    <div class="Assignments"><small>Assignments here</small></div>
+  <div class="Title3">Previous Assignments</div>
+    <div class="Previous"><small>Previous Assignments Here</small></div>
+
+
+<!--Sidebar items here-->
+    <div class="Sidebar"><img alt id="logo"  src="../static/images/logo.png""Test Logo">
+        <!-- Control Buttons -->
+        <div align="center" id="controlB">
+        <a class="btn btn-info btn-sm " href="login">Logout</a>
+
+
+
+            <!--MODAL TEST BUTTON FOR ADDING NEW ASSIGNMENT-->
+          <button type="button" id="userButton" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addAssign">
+    Add Assignment
+  </button>
+        </div>
+        <p align="middle"><img alt="Persons face" id="stuFace" src="../static/images/Blank-Person-Image.png"></p>
+        <!--Student Variables-->
+        <div align="center" id="studentVariables"
+            <p align="middle">Student Name Here</p>
+            <h5>Your Classes</h5>
+                <p>Class X</p>
+                <p>Class Y</p>
+                <p>Class Z</p>
+            <h5>Next Assignment Due</h5>
+                <p>Assignment Title</p>
+                <p>Date/Time Due</p>
+    </div>
+        <!--Help Buttons-->
+    <div align="center">
+        <div class="inline-block"><a href="login"><img alt="Exit" height="32" src="../static/images/exit.png" title="Exit" width="32"></a>
+        <div class="inline-block"><a href="login"><img alt="Help" height="32" src="../static/images/question.png" title="Help" width="32"></a>
+           <div class="inline-block"><a href="login"><img alt="Gear" height="32" src="../static/images/gear.png" title="Gear" width="32"></a>
+       </div>
+    </div>
+   </div>
+
+<!--Modal Box for adding new assignments-->
+          <!-- The Modal -->
+  <div class="modal fade" id="addAssign">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Create New Assignment</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+      <div>
+        <form class="form-assign" method="POST" action="addAssign">
+            <!--Assessment Title-->
+        <label for="assessTitle" class="sr-only">assessTitle</label>
+        <input type="assessTitle" name="assessTitle" id="inputTitle" class="form-control" placeholder="Assessment Title">
+            <!--Assessment Details-->
+            <div class="modal-header">
+          <h6 class="modal-title">Assignment Details</h6>
+            </div>
+            <label for="taskDetail" class="sr-only">taskDetail</label>
+        <textarea type="taskDetail"  name="taskDetail" id="inputDetail" class="form-control" placeholder="Task Details" required autofocus rows ="10">
+        </textarea>
+            <!--Due Date-->
+            <label for="dueDate" class="sr-only">Due Date</label>
+        <input type="due" name="dueDate" id="inputDue" class="form-control" placeholder="Due Date" required autofocus>
+            <!--Class ID-->
+            <label for="classID" class="sr-only">classID</label>
+        <input type="classID" name="classID" id="classID" class="form-control" placeholder="Class ID">
+
+
+      </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button id="btnAddAssign" class="btn btn-info btn-primary btn-sm" type="addAssign">Save Assignment</button>
+             <!--Commit Data-->
+            <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

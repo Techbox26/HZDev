@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Large Modal</h2>
+    <!-- Button to Open the Modal -->
+    <button class="btn btn-info btn-sm" data-target="#addAssign" data-toggle="modal" id="userButton" type="button">
+        Add Assignment
+    </button>
+
+    <!--Modal Box for adding new assignments-->
+    <!-- The Modal -->
+    <div class="modal fade" id="addAssign">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Create New Assignment</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div>
+
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h6>File Input</h6>
+                        <form action="/addSub" enctype="multipart/form-data" method="POST">
+                            <div class="form-group">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Date Title-->
+                                <label class="sr-only" for="date">date</label>
+                                <input class="form-control" id="date" name="date" placeholder="Submission Date"
+                                       type="date">
+                                <!--final mark-->
+                                <label class="sr-only" for="finalMark">finalMark</label>
+                                <input autofocus class="form-control" id="finalMark" name="finalMark"
+                                       placeholder="finalMark" required type="finalMark">
+                                <!--teach comment-->
+                                <div class="modal-header">
+                                     <h6 class="modal-title">Teach Comment</h6>
+                                </div>
+                                <label class="sr-only" for="teachComment">teachComment</label>
+                                <textarea autofocus  class="form-control" id="teachComment" name="teachComment" placeholder="Teacher Comment" required rows ="10" type="teachComment">
+                                </textarea>
+                                <!--Assignment ID-->
+                                <label class="sr-only" for="assignID">assignID</label>
+                                <input class="form-control" id="assignID" name="assignID" placeholder="Assignment ID"
+                                       type="assignID">
+                                 <!--User ID-->
+                                <label class="sr-only" for="userID">userID</label>
+                                <input class="form-control" id="userID" name="userID" placeholder="User ID"
+                                       type="userID">
+                            </div>
+                            <button class="btn btn-default" type="btnAddSub">Submit</button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addSub">Save Submission
+                    </button>
+                    <!--Commit Data-->
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="addSub">Close</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
