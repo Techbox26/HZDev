@@ -4,6 +4,7 @@ from flaskext.mysql import MySQL
 from werkzeug.utils import secure_filename
 
 import os
+
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 UPLOAD_PATH = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Assignments'
 
@@ -16,35 +17,37 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_DB'] = 'Project'
 mysql.init_app(app)
 
-app.secret_key=b'1234567v8fvfdvm'
+app.secret_key = b'1234567v8fvfdvm'
 conn = mysql.connect()
 cursor = conn.cursor()
+
 
 @app.route('/')
 def main():
     return render_template('index.html')
 
+
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signup.html')
+
 
 @app.route('/testtables')
 def showTableTest():
     return render_template('tabletests.html')
 
+
 @app.route('/tabletests2')
 def showTableTest2():
-    return render_template('tabletests2.html')
+    detail_check()
+
 
 @app.route('/modaltest')
 def showModalTest():
     return render_template('modaltest.html')
 
 
-
-
-
-#USER SIGNUP#
+# USER SIGNUP#
 @app.route('/signup', methods=['POST', 'GET'])
 def signUp():
     # read the posted values from the UI
@@ -66,7 +69,8 @@ def signUp():
     conn.commit()
     return redirect('/login', code=302)
 
-#ADD NEW ASSIGNMENT#
+
+# ADD NEW ASSIGNMENT#
 @app.route('/addAssign', methods=['POST', 'GET'])
 def addAssign():
     # read the posted values from the UI (modal script)
@@ -84,10 +88,13 @@ def addAssign():
     print(data)
     conn.commit()
     return redirect('/tabletests2', code=302)
+
+
 def allowed_files(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-#ADD NEW SUBMISSION#
+
+# ADD NEW SUBMISSION#
 @app.route('/addSub', methods=['POST', 'GET'])
 def addSub():
     if 'inputfile' not in request.files:
@@ -95,14 +102,14 @@ def addSub():
     else:
         print("Success")
         inputFile = request.files['inputfile']
-        if inputFile.filename =='':
+        if inputFile.filename == '':
             flash("no file selected")
-            return(redirect('tableTests2'))
+            return (redirect('tableTests2'))
         if inputFile and allowed_files(inputFile.filename):
             filename = secure_filename(inputFile.filename)
             inputFile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             _inputFileName = filename
-            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             print(_inputFileName)
             print(_inputFilePath)
             # read the posted values from the UI (modal script)
@@ -121,31 +128,32 @@ def addSub():
             _userID = request.form['userID']
             print(_userID)
 
-            cursor.callproc('addSubmission', (_date, _inputFileName, _inputFilePath, _finalMark, _teachComment, _assignmentID, _userID))
+            cursor.callproc('addSubmission',
+                            (_date, _inputFileName, _inputFilePath, _finalMark, _teachComment, _assignmentID, _userID))
             data = cursor.fetchall()
             print(data)
             conn.commit()
 
         return render_template('testing.html')
 
-#USER SIGN IN#
-#@bull.route("/loginV3", methods=["GET", "POST"])
-#def login():
- #   """For GET requests, display the login form.
-  #  For POSTS, login the current user by processing the form.
-   # """
-    #form = LoginForm()
-    #if form.validate_on_submit():
-     #   user = User.query.get(form.email.data)
-      #  if user:
-       #     if bcrypt.check_password_hash(user.password, form.password.data):
-        #        user.authenticated = True
-         #       db.session.add(user)
-          #      db.session.commit()
-           #     login_user(user, remember=True)
-            #    return redirect(url_for("bull.reports"))
-    #return render_template("loginV3.html", form=form)
 
+# USER SIGN IN#
+# @bull.route("/loginV3", methods=["GET", "POST"])
+# def login():
+#   """For GET requests, display the login form.
+#  For POSTS, login the current user by processing the form.
+# """
+# form = LoginForm()
+# if form.validate_on_submit():
+#   user = User.query.get(form.email.data)
+#  if user:
+#     if bcrypt.check_password_hash(user.password, form.password.data):
+#        user.authenticated = True
+#       db.session.add(user)
+#      db.session.commit()
+#     login_user(user, remember=True)
+#    return redirect(url_for("bull.reports"))
+# return render_template("loginV3.html", form=form)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -156,6 +164,8 @@ def login():
         return render_template('signup.html')
     return render_template('loginV3.html')
 
+
+# Pull data from database
 @app.route('/students', methods=['GET'])
 def get_student():
     cursor.execute("SELECT * from user")
@@ -164,13 +174,16 @@ def get_student():
     print(student_data)
     return render_template('tabletests2.html')
 
+
+# Login to HZ
+@app.route('/userLogin', methods=['POST'])
+def detail_check():
+    if request.method == 'POST':
+        inputpass = request.form.get('password')
+        print(inputpass)
+    else:
+        return render_template('loginV3.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
-
-
-
-
