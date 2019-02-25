@@ -39,7 +39,7 @@ def showTableTest():
 
 @app.route('/tabletests2')
 def showTableTest2():
-    detail_check()
+    return render_template('tabletests2.html')
 
 
 @app.route('/modaltest')
@@ -168,22 +168,24 @@ def login():
 # Pull data from database
 @app.route('/students', methods=['GET'])
 def get_student():
-    cursor.execute("SELECT * from user")
-    student_data = cursor.fetchall()
+    cursor.execute("SELECT * from user where email = 'technowhiz1@gmail.com' ")
+    result_set = cursor.fetchall()
+    for row in result_set:
+        print(row["fname"], row["lname"])
 
-    print(student_data)
-    return render_template('tabletests2.html')
+    return render_template('tabletests2.html', fName=fName)
 
 
 # Login to HZ
-@app.route('/userLogin', methods=['POST'])
+@app.route('/userLogin', methods=['GET', 'POST'])
 def detail_check():
-    if request.method == 'POST':
-        inputpass = request.form.get('password')
-        print(inputpass)
-    else:
+    if request.method == 'POST' in request.form:
+        _inputpass = request.form['password']
+        # Failure to return a redirect or render_template
+        print(_inputpass)
         return render_template('loginV3.html')
-
+    else:
+        return render_template('tabletests2.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
