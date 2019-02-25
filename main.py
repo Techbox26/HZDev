@@ -156,8 +156,21 @@ def login():
         return render_template('signup.html')
     return render_template('loginV3.html')
 
+@app.route('/students', methods=['GET'])
+def get_student():
+    cursor.execute("SELECT * from user")
+    student_data = cursor.fetchall()
+
+    print(student_data)
+    return render_template('tabletests2.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
 
 
