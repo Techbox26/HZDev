@@ -179,13 +179,24 @@ def get_student():
 # Login to HZ
 @app.route('/userLogin', methods=['GET', 'POST'])
 def detail_check():
-    if request.method == 'POST' in request.form:
-        _inputpass = request.form['password']
-        # Failure to return a redirect or render_template
-        print(_inputpass)
-        return render_template('loginV3.html')
-    else:
+    # if request.method == 'POST' in request.form:
+    _inputEmail = request.form['username']
+    _inputpass = request.form['password']
+    print(_inputEmail)
+    print(_inputpass)
+
+    # Failure to return a redirect or render_template
+    cursor.execute("SELECT password from user where email ='" + _inputEmail +"';")
+    _verifiypass = cursor.fetchall()
+    _verifiypass = (str(_verifiypass).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_verifiypass)
+
+    if _inputpass == _verifiypass:
         return render_template('tabletests2.html')
+    else:
+     return render_template('loginV3.html')
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
