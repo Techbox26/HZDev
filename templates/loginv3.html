@@ -9,6 +9,8 @@
 </head>
 
 <body>
+<!--Get any flashed messaged-->
+
 <div id="login">
     <div>
         <h3 name="test">TEST</h3>
@@ -27,7 +29,11 @@
                             <div class="form-group">
                                 <label type="password" for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
+                            </div> <!--Error message if needed-->
+                            <div align="center"
+                            <label type="password" for="password" class=" alert-danger">{{ error }}</label>
                             </div>
+
                             <div class="form-group">
                                 <label for="remember-me" class="text-info"><span>Remember me</span> <span><input
                                         id="remember-me" name="remember-me" type="checkbox"></span></label><br>

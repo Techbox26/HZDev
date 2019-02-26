@@ -179,7 +179,6 @@ def get_student():
     result_set = cursor.fetchall()
     for row in result_set:
         print(row["fname"], row["lname"])
-
     return render_template('tabletests2.html', fName=fName)
 
 
@@ -222,7 +221,8 @@ def detail_check():
     if _inputpass == _verifiypass:
         return showTableTest2()
     else:
-     return render_template('loginV3.html')
+        error = 'Invalid credentials, please try again'
+    return render_template('loginV3.html', error=error)
 
 
 if __name__ == "__main__":
