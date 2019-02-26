@@ -1,5 +1,5 @@
 from flask_login import LoginManager, login_manager
-from flask import Flask, render_template, json, request, url_for, redirect, flash
+from flask import Flask, render_template, jsonify, request, url_for, redirect, flash
 from flaskext.mysql import MySQL
 from werkzeug.utils import secure_filename
 
@@ -179,18 +179,33 @@ def get_student():
 # Login to HZ
 @app.route('/userLogin', methods=['GET', 'POST'])
 def detail_check():
-    # if request.method == 'POST' in request.form:
+# Retrieve details from login screen
     _inputEmail = request.form['username']
     _inputpass = request.form['password']
     print(_inputEmail)
     print(_inputpass)
 
-    # Failure to return a redirect or render_template
-    cursor.execute("SELECT password from user where email ='" + _inputEmail +"';")
+# Pull correct user password from DB based on inputted email address
+    cursor.execute("SELECT password from user where email ='" + _inputEmail + "';")
     _verifiypass = cursor.fetchall()
-    _verifiypass = (str(_verifiypass).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    _verifiypass = (str(_verifiypass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_verifiypass)
 
+# INCOMPLETE
+#Pull User's Name
+    cursor.execute("SELECT fname from user where email ='" + _inputEmail +"';")
+    _userName = cursor.fetchall()
+    #_userName = (str(_userName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+
+    _userName = str(jsonify(_username=cursor.fetchall()))
+    print(str(_userName))
+
+
+# INCOMPLETE
+
+
+
+# DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
         return render_template('tabletests2.html')
     else:
