@@ -190,7 +190,9 @@ def detail_check():
     _inputpass = request.form['password']
     print(_inputEmail)
     print(_inputpass)
-
+    if _inputpass == "" or _inputEmail == "":
+        error = 'Invalid credentials, please try again'
+        return render_template('loginV3.html', error=error)
 # Pull correct user password from DB based on inputted email address
     cursor.execute("SELECT password from user where email ='" + _inputEmail + "';")
     _verifiypass = cursor.fetchall()
@@ -220,9 +222,8 @@ def detail_check():
 # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
         return showTableTest2()
-    else:
-        error = 'Invalid credentials, please try again'
-    return render_template('loginV3.html', error=error)
+    elif _inputpass == '':
+        return render_template('loginV3.html', error=error)
 
 
 if __name__ == "__main__":
