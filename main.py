@@ -21,6 +21,9 @@ app.secret_key = b'1234567v8fvfdvm'
 conn = mysql.connect()
 cursor = conn.cursor()
 
+# User variables
+_userFName = ""
+_userLName = ""
 
 @app.route('/')
 def main():
@@ -39,7 +42,11 @@ def showTableTest():
 
 @app.route('/tabletests2')
 def showTableTest2():
-    return render_template('tabletests2.html')
+    global _userFName
+    global _userLName
+    print("testing")
+    print(_userLName)
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName)
 
 
 @app.route('/modaltest')
@@ -194,12 +201,17 @@ def detail_check():
 # INCOMPLETE
 #Pull User's Name
 #could use storedproc?
+    cursor.execute("SELECT fname from user where email ='" + _inputEmail + "';")
+    global _userFName
+    _userFName = cursor.fetchall()
+    _userFName = (str(_userFName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_userFName)
 
-
-    cursor.execute("SELECT CONCAT(fname, +" "+,lname) from user where email ='" + _inputEmail + "';")
-    _userName = cursor.fetchall()
-    _userName = (str(_userName).replace('(',"").replace("'","").replace(",","").replace(")",""))
-    print(_userName)
+    cursor.execute("SELECT lname from user where email ='" + _inputEmail + "';")
+    global _userLName
+    _userLName = cursor.fetchall()
+    _userLName = (str(_userLName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_userLName)
 
 
 # INCOMPLETE
@@ -208,10 +220,9 @@ def detail_check():
 
 # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
-        return render_template('tabletests2.html')
+        return showTableTest2()
     else:
      return render_template('loginV3.html')
-
 
 
 if __name__ == "__main__":
