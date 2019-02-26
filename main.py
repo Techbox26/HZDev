@@ -2,7 +2,7 @@ from flask_login import LoginManager, login_manager
 from flask import Flask, render_template, jsonify, request, url_for, redirect, flash
 from flaskext.mysql import MySQL
 from werkzeug.utils import secure_filename
-
+import json
 import os
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -193,12 +193,13 @@ def detail_check():
 
 # INCOMPLETE
 #Pull User's Name
-    cursor.execute("SELECT fname from user where email ='" + _inputEmail +"';")
-    _userName = cursor.fetchall()
-    #_userName = (str(_userName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+#could use storedproc?
 
-    _userName = str(jsonify(_username=cursor.fetchall()))
-    print(str(_userName))
+
+    cursor.execute("SELECT CONCAT(fname, +" "+,lname) from user where email ='" + _inputEmail + "';")
+    _userName = cursor.fetchall()
+    _userName = (str(_userName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_userName)
 
 
 # INCOMPLETE
