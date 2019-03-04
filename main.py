@@ -1,5 +1,6 @@
 from flask_login import LoginManager, login_manager
 from flask import Flask, render_template, jsonify, request, url_for, redirect, flash
+from flask_table import Table, columns
 from flaskext.mysql import MySQL
 from werkzeug.utils import secure_filename
 import json
@@ -224,6 +225,8 @@ def detail_check():
         return showTableTest2()
     elif _inputpass == '':
         return render_template('loginV3.html', error=error)
+    elif _inputEmail != _verifiypass:
+        return render_template('loginV3.html')
 
 
 if __name__ == "__main__":
