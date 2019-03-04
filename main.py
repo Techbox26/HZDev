@@ -18,13 +18,15 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_DB'] = 'Project'
 mysql.init_app(app)
 
-app.secret_key = b'1234567v8fvfdvm'
+app.secret_key = 'yeet'
 conn = mysql.connect()
 cursor = conn.cursor()
 
 # User variables
 _userFName = ""
 _userLName = ""
+_userEmail = ""
+_userClass = ""
 
 @app.route('/')
 def main():
@@ -40,14 +42,24 @@ def showSignUp():
 def showTableTest():
     return render_template('tabletests.html')
 
-
+# pass all details to landing page to build screen correctly
 @app.route('/tabletests2')
 def showTableTest2():
     global _userFName
     global _userLName
     print("testing")
     print(_userLName)
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName)
+
+    global _userClass
+    cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "';")
+    _userClass = cursor.fetchall()
+    _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+    print(_userClass)
+
+
+
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass=_userClass)
+
 
 
 @app.route('/modaltest')
@@ -215,10 +227,11 @@ def detail_check():
     _userLName = (str(_userLName).replace('(',"").replace("'","").replace(",","").replace(")",""))
     print(_userLName)
 
-
-# INCOMPLETE
-
-
+    cursor.execute("SELECT email from user where email ='" + _inputEmail + "';")
+    global _userEmail
+    _userEmail = cursor.fetchall()
+    _userEmail = (str(_userEmail).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_userEmail)
 
 # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
@@ -227,6 +240,19 @@ def detail_check():
         return render_template('loginV3.html', error=error)
     elif _inputEmail != _verifiypass:
         return render_template('loginV3.html')
+
+#def return_user_details():
+
+
+#def manageclasses():
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
