@@ -50,15 +50,17 @@ def showTableTest2():
     print("testing")
     print(_userLName)
 
+# RETURN USER CLASS INFORMATION
+    # CURRENTLY RETURNS DOUBLE THE DATA
     global _userClass
-    cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "';")
+    cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
     _userClass = cursor.fetchall()
     _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_userClass)
 
 
 
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass=_userClass)
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass)
 
 
 
