@@ -27,6 +27,10 @@ _userFName = ""
 _userLName = ""
 _userEmail = ""
 _userClass = ""
+_nextAssDue = ""
+_nextAssDueDate = ""
+_nextAssDueSub = ""
+_nextAssDueDetail = ""
 
 @app.route('/')
 def main():
@@ -42,7 +46,7 @@ def showSignUp():
 def showTableTest():
     return render_template('tabletests.html')
 
-# pass all details to landing page to build screen correctly
+# pass all details to landing page to build screen correctly STUDENTS ONLY
 @app.route('/tabletests2')
 def showTableTest2():
     global _userFName
@@ -51,17 +55,26 @@ def showTableTest2():
     print(_userLName)
 
 # RETURN USER CLASS INFORMATION
-    # CURRENTLY RETURNS DOUBLE THE DATA
     global _userClass
     cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
     _userClass = cursor.fetchall()
-    print(len(_userClass))
-    print(_userClass[2])
-  #  _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+    # Return row 1 and 2 in unison
+    _userClass = (_userClass[1]) + (_userClass[2])
+    _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_userClass)
 
+# RETURN NEXT ASSIGNMENT DUE DETAILS
+    global _nextAssDue
+    cursor.execute("SELECT class.title, assTitle, dueDate FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
+    _nextAssDue = cursor.fetchall()
+    _nextAssDueDate = (_nextAssDue[0][2])
+    _nextAssDueDetail = (_nextAssDueDetail[0][1])
+    _nextAssDueSub = (_nextAssDue[0][0])
+    print(_nextAssDue)
 
 
+
+# Pass variables to main page
     return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass)
 
 
