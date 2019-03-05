@@ -68,7 +68,7 @@ def showTableTest2():
     cursor.execute("SELECT class.title, assTitle, dueDate FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
     _nextAssDue = cursor.fetchall()
     _nextAssDueDate = (_nextAssDue[0][2])
-    _nextAssDueDetail = (_nextAssDueDetail[0][1])
+    _nextAssDueDetail = (_nextAssDue[0][1])
     _nextAssDueSub = (_nextAssDue[0][0])
     print(_nextAssDue)
 
