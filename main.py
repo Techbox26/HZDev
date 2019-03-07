@@ -67,18 +67,19 @@ def showTableTest2():
 
     # MAYBE USE LOOPS TO COUNT NUMBER OF ELEMENTS TO ADD?
     global _nextAssDue
-    cursor.execute("SELECT class.title, assTitle, dueDate, taskdetails FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
+    cursor.execute("SELECT class.title, assTitle, dueDate, taskdetails, assID FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
     _nextAssDue = cursor.fetchall()
     _nextAssDueDate = (_nextAssDue[0][2])
     _nextAssDueDetail = (_nextAssDue[0][1])
     _nextAssDueSub = (_nextAssDue[0][0])
     _nextAssDueTask = (_nextAssDue[0][3])
+    _assID = (_nextAssDue[0][4])
     print(_nextAssDue)
 
 
 
 # Pass variables to main page
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask)
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _assID = _assID)
 
 
 

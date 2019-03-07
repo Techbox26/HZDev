@@ -133,7 +133,7 @@
                             <label for="taskDetail" class="sr-only">taskDetail</label>
                             <textarea type="taskDetail" name="taskDetail" id="inputDetail" class="form-control"
                                       placeholder="Task Details" required autofocus rows="10">
-        </textarea>
+                            </textarea>
                             <!--Due Date-->
                             <label for="dueDate" class="sr-only">Due Date</label>
                             <input type="due" name="dueDate" id="inputDue" class="form-control" placeholder="Due Date"
@@ -176,10 +176,11 @@
                     <!-- Modal body -->
                     <div>
                         <H6>Assignment Details:</H6>
+                        <P> {{ _assID }}</P>
                         <p>{{ _nextAssDueTask }}</p>
                         <!--LINK TO ASSIGNMENT HELP FILE-->
                         <H6>Assignment Task Sheet:</H6>
-                        <a target="_blank" href="../static/images/logo.png">FILE</a>
+                        <a target="_blank" href="../static/data/assignments/id/{{ _assID }}.pdf" >FILE</a>
 
 
 
