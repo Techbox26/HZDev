@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Table Tests</title>
-
+    <link rel="shortcut icon" type="image/png" href="../static/images/icon.png">
     <!--Code Begins Here!-->
-
 
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <!Css File>
@@ -34,8 +33,10 @@
       <div id="alerttext" align="center">Your average mark is XXXX</div>
   </div>
     <!--Alerts Content with useful info-->
-    <div class="AlertsText">
-    <div align="center">BIG MASSIVE ALERT THINGS</div>
+    <div class="AlertsText" >
+    <h4>NEXT ASSIGNMENT DUE</h4>
+        <div align="left">It is advisable you work on your {{ _nextAssDueSub }} assignment as this is due very soon! </div>
+        <div align="left">Your next assignment is due on: {{ _nextAssDueDate }}</div>
     </div>
 
 <!--Graphs Title Section with useful info-->
@@ -88,8 +89,9 @@
                 <p>Class Y</p>
                 <p>Class Z</p>
             <h5>Next Assignment Due</h5>
-                <p>Assignment Title</p>
-                <p>Date/Time Due</p>
+                <p>Subject: {{ _nextAssDueSub }}</p>
+                <p>Assignment: {{ _nextAssDueDetail }}</p>
+                <p>Date Due: {{ _nextAssDueDate }}</p>
     </div>
         <!--Help Buttons-->
     <div align="center">
