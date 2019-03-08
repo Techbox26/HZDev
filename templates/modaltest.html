@@ -42,29 +42,25 @@
                                 <input name="inputfile" type='file'>
                             </div>
                             <div>
-                                <!--Date Title-->
+                                <!--Assignment title-->
+                                <label class="sr-only" for="assTitle">assTitle</label>
+                                <input class="form-control" id="assTitle" name="assTitle" placeholder="Assignment Title"
+                                       type="assTitle">
+                                <!--Date-->
                                 <label class="sr-only" for="date">date</label>
                                 <input class="form-control" id="date" name="date" placeholder="Submission Date"
                                        type="date">
-                                <!--final mark-->
-                                <label class="sr-only" for="finalMark">finalMark</label>
-                                <input autofocus class="form-control" id="finalMark" name="finalMark"
-                                       placeholder="finalMark" required type="finalMark">
-                                <!--teach comment-->
+                                <!--task details-->
                                 <div class="modal-header">
-                                     <h6 class="modal-title">Teach Comment</h6>
+                                     <h6 class="modal-title">Task Details</h6>
                                 </div>
-                                <label class="sr-only" for="teachComment">teachComment</label>
-                                <textarea autofocus  class="form-control" id="teachComment" name="teachComment" placeholder="Teacher Comment" required rows ="10" type="teachComment">
+                                <label class="sr-only" for="taskDetails">taskDetails</label>
+                                <textarea autofocus  class="form-control" id="taskDetails" name="taskDetails" placeholder="taskDetails" required rows ="10" type="taskDetails">
                                 </textarea>
-                                <!--Assignment ID-->
-                                <label class="sr-only" for="assignID">assignID</label>
-                                <input class="form-control" id="assignID" name="assignID" placeholder="Assignment ID"
-                                       type="assignID">
-                                 <!--User ID-->
-                                <label class="sr-only" for="userID">userID</label>
-                                <input class="form-control" id="userID" name="userID" placeholder="User ID"
-                                       type="userID">
+                               <!--User ID-->
+                                <label class="sr-only" for="classID">classID</label>
+                                <input class="form-control" id="classID" name="classID" placeholder="classID"
+                                       type="classID">
                             </div>
                             <button class="btn btn-default" type="btnAddSub">Submit</button>
 

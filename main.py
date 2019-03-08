@@ -7,11 +7,15 @@ import json
 import os
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-UPLOAD_PATH = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Assignments'
+UPLOAD_PATH_ASSIGN = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Assignments'
+UPLOAD_PATH_SUBMISSION = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Submissions'
 
 app = Flask(__name__)
 mysql = MySQL()
-app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
+app.config['UPLOAD_FOLDER_ASSIGN'] = UPLOAD_PATH_ASSIGN
+app.config['UPLOAD_FOLDER_SUBMISSION'] = UPLOAD_PATH_SUBMISSION
+
+
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
@@ -134,7 +138,9 @@ def allowed_files(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# ADD NEW SUBMISSION#
+
+
+# ADD NEW ASSIGNMENT# NOT YET COMPLETE
 @app.route('/addSub', methods=['POST', 'GET'])
 def addSub():
     if 'inputfile' not in request.files:
@@ -147,34 +153,73 @@ def addSub():
             return (redirect('tableTests2'))
         if inputFile and allowed_files(inputFile.filename):
             filename = secure_filename(inputFile.filename)
-            inputFile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            inputFile.save(os.path.join(app.config['UPLOAD_FOLDER_SUBMISSION'], filename))
             _inputFileName = filename
-            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER_SUBMISSION'], filename)
             print(_inputFileName)
             print(_inputFilePath)
+
             # read the posted values from the UI (modal script)
-            _date = request.form['date']
-            print(_date)
+            _assTitle = request.form['assTitle']
+            print(_assTitle)
 
-            _finalMark = request.form['finalMark']
-            print(_finalMark)
+            _dueDate = request.form['date']
+            print(_dueDate)
 
-            _teachComment = request.form['teachComment']
-            print(_teachComment)
+            _taskdetails = request.form['taskDetails']
+            print(_taskdetails)
 
-            _assignmentID = request.form['assignID']
-            print(_assignmentID)
+            _classID = request.form['classID']
+            print(_classID)
 
-            _userID = request.form['userID']
-            print(_userID)
-
-            cursor.callproc('addSubmission',
-                            (_date, _inputFileName, _inputFilePath, _finalMark, _teachComment, _assignmentID, _userID))
+            cursor.callproc('addAssign2', [_assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID])
             data = cursor.fetchall()
             print(data)
             conn.commit()
 
         return render_template('testing.html')
+
+
+
+
+# ADDING NEW ASSIGNMENT WITH FILE UPLOAD IN PROGRESSSSSSSSSSS
+@app.route('/addAssign2', methods=['POST', 'GET'])
+def addAssign2():
+    if 'inputfile' not in request.files:
+        print("failed")
+    else:
+        print("Success")
+        inputFile = request.files['inputfile']
+        if inputFile.filename == '':
+            flash("no file selected")
+            return (redirect('tableTests2'))
+        if inputFile and allowed_files(inputFile.filename):
+            filename = secure_filename(inputFile.filename)
+            inputFile.save(os.path.join(app.config['UPLOAD_FOLDER_ASSIGN'], filename))
+            _inputFileName = filename
+            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER_ASSIGN'], filename)
+            print(_inputFileName)
+            print(_inputFilePath)
+
+            # read the posted values from the UI (modal script)
+            _assTitle = request.form['assessTitle']
+            print(_assTitle)
+
+            _dueDate = request.form['date']
+            print(_dueDate)
+
+            _taskdetails = request.form['taskDetails']
+            print(_taskdetails)
+
+            _classID = request.form['classID']
+            print(_classID)
+
+            cursor.callproc('addAssign2', _assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID)
+            data = cursor.fetchall()
+            print(data)
+            conn.commit()
+
+        return redirect('tabletests2', code=302)
 
 
 # USER SIGN IN#
