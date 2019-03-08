@@ -141,7 +141,7 @@ def allowed_files(filename):
 
 
 # ADD NEW ASSIGNMENT# NOT YET COMPLETE
-@app.route('/addSub', methods=['POST', 'GET'])
+@app.route('/addAssignment', methods=['POST', 'GET'])
 def addSub():
     if 'inputfile' not in request.files:
         print("failed")
@@ -172,27 +172,27 @@ def addSub():
             _classID = request.form['classID']
             print(_classID)
 
-            cursor.callproc('addAssign2', [_assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID])
+            cursor.callproc('addAssign2', (_assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID))
             data = cursor.fetchall()
             print(data)
             conn.commit()
 
-        return render_template('testing.html')
+        return render_template('/tabletests2')
 
 
 
 
 # ADDING NEW ASSIGNMENT WITH FILE UPLOAD IN PROGRESSSSSSSSSSS
-@app.route('/addAssign2', methods=['POST', 'GET'])
+@app.route('/addSub', methods=['POST', 'GET'])
 def addAssign2():
     if 'inputfile' not in request.files:
         print("failed")
     else:
         print("Success")
         inputFile = request.files['inputfile']
-        if inputFile.filename == '':
-            flash("no file selected")
-            return (redirect('tableTests2'))
+      #  if inputFile.filename == '':
+       #     flash("no file selected")
+        #    return (redirect('tableTests2'))
         if inputFile and allowed_files(inputFile.filename):
             filename = secure_filename(inputFile.filename)
             inputFile.save(os.path.join(app.config['UPLOAD_FOLDER_ASSIGN'], filename))
@@ -202,7 +202,7 @@ def addAssign2():
             print(_inputFilePath)
 
             # read the posted values from the UI (modal script)
-            _assTitle = request.form['assessTitle']
+            _assTitle = request.form['assTitle']
             print(_assTitle)
 
             _dueDate = request.form['date']
@@ -214,7 +214,8 @@ def addAssign2():
             _classID = request.form['classID']
             print(_classID)
 
-            cursor.callproc('addAssign2', _assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID)
+            cursor.callproc('addAssign2',
+                            (_assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID))
             data = cursor.fetchall()
             print(data)
             conn.commit()
