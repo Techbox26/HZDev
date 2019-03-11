@@ -185,10 +185,10 @@ def addSub():
 # ADDING NEW ASSIGNMENT WITH FILE UPLOAD IN PROGRESSSSSSSSSSS
 @app.route('/addSub', methods=['POST', 'GET'])
 def addAssign2():
-    if 'inputfile' not in request.files:
-        print("failed")
-    else:
-        print("Success")
+   # if 'inputfile' not in request.files:
+    #    print("failed")
+    #else:
+     #   print("Success")
         inputFile = request.files['inputfile']
       #  if inputFile.filename == '':
        #     flash("no file selected")
@@ -214,6 +214,13 @@ def addAssign2():
             _classID = request.form['classID']
             print(_classID)
 
+# DETERMINE CLASS ID
+            # CONTINUE WORK TO ALLOW FOR CLASS NAME INPUT RATHER THAN CLASSID INPUT
+            cursor.execute(
+                "SELECT class.title FROM class WHERE classID ='" + _classID + "';  ;")
+            _classTitle = cursor.fetchall()
+            _classTitle = (str(_classTitle).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+            print(_classTitle)
             cursor.callproc('addAssign2',
                             (_assTitle, _taskdetails, _dueDate, _inputFileName, _inputFilePath, _classID))
             data = cursor.fetchall()
@@ -308,15 +315,7 @@ def detail_check():
         return render_template('loginV3.html')
 
 #def return_user_details():
-
-
 #def manageclasses():
-
-
-
-
-
-
 
 
 

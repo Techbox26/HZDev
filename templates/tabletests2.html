@@ -109,7 +109,7 @@
 
         <!--Modal Box for adding new assignments-->
         <!-- The Modal -->
-        <div class="modal fade" id="addAssign">
+        <div class="modal fade" id="addAssign2">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
@@ -172,20 +172,15 @@
                         <h4 class="modal-title">View {{ _nextAssDueSub }} assignment</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
                     <!-- Modal body -->
                     <div>
                         <H6>Assignment Details:</H6>
-                        <p>{{ _nextAssDueTask }}</p>
+                        <p class="model-signature">{{ _nextAssDueTask }}</p>
                         <!--LINK TO ASSIGNMENT HELP FILE-->
                         <H6>Assignment Task Sheet:</H6>
                         <a target="_blank" href="../static/images/logo.png">FILE</a>
-
-
-
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
-
                         <form action="/addSub" enctype="multipart/form-data" method="POST">
                             <div class="form-group">
                                 <label>File Upload</label>
@@ -193,13 +188,11 @@
                             </div>
                             <div>
                                 <!--Collect Data-->
-
                             </div>
-
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <p>Remember! Research and ask a friend before asking me!</p>
-                                <div class="center">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
                                     <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Close
                                     </button>
                                 </div>
@@ -209,6 +202,77 @@
                 </div>
             </div>
         </div>
+
+
+         <!--Modal Box for adding new assignments WITH FILE UPLOAD ENABLED-->
+    <!-- The Modal -->
+    <div class="modal fade" id="addAssign">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Create New Assignment</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div>
+
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h6>File Input</h6>
+                        <form action="/addSub" enctype="multipart/form-data" method="POST">
+                            <div class="form-group">
+
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Assignment title-->
+                                <label class="sr-only" for="assTitle">assTitle</label>
+                                <input class="form-control" id="assTitle" name="assTitle" placeholder="Assignment Title"
+                                       type="assTitle">
+                                <!--Date-->
+                                <label class="sr-only" for="date">date</label>
+                                <input class="form-control" id="date" name="date" placeholder="Submission Date"
+                                       type="date">
+                                <!--task details-->
+                                <div class="modal-header">
+                                     <h6 class="modal-title">Task Details</h6>
+                                </div>
+                                <label class="sr-only" for="taskDetails">taskDetails</label>
+                                <textarea autofocus  class="form-control" id="taskDetails" name="taskDetails" placeholder="taskDetails" required rows ="10" type="taskDetails">
+                                </textarea>
+                               <!--User ID-->
+                                <label class="sr-only" for="classID">classID</label>
+                                <input class="form-control" id="classID" name="classID" placeholder="classID"
+                                       type="classID">
+                            </div>
+                            <button class="btn btn-default" type="btnAddSub">Submit</button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addSub">Save Submission
+                    </button>
+                    <!--Commit Data-->
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="addSub">Close</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
 
 
     </div>
