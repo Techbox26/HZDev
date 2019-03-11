@@ -288,22 +288,26 @@ def detail_check():
 # INCOMPLETE
 #Pull User's Name
 #could use storedproc?
-    cursor.execute("SELECT fname from user where email ='" + _inputEmail + "';")
+    cursor.execute("SELECT fname, lname, email from user where email ='" + _inputEmail + "';")
     global _userFName
-    _userFName = cursor.fetchall()
-    _userFName = (str(_userFName).replace('(',"").replace("'","").replace(",","").replace(")",""))
-    print(_userFName)
-
-    cursor.execute("SELECT lname from user where email ='" + _inputEmail + "';")
     global _userLName
-    _userLName = cursor.fetchall()
-    _userLName = (str(_userLName).replace('(',"").replace("'","").replace(",","").replace(")",""))
-    print(_userLName)
-
-    cursor.execute("SELECT email from user where email ='" + _inputEmail + "';")
     global _userEmail
-    _userEmail = cursor.fetchall()
-    _userEmail = (str(_userEmail).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    _userDetails = cursor.fetchall()
+    print(_userDetails)
+    _userFName = (_userDetails[0][0])
+    _userLName = (_userDetails[0][1])
+    _userEmail = (_userDetails[0][2])
+
+    #_userFName = (str(_userFName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_userFName)
+    # cursor.execute("SELECT lname from user where email ='" + _inputEmail + "';")
+    #_userLName = cursor.fetchall()
+    #_userLName = (str(_userLName).replace('(',"").replace("'","").replace(",","").replace(")",""))
+    print(_userLName)
+    #cursor.execute("SELECT email from user where email ='" + _inputEmail + "';")
+    #global _userEmail
+    #_userEmail = cursor.fetchall()
+    #_userEmail = (str(_userEmail).replace('(',"").replace("'","").replace(",","").replace(")",""))
     print(_userEmail)
 
 # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
@@ -313,6 +317,11 @@ def detail_check():
         return render_template('loginV3.html', error=error)
     elif _inputEmail != _verifiypass:
         return render_template('loginV3.html')
+
+#DETERMINE AVERAGE MARKS
+    cursor.execute("SELECT AVG(finalmark) FROM SUBMISSION WHERE ")
+
+
 
 #def return_user_details():
 #def manageclasses():
