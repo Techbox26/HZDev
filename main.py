@@ -35,6 +35,17 @@ _nextAssDue = ""
 _nextAssDueDate = ""
 _nextAssDueSub = ""
 _nextAssDueDetail = ""
+_memberID = ""
+_avgMark = ""
+_weakMark = ""
+_weakMarkSub = ""
+_strongMark = ""
+_strongMarkSub = ""
+
+
+
+
+
 
 @app.route('/')
 def main():
@@ -82,7 +93,7 @@ def showTableTest2():
 
 
 # Pass variables to main page
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask)
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark)
 
 
 
@@ -288,16 +299,25 @@ def detail_check():
 # INCOMPLETE
 #Pull User's Name
 #could use storedproc?
-    cursor.execute("SELECT fname, lname, email from user where email ='" + _inputEmail + "';")
+    cursor.execute("SELECT fname, lname, email, memberID from user where email ='" + _inputEmail + "';")
     global _userFName
     global _userLName
     global _userEmail
+    global _memberID
+    global _avgMark
+    global _weakMark
+    global _weakMarkSub
+    global _strongMark
+    global _strongMarkSub
+
+
+
     _userDetails = cursor.fetchall()
     print(_userDetails)
     _userFName = (_userDetails[0][0])
     _userLName = (_userDetails[0][1])
     _userEmail = (_userDetails[0][2])
-
+    _memberID = (_userDetails[0][3])
     #_userFName = (str(_userFName).replace('(',"").replace("'","").replace(",","").replace(")",""))
     print(_userFName)
     # cursor.execute("SELECT lname from user where email ='" + _inputEmail + "';")
@@ -310,6 +330,14 @@ def detail_check():
     #_userEmail = (str(_userEmail).replace('(',"").replace("'","").replace(",","").replace(")",""))
     print(_userEmail)
 
+#Determine user type:
+    if _memberID == 1:
+       _userType = 'student'
+    elif _memberID ==2:
+        _userType ='teacher'
+    elif _memberID ==3:
+        _userType = 'parent'
+
 # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
         return showTableTest2()
@@ -319,9 +347,22 @@ def detail_check():
         return render_template('loginV3.html')
 
 #DETERMINE AVERAGE MARKS
-    cursor.execute("SELECT AVG(finalmark) FROM SUBMISSION WHERE ")
+    cursor.execute("SELECT AVG(finalmark) FROM SUBMISSION JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
+    _avgMark = cursor.fetchall()
+    print(_avgMark)
 
+    #DETERMINE STRONGEST SUBJECT MARKS
+    cursor.execute("SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
+    _strongMark = cursor.fetchall()
+    _strongMarkSub = (_strongMark[0][1])
+    _strongMark = (_strongMark[0][0])
 
+    #DETERMINE WEAKEST SUBJECT
+    cursor.execute(
+    "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
+    _weakMark = cursor.fetchall()
+    _weakMarkSub = (_weakMark[0][1])
+    _weakMark = (_weakMark[0][0])
 
 #def return_user_details():
 #def manageclasses():
