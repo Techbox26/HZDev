@@ -82,5 +82,56 @@
         </div>
     </div>
 
+
+
+
+
+    <!-- Button to Open the Modal -->
+    <button class="btn btn-info btn-sm" data-target="#classManage" data-toggle="modal" id="userButton" type="button">
+        Class Management
+    </button>
+
+
+
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManage">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Member Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div>
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h6>Enter Class ID and Student ID</h6>
+                        <form action="/classManagement" enctype="multipart/form-data" method="POST">
+                               <!--User ID-->
+                                <label class="sr-only" for="userID">Student ID</label>
+                                <input class="form-control" id="userID" name="userID" placeholder="Student ID"
+                                       type="userID">
+
+                               <!--Class ID-->
+                                <label class="sr-only" for="classID">classID</label>
+                                <input class="form-control" id="classID" name="classID" placeholder="classID"
+                                       type="classID">
+                            </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" type="btnAddSub">Submit</button>
+                        <!--Commit Data-->
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManagement">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

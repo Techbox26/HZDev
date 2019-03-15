@@ -41,7 +41,8 @@ _weakMark = ""
 _weakMarkSub = ""
 _strongMark = ""
 _strongMarkSub = ""
-
+_userID = ""
+_totalComplete = ""
 
 
 
@@ -92,8 +93,11 @@ def showTableTest2():
 
 
 
-# Pass variables to main page
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark)
+   # cursor.execute("INSERT INTO classregister(users_userID, class_classID) values(2,2);")
+   # conn.commit()
+
+    # Pass variables to main page
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark, _weakMarkSub = _weakMarkSub, _weakMark = _weakMark, _strongMarkSub=_strongMarkSub, _strongMark = _strongMark)
 
 
 
@@ -227,6 +231,7 @@ def addAssign2():
 
 # DETERMINE CLASS ID
             # CONTINUE WORK TO ALLOW FOR CLASS NAME INPUT RATHER THAN CLASSID INPUT
+
             cursor.execute(
                 "SELECT class.title FROM class WHERE classID ='" + _classID + "';  ;")
             _classTitle = cursor.fetchall()
@@ -238,7 +243,8 @@ def addAssign2():
             print(data)
             conn.commit()
 
-        return redirect('tabletests2', code=302)
+            return redirect('tabletests2', code=302)
+
 
 
 # USER SIGN IN#
@@ -296,19 +302,22 @@ def detail_check():
     _verifiypass = (str(_verifiypass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_verifiypass)
 
+
 # INCOMPLETE
 #Pull User's Name
 #could use storedproc?
-    cursor.execute("SELECT fname, lname, email, memberID from user where email ='" + _inputEmail + "';")
+    cursor.execute("SELECT fname, lname, email, memberID, userID from user where email ='" + _inputEmail + "';")
     global _userFName
     global _userLName
     global _userEmail
+    global _userID
     global _memberID
     global _avgMark
     global _weakMark
     global _weakMarkSub
     global _strongMark
     global _strongMarkSub
+    global _totalComplete
 
 
 
@@ -318,6 +327,7 @@ def detail_check():
     _userLName = (_userDetails[0][1])
     _userEmail = (_userDetails[0][2])
     _memberID = (_userDetails[0][3])
+    _userID = (_userDetails[0][4])
     #_userFName = (str(_userFName).replace('(',"").replace("'","").replace(",","").replace(")",""))
     print(_userFName)
     # cursor.execute("SELECT lname from user where email ='" + _inputEmail + "';")
@@ -331,6 +341,7 @@ def detail_check():
     print(_userEmail)
 
 #Determine user type:
+# RETURN DIFFERENT RENDER TEMPLATE BASED ON OUTCOME OF THIS ROUTINE
     if _memberID == 1:
        _userType = 'student'
     elif _memberID ==2:
@@ -350,6 +361,10 @@ def detail_check():
     cursor.execute("SELECT AVG(finalmark) FROM SUBMISSION JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
     _avgMark = cursor.fetchall()
     print(_avgMark)
+#DETERMIN NUM OF COMPLETED ASSIGNMENTS WIHTIN PAST 9 MONTHS
+    cursor.execute("SELECT COUNT(*) FROM submission WHERE user_userID ='" + _userID + "' AND finalmark <>'' AND submission.date > DATE_SUB(now(), INTERVAL 9 MONTH);")
+    _totalComplete = cursor.fetchall()
+    print(_totalComplete)
 
     #DETERMINE STRONGEST SUBJECT MARKS
     cursor.execute("SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
@@ -358,15 +373,36 @@ def detail_check():
     _strongMark = (_strongMark[0][0])
 
     #DETERMINE WEAKEST SUBJECT
-    cursor.execute(
-    "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
+    cursor.execute("SELECT MIN(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
     _weakMark = cursor.fetchall()
     _weakMarkSub = (_weakMark[0][1])
     _weakMark = (_weakMark[0][0])
 
-#def return_user_details():
-#def manageclasses():
+# Find list of all assignments without a mark assigned (INCOMPLETE SUBMISSIONS)
+    cursor.execute("SELECT inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission WHERE user_userID ='" + _userID + "' AND finalmark ='';")
+    _assignsDue = cursor.fetchall()
+    print(_assignsDue)
 
+# Find list of all assignments with a mark assigned (COMPLETED SUBMISSIONS)
+    cursor.execute("SELECT inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission WHERE user_userID ='" + _userID + "' AND finalmark <>'';")
+    _assignsComplete = cursor.fetchall()
+    print(_assignsComplete)
+
+
+
+#def return_user_details():
+@app.route('/classManagement', methods=['GET', 'POST'])
+def manageclasses(): # MIGHT NOT WORK UNSURE
+    # GET DATA FROM FORMS
+    _userID = request.form['userID']
+    _classID = request.form['classID']
+    # GET STUDENT DATE FROM FORMS
+    cursor.execute("INSERT INTO classregister(users_userID, class_classID) values('" + (str(_userID)) + "','" + str((_classID)) + "');")
+    conn.commit()
+    return render_template('tabletests2.html')
+
+# TEACHERS VARIABLE SETTING
+# def teachervar():
 
 
 

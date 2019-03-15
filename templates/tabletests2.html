@@ -23,8 +23,8 @@
 <div class="grid-container">
     <!--Alerts Title Section with useful info-->
     <div class="Alerts">
-        <div id="alerthead" align="left">You have completed XXXX since September</div>
-        <div id="alerttext" align="center">Your average mark is XXXX</div>
+        <div id="alerthead" align="left">You have completed <strong>{{ _totalComplete }}</strong> within the last 9 months.</div><br>
+        <div id="alerthead" align="left">Your average mark is <strong>{{ _avgMark }} %</strong></div>
     </div>
     <!--Alerts Content with useful info-->
     <div class="AlertsText">
@@ -49,19 +49,20 @@
     <div class="Graph"><h5>Graphs Here</h5>
         <div align="left">Your Average Mark Grade is:</div>
         <p>{{ _avgMark }}</p>
-        <div align="left">Strongest Subject</div>
-        <p>Maths%</p>
-        <div align="left">Weakest Subject</div>
-        <p>Physical Education</p>
+        <div align="left"><strong>Strongest Subject</strong></div>
+        <p>{{ _strongMarkSub }}%</p>
+        <p> With an average mark of {{ _strongMark }}</p>
+        <div align="left"><strong>Weakest Subject</strong></div>
+        <p>{{ _weakMarkSub }}%</p>
+        <p> With an average mark of {{ _weakMark }}</p>
     </div>
 
-
     <!--Current Assignment Content Section with useful info-->
-    <div class="Title2">Assignments</div>
+    <div class="Title2"><strong>Assignments</strong></div>
     <div class="Assignments">
         <small>Assignments here</small>
     </div>
-    <div class="Title3">Previous Assignments</div>
+    <div class="Title3"><strong>Assignments</strong></div>
     <div class="Previous">
         <small>Previous Assignments Here</small>
         <h3> {{student_data}}</h3>
