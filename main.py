@@ -72,12 +72,30 @@ def showTableTest2():
 
 # RETURN USER CLASS INFORMATION
     global _userClass
+    # COUNT N.O OF CLASSES
+    cursor.execute("SELECT COUNT(*) FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
+    _userClassNo = cursor.fetchall()
+    _userClassNo =(int((_userClassNo[0][0])*.5))
+    print(_userClassNo)
     cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
     _userClass = cursor.fetchall()
     # Return row 1 and 2 in unison
-    _userClass = (_userClass[1]) + (_userClass[2])
-    _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+   # _userClass = (_userClass[1]) + (_userClass[2])
+    #_userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_userClass)
+
+
+# THIS DOESN'T WORK JUST YET
+    printedclasses = 0
+    while printedclasses <0:
+        print(_userClassNo[printedclasses])
+        _userClass = _userClass[0]
+        printedclasses = printedclasses + 1
+        print("CLASSES ATTENDED")
+        printedclasses = (str(printedclasses).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+
+        print(printedclasses)
+
 
 # RETURN NEXT ASSIGNMENT DUE DETAILS
 
