@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link href="../static/test2.css" rel="stylesheet">
 </head>
 <body>
 
@@ -85,13 +86,14 @@
 
 
     <!--Modal Box for class management-->
+    <!--Adding Students to classes-->
     <!-- Button to Open the Modal -->
-    <button class="btn btn-info btn-sm" data-target="#classManage" data-toggle="modal" id="userButton" type="button">
+    <button class="btn btn-info btn-sm" data-target="#ClassManageAdd" data-toggle="modal" id="userButton" type="button">
         Class Management
     </button>
      <!--Modal Box for class management-->
     <!-- The Modal -->
-    <div class="modal fade" id="classManage">
+    <div class="modal fade" id="ClassManageAdd">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -105,6 +107,7 @@
                 <div>
                     <!--LONGBLOB FILE UPLOAD-->
                     <div class="container">
+                        <h6>Add Students to Classes</h6>
                         <h6>Enter Class ID and Student ID</h6>
                         <form action="/classManagement" enctype="multipart/form-data" method="POST">
                                <!--User ID-->
@@ -115,13 +118,66 @@
                                 <label class="sr-only" for="classID">classID</label>
                                 <input class="form-control" id="classID" name="classID" placeholder="classID"
                                        type="classID">
-                        </form>
+
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-info btn-sm" type="btnAddSub">Submit</button>
+                        <button class="btn btn-info btn-sm" type="ClassManageAdd">Submit</button>
                         <!--Commit Data-->
-                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManagement">Close</button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="ClassManageAdd">Close</button>
+                        </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+ <!--Modal Box for class management-->
+    <!--Removing Students from classes-->
+    <!-- Button to Open the Modal -->
+    <button class="btn btn-info btn-sm" data-target="#classManageRemove" data-toggle="modal" id="userButton" type="button">
+        Remove Class Members
+    </button>
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManageRemove">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Member Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div>
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h6>Remove Students from Classes</h6>
+                        <h6>Enter Class ID and Student ID</h6>
+                        <form action="/classManageRemove" enctype="multipart/form-data" method="POST">
+                               <!--User ID-->
+                                <label class="sr-only" for="userID">Student ID</label>
+                                <input class="form-control" id="userID" name="userID" placeholder="Student ID"
+                                       type="userID">
+                               <!--Class ID-->
+                                <label class="sr-only" for="classID">classID</label>
+                                <input class="form-control" id="classID" name="classID" placeholder="classID"
+                                       type="classID">
+                            <!--Commit Data-->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-primary btn-sm" id="btnClassManageRemove" type="classManageRemove">Save Change
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">Close</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
             </div>

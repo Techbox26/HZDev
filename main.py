@@ -80,8 +80,8 @@ def showTableTest2():
     cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
     _userClass = cursor.fetchall()
     # Return row 1 and 2 in unison
-   # _userClass = (_userClass[1]) + (_userClass[2])
-    #_userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+    _userClass = (_userClass[1]) + (_userClass[2])
+    _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_userClass)
 
 
@@ -93,7 +93,6 @@ def showTableTest2():
         printedclasses = printedclasses + 1
         print("CLASSES ATTENDED")
         printedclasses = (str(printedclasses).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
-
         print(printedclasses)
 
 
@@ -407,10 +406,10 @@ def detail_check():
     print(_assignsComplete)
 
 
-
+# ADD Students to class(es)
 #def return_user_details():
 @app.route('/classManagement', methods=['GET', 'POST'])
-def manageclasses(): # MIGHT NOT WORK UNSURE
+def manageclasses(): # WORKS
     # GET DATA FROM FORMS
     _userID = request.form['userID']
     _classID = request.form['classID']
@@ -418,6 +417,19 @@ def manageclasses(): # MIGHT NOT WORK UNSURE
     cursor.execute("INSERT INTO classregister(users_userID, class_classID) values('" + (str(_userID)) + "','" + str((_classID)) + "');")
     conn.commit()
     return render_template('tabletests2.html')
+
+#REMOVE students from classes
+@app.route('/classManageRemove', methods=['GET', 'POST'])
+def manageClassRemove(): # WORKS
+    # GET DATA FROM FORMS
+    _userID = request.form['userID']
+    _classID = request.form['classID']
+    # GET STUDENT DATE FROM FORMS
+    cursor.execute("DELETE FROM classregister WHERE users_userID =('" + (str(_userID)) + "') AND class_classID = ('" + str((_classID)) + "');")
+    conn.commit()
+    return render_template('tabletests2.html')
+
+
 
 # TEACHERS VARIABLE SETTING
 # def teachervar():
