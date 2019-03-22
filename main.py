@@ -406,30 +406,35 @@ def detail_check():
     print(_assignsComplete)
 
 
-# ADD Students to class(es)
+# ADD Students to class(es) VIA NAMES AND CLASS NAME
 #def return_user_details():
 @app.route('/classManagement', methods=['GET', 'POST'])
 def manageclasses(): # WORKS
     # GET DATA FROM FORMS
     _userID = request.form['userID']
     _classID = request.form['classID']
-    # GET STUDENT DATE FROM FORMS
-    cursor.execute("INSERT INTO classregister(users_userID, class_classID) values('" + (str(_userID)) + "','" + str((_classID)) + "');")
+    _stuFname = request.form['stuFname']
+    _stuLname = request.form['stuLname']
+    _className = request.form['className']
+    # GET STUDENT DATA FROM FORMS
+   # cursor.execute("INSERT INTO classregister(users_userID, class_classID) values('" + (str(_userID)) + "','" + str((_classID)) + "');")
+    cursor.execute("INSERT INTO classregister(users_userID, class_classID) SELECT user.userID, class.classID FROM user, class WHERE user.fname=('" + _stuFname + "' ) AND user.lname =('" + _stuLname + "') AND class.title = ('" + _className + "' );")
     conn.commit()
     return render_template('tabletests2.html')
 
 #REMOVE students from classes
+# NO LONGER NEEDED
 @app.route('/classManageRemove', methods=['GET', 'POST'])
 def manageClassRemove(): # WORKS
     # GET DATA FROM FORMS
     _userID = request.form['userID']
     _classID = request.form['classID']
-    # GET STUDENT DATE FROM FORMS
+    # GET STUDENT DATA FROM FORMS
     cursor.execute("DELETE FROM classregister WHERE users_userID =('" + (str(_userID)) + "') AND class_classID = ('" + str((_classID)) + "');")
     conn.commit()
     return render_template('tabletests2.html')
 
-#REMOVE students from classes VIA STUDENT NAME
+#REMOVE students from classes VIA STUDENT NAME AND CLASS TITLE
 @app.route('/classManageRemoveName', methods=['GET', 'POST'])
 def manageClassRemoveName(): # WORKS
     # GET DATA FROM FORMS
@@ -437,9 +442,10 @@ def manageClassRemoveName(): # WORKS
     _classID = request.form['classID']
     _stuFname = request.form['stuFname']
     _stuLname = request.form['stuLname']
-    # GET STUDENT DATE FROM FORMS
-    cursor.execute("DELETE FROM classregister WHERE users_userID =('" + (str(_userID)) + "') AND class_classID = ('" + str((_classID)) + "');")
-    cursor.execute("DELETE classregister FROM classregister JOIN user ON classregister.users_userID = user.userID WHERE user.fname=('" + _stuFname + "' ) AND user.lname =('" + _stuLname + "') AND classregister.class_classID = ('" + str((_classID)) + "');")
+    _className = request.form['className']
+    # GET STUDENT DATA FROM FORMS
+    #cursor.execute("DELETE FROM classregister WHERE users_userID =('" + (str(_userID)) + "') AND class_classID = ('" + str((_classID)) + "');")
+    cursor.execute("DELETE classregister FROM classregister JOIN user ON classregister.users_userID = user.userID JOIN class ON classregister.class_classID = class.classID WHERE user.fname=('" + _stuFname + "' ) AND user.lname =('" + _stuLname + "') AND class.title = ('" + _className + "' );")
     conn.commit()
     return render_template('tabletests2.html')
 

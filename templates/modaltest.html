@@ -157,11 +157,11 @@
 
                 <!-- Modal body -->
                 <div>
-                    <!--LONGBLOB FILE UPLOAD-->
+                    <
                     <div class="container">
                         <h6>Remove Students from Classes</h6>
-                        <h6>Enter Class ID and Student ID</h6>
-                        <form action="/classManageRemove" enctype="multipart/form-data" method="POST">
+                        <h6>Enter Student and Class Details</h6>
+                        <form action="/classManageRemoveName" enctype="multipart/form-data" method="POST">
                           <!--  ########################-->
                             <!--Student Name-->
                             <label class="sr-only" for="stuFname">Student First Name</label>
@@ -170,6 +170,9 @@
                             <label class="sr-only" for="stuLname">Student Last Name</label>
                                 <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
                                        type="stuLname">
+                            <label class="sr-only" for="className">Class Name</label>
+                                <input class="form-control" id="className" name="className" placeholder="Class Name"
+                                       type="className">
                            <!-- ########################-->
                             <!--User ID-->
                                 <label class="sr-only" for="userID">Student ID</label>
