@@ -84,7 +84,7 @@ def showTableTest2():
     _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_userClass)
 
-
+########################################
 # THIS DOESN'T WORK JUST YET
     printedclasses = 0
     while printedclasses <0:
@@ -94,7 +94,7 @@ def showTableTest2():
         print("CLASSES ATTENDED")
         printedclasses = (str(printedclasses).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
         print(printedclasses)
-
+########################################
 
 # RETURN NEXT ASSIGNMENT DUE DETAILS
 
@@ -429,6 +429,19 @@ def manageClassRemove(): # WORKS
     conn.commit()
     return render_template('tabletests2.html')
 
+#REMOVE students from classes VIA STUDENT NAME
+@app.route('/classManageRemoveName', methods=['GET', 'POST'])
+def manageClassRemoveName(): # WORKS
+    # GET DATA FROM FORMS
+    _userID = request.form['userID']
+    _classID = request.form['classID']
+    _stuFname = request.form['stuFname']
+    _stuLname = request.form['stuLname']
+    # GET STUDENT DATE FROM FORMS
+    cursor.execute("DELETE FROM classregister WHERE users_userID =('" + (str(_userID)) + "') AND class_classID = ('" + str((_classID)) + "');")
+    cursor.execute("DELETE classregister FROM classregister JOIN user ON classregister.users_userID = user.userID WHERE user.fname=('" + _stuFname + "' ) AND user.lname =('" + _stuLname + "') AND classregister.class_classID = ('" + str((_classID)) + "');")
+    conn.commit()
+    return render_template('tabletests2.html')
 
 
 # TEACHERS VARIABLE SETTING
