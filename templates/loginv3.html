@@ -30,8 +30,13 @@
                                 <label type="password" for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
                             </div> <!--Error message if needed-->
-                            <div align="center"
-                            <label type="password" for="password" class=" alert-danger">{{ error }}</label>
+                            <div align="center">
+                                      {% if error %}
+                                        <div class="alert alert-danger"
+                                        <p><strong>Error:</strong> {{ error }}
+                                        </div>
+                                        {% endif %}
+                               <label hidden= " _loginFail "  type="password" for="password" class=" alert-danger">{{ _loginFail }}</label>
                             </div>
 
                             <div class="form-group">
@@ -47,6 +52,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </body>
 

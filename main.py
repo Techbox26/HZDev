@@ -43,7 +43,7 @@ _strongMark = ""
 _strongMarkSub = ""
 _userID = ""
 _totalComplete = ""
-
+_userType = ""
 
 
 
@@ -114,7 +114,7 @@ def showTableTest2():
    # conn.commit()
 
     # Pass variables to main page
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark, _weakMarkSub = _weakMarkSub, _weakMark = _weakMark, _strongMarkSub=_strongMarkSub, _strongMark = _strongMark)
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark, _weakMarkSub = _weakMarkSub, _weakMark = _weakMark, _strongMarkSub=_strongMarkSub, _strongMark = _strongMark, _userType = _userType)
 
 
 
@@ -305,6 +305,7 @@ def get_student():
 # Login to HZ
 @app.route('/userLogin', methods=['GET', 'POST'])
 def detail_check():
+    error = None
 # Retrieve details from login screen
     _inputEmail = request.form['username']
     _inputpass = request.form['password']
@@ -335,6 +336,8 @@ def detail_check():
     global _strongMark
     global _strongMarkSub
     global _totalComplete
+    global _userType
+
 
 
 
@@ -370,9 +373,13 @@ def detail_check():
     if _inputpass == _verifiypass:
         return showTableTest2()
     elif _inputpass == '':
+        error = 'Invalid username or password'
+#######################################  BAKE IN ERROR HANDLING
         return render_template('loginV3.html', error=error)
+########################################
     elif _inputEmail != _verifiypass:
-        return render_template('loginV3.html')
+        error = 'Invalid username or password'
+        return render_template('loginV3.html', error=error)
 
 #DETERMINE AVERAGE MARKS
     cursor.execute("SELECT AVG(finalmark) FROM SUBMISSION JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")

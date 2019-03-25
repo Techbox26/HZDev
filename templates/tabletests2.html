@@ -73,6 +73,7 @@
     <div class="Sidebar"><img alt id="logo" src="../static/images/logo.png""Test Logo">
         <!-- Control Buttons -->
         <div align="center" id="controlB">
+            <p>This is a {{ _userType }} account</p>
             <a class="btn btn-info btn-sm " href="login">Logout</a>
 
 
@@ -83,9 +84,10 @@
             </button>
         </div>
         <p align="middle"><img alt="Persons face" id="stuFace" src="../static/images/Blank-Person-Image.png"></p>
-        <!--Student Variables-->
-        <div align="center" id="studentVariables"
-        <h1 align="middle">{{ _userFName }} {{ _userLName }}</h1>
+        <!--Variables-->
+        <div align="center" id="studentVariables">
+
+        <h4 align="middle">{{ _userFName }} {{ _userLName }}</h4>
         <p align="middle">{{ _userEmail }}</p>
         <h5>Your Classes</h5>
         <p>{{ _userClass }}</p>
@@ -235,7 +237,7 @@
                                        type="assTitle">
                                 <!--Date-->
                                 <label class="sr-only" for="date">date</label>
-                                <input class="form-control" id="date" name="date" placeholder="Submission Date"
+                                <input class="form-control datepicker" id="date" name="date" placeholder="Submission Date"
                                        type="date">
                                 <!--task details-->
                                 <div class="modal-header">
