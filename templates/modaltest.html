@@ -9,7 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 
@@ -233,6 +232,7 @@
                        <div class="modal-footer">
                         <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">Close</button>
                         </div>
+                        <p id="userID2">{{ _userID }}</p>
                     </div>
                 </div>
             </div>
@@ -250,13 +250,15 @@
 
     <script>
 var ctx = document.getElementById('myChart').getContext('2d');
+var userID = document.getElementById("userID2").innerHTML;
+
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['TEST COL 1', 'TEST COL 2', userID],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Average Percentage',
+            data: [75, 55, userID],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -286,6 +288,7 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+window.alert("sometext");
 </script>
 
 
