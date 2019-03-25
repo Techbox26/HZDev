@@ -30,7 +30,7 @@
     <div class="AlertsText">
         <h4>Important Information</h4>
         <div align="left">It is advisable you work on your {{ _nextAssDueSub }} assignment as it is due very soon!</div>
-        <div align="left">Your next assignment is due on: {{ _nextAssDueDate }}</div>
+        <div align="center">Your next assignment is due on: <strong> {{ _nextAssDueDate }}</strong></div>
         <div align="center">
             <button type="button" id="userButton" class="btn btn-info btn-sm" data-toggle="modal"
                     data-target="#viewAssign">View Assignment
@@ -272,13 +272,128 @@
         </div>
     </div>
 
+    <!--Modal Box for class management-->
+        <!--ADDING AND REMOVING STUDENTS-->
+    <button class="btn btn-info btn-sm" data-target="#classManager" data-toggle="modal" id="userButton" type="button">
+        Class Manager
+    </button>
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManager">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Manager</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <div class="container">
+                        <h6>Remove Students from Classes</h6>
+                        <button class="btn btn-info btn-sm" data-target="#classManageRemoveName" data-toggle="modal" id="userButton" type="button">
+                        Remove Class Members
+                        </button>
+                             <button class="btn btn-info btn-sm" data-target="#classManageAddName" data-toggle="modal" id="userButton" type="button">
+                            Add Class Members
+                        </button>
+                        <br>
+                       <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManager">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!--Removing Students from classes-->
+         <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManageRemoveName">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Member Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <div class="container">
+                        <h5>Remove Students from Classes</h5>
+                        <h6>Enter Student and Class Details</h6>
+                        <form action="/classManageRemoveName" enctype="multipart/form-data" method="POST">
+                          <!--  ########################-->
+                            <!--Student Name-->
+                            <label class="sr-only" for="stuFname">Student First Name</label>
+                                <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
+                                       type="stuFname">
+                            <label class="sr-only" for="stuLname">Student Last Name</label>
+                                <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
+                                       type="stuLname">
+                            <label class="sr-only" for="className">Class Name</label>
+                                <input class="form-control" id="className" name="className" placeholder="Class Name"
+                                       type="className">
+                           <!-- ########################-->
+                            <!--Commit Data-->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-primary btn-sm" id="btnClassManageRemove" type="classManageRemove">Save Change
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">Close</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!--Adding Students to classes-->
+    <!-- Button to Open the Modal -->
 
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManageAddName">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-
-
-
+                <!-- Modal Header -->
+                <div class="modal-header"><
+                    <h4 class="modal-title">Class Member Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h5>Add Students to Classes</h5>
+                        <h6>Enter Student and Class Details</h6>
+                        <form action="/classManageAddName" enctype="multipart/form-data" method="POST">
+                            <!--Student Name-->
+                            <label class="sr-only" for="stuFname">Student First Name</label>
+                                <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
+                                       type="stuFname">
+                            <label class="sr-only" for="stuLname">Student Last Name</label>
+                                <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
+                                       type="stuLname">
+                            <label class="sr-only" for="className">Class Name</label>
+                                <input class="form-control" id="className" name="className" placeholder="Class Name"
+                                       type="className">
+                            <!-- ########################-->
+                            <!--Commit Data-->
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-info btn-sm" type="classManageAddName">Submit</button>
+                          <!--Commit Data-->
+                          <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageAddName">Close</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

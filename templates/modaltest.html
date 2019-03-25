@@ -8,6 +8,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+
     <link href="../static/test2.css" rel="stylesheet">
 </head>
 <body>
@@ -88,12 +93,12 @@
     <!--Modal Box for class management-->
     <!--Adding Students to classes-->
     <!-- Button to Open the Modal -->
-    <button class="btn btn-info btn-sm" data-target="#ClassManageAdd" data-toggle="modal" id="userButton" type="button">
+    <button class="btn btn-info btn-sm" data-target="#classManageAddName" data-toggle="modal" id="userButton" type="button">
         Class Management
     </button>
      <!--Modal Box for class management-->
     <!-- The Modal -->
-    <div class="modal fade" id="ClassManageAdd">
+    <div class="modal fade" id="classManageAddName">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -108,22 +113,25 @@
                     <!--LONGBLOB FILE UPLOAD-->
                     <div class="container">
                         <h6>Add Students to Classes</h6>
-                        <h6>Enter Class ID and Student ID</h6>
-                        <form action="/classManagement" enctype="multipart/form-data" method="POST">
-                               <!--User ID-->
-                                <label class="sr-only" for="userID">Student ID</label>
-                                <input class="form-control" id="userID" name="userID" placeholder="Student ID"
-                                       type="userID">
-                               <!--Class ID-->
-                                <label class="sr-only" for="classID">classID</label>
-                                <input class="form-control" id="classID" name="classID" placeholder="classID"
-                                       type="classID">
-
+                        <h6>Enter Student and Class Names</h6>
+                        <form action="/classManageAddName" enctype="multipart/form-data" method="POST">
+                            <!--  ########################-->
+                            <!--Student Name-->
+                            <label class="sr-only" for="stuFname">Student First Name</label>
+                                <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
+                                       type="stuFname">
+                            <label class="sr-only" for="stuLname">Student Last Name</label>
+                                <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
+                                       type="stuLname">
+                            <label class="sr-only" for="className">Class Name</label>
+                                <input class="form-control" id="className" name="className" placeholder="Class Name"
+                                       type="className">
+                           <!-- ########################-->
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-info btn-sm" type="ClassManageAdd">Submit</button>
+                        <button class="btn btn-info btn-sm" type="classManageAddName">Submit</button>
                         <!--Commit Data-->
-                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="ClassManageAdd">Close</button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageAddName">Close</button>
                         </form>
                         </div>
                     </div>
@@ -137,7 +145,7 @@
 
 
 
- <!--Modal Box for class management-->
+    <!--Modal Box for class management-->
     <!--Removing Students from classes-->
     <!-- Button to Open the Modal -->
     <button class="btn btn-info btn-sm" data-target="#classManageRemove" data-toggle="modal" id="userButton" type="button">
@@ -195,5 +203,96 @@
             </div>
         </div>
     </div>
+
+
+
+    <!--Modal Box for class management-->
+    <button class="btn btn-info btn-sm" data-target="#classManager" data-toggle="modal" id="userButton" type="button">
+        Class Manager
+    </button>
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManager">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Manager</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                    <div class="container">
+                        <h6>Remove Students from Classes</h6>
+                        <button class="btn btn-info btn-sm" data-target="#classManageRemove" data-toggle="modal" id="userButton" type="button">
+                        Remove Class Members
+                        </button>
+                         <button class="btn btn-info btn-sm" data-target="#ClassManageAdd" data-toggle="modal" id="userButton" type="button">
+                         Add Class Member
+                         </button>
+                        <br>
+                       <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- ## MAKING A GRAPH ## -->
+<div class="container">
+<canvas id="myChart" width="50" height="50"></canvas>
+</div>
+
+
+
+
+    <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
+
+
+
+
+
 </body>
 </html>

@@ -374,9 +374,7 @@ def detail_check():
         return showTableTest2()
     elif _inputpass == '':
         error = 'Invalid username or password'
-#######################################  BAKE IN ERROR HANDLING
         return render_template('loginV3.html', error=error)
-########################################
     elif _inputEmail != _verifiypass:
         error = 'Invalid username or password'
         return render_template('loginV3.html', error=error)
@@ -415,11 +413,10 @@ def detail_check():
 
 # ADD Students to class(es) VIA NAMES AND CLASS NAME
 #def return_user_details():
-@app.route('/classManagement', methods=['GET', 'POST'])
+@app.route('/classManageAddName', methods=['GET', 'POST'])
 def manageclasses(): # WORKS
     # GET DATA FROM FORMS
-    _userID = request.form['userID']
-    _classID = request.form['classID']
+
     _stuFname = request.form['stuFname']
     _stuLname = request.form['stuLname']
     _className = request.form['className']
