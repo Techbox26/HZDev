@@ -232,7 +232,16 @@
                        <div class="modal-footer">
                         <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">Close</button>
                         </div>
-                        <p id="userID2">{{ _userID }}</p>
+                        <div hidden="true>"
+                        <p id="userID">{{ _userID }}</p>
+                        <p id="subject1Name">{{ _userID }}</p>
+                        <p id="subject2Name">{{ _userID }}</p>
+                        <p id="subject3Name">{{ _userID }}</p>
+                        <p id="sub1Mark">{{ _userID }}</p>
+                        <p id="sub2Mark">{{ _userID }}</p>
+                        <p id="sub3Mark">{{ _userID }}</p>
+                    </div>
+
                     </div>
                 </div>
             </div>
@@ -240,25 +249,37 @@
     </div>
 
 
+
+
+
+
 <!-- ## MAKING A GRAPH ## -->
 <div class="container">
-<canvas id="myChart" width="50" height="50"></canvas>
+<canvas id="SubjectMarks" width="50" height="50"></canvas>
 </div>
 
 
 
 
-    <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var userID = document.getElementById("userID2").innerHTML;
+<script>
+var ctx = document.getElementById('SubjectMarks').getContext('2d');
+var _userID = document.getElementById("userID").innerHTML;
+var _subject1Name = document.getElementById("subject1Name").innerHTML;
+var _subject2Name = document.getElementById("subject2Name").innerHTML;
+var _subject3Name = document.getElementById("subject3Name").innerHTML;
+var _sub1Mark = document.getElementById("sub1Mark").innerHTML;
+var _sub2Mark = document.getElementById("sub2Mark").innerHTML;
+var _sub3Mark = document.getElementById("sub3Mark").innerHTML;
 
-var myChart = new Chart(ctx, {
+
+
+var SubjectMarks = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['TEST COL 1', 'TEST COL 2', userID],
+        labels: [_subject1Name, _subject2Name, _subject3Name],
         datasets: [{
             label: 'Average Percentage',
-            data: [75, 55, userID],
+            data: [_sub1Mark, _sub2Mark, _sub3Mark],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

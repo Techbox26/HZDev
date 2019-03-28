@@ -44,7 +44,7 @@ _strongMarkSub = ""
 _userID = ""
 _totalComplete = ""
 _userType = ""
-
+_graphClasses = ""
 
 
 
@@ -52,6 +52,10 @@ _userType = ""
 def main():
     return render_template('index.html')
 
+
+@app.route('/showModalTest')
+def showmodaltest():
+    return render_template('modaltest.html', _userID=1)
 
 @app.route('/showSignUp')
 def showSignUp():
@@ -72,28 +76,32 @@ def showTableTest2():
 
 # RETURN USER CLASS INFORMATION
     global _userClass
+    global _graphClasses
     # COUNT N.O OF CLASSES
     cursor.execute("SELECT COUNT(*) FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
     _userClassNo = cursor.fetchall()
     _userClassNo =(int((_userClassNo[0][0])*.5))
     print(_userClassNo)
-    cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY class.title;")
+   # cursor.execute("SELECT title FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + _userEmail + "'ORDER BY class.title;")
+    cursor.execute("SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '"+ str(_userID) + "' GROUP BY class.title;")
     _userClass = cursor.fetchall()
+    print(_userClass)
+    _graphClasses = _userClass
     # Return row 1 and 2 in unison
-    _userClass = (_userClass[1]) + (_userClass[2])
-    _userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+    _userClass = ((_userClass[0][0]) + " " + (_userClass[1][0]) + " " + (_userClass[2][0]))
+    #_userClass = (str(_userClass).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
     print(_userClass)
 
 ########################################
 # THIS DOESN'T WORK JUST YET
-    printedclasses = 0
-    while printedclasses <0:
-        print(_userClassNo[printedclasses])
-        _userClass = _userClass[0]
-        printedclasses = printedclasses + 1
-        print("CLASSES ATTENDED")
-        printedclasses = (str(printedclasses).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
-        print(printedclasses)
+  #  printedclasses = 0
+  #  while printedclasses <0:
+   #     print(_userClassNo[printedclasses])
+   #     _userClass = _userClass[0]
+   #     printedclasses = printedclasses + 1
+    #    print("CLASSES ATTENDED")
+    #    printedclasses = (str(printedclasses).replace('(', "").replace("'", "").replace(",", "").replace(")", ""))
+    #    print(printedclasses)
 ########################################
 
 # RETURN NEXT ASSIGNMENT DUE DETAILS
@@ -113,9 +121,35 @@ def showTableTest2():
    # cursor.execute("INSERT INTO classregister(users_userID, class_classID) values(2,2);")
    # conn.commit()
 
-    # Pass variables to main page
-    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark, _weakMarkSub = _weakMarkSub, _weakMark = _weakMark, _strongMarkSub=_strongMarkSub, _strongMark = _strongMark, _userType = _userType)
 
+########################################
+#POPULATE AND BUILD GRAPH DATA
+
+    #Determine 3 class details and marks
+    _class1 = (_graphClasses[0][0])
+    _class2 = (_graphClasses[1][0])
+    _class3 = (_graphClasses[2][0])
+    print(_class1, _class2, _class3)
+
+    #Determine class average grades for user to pass to graph
+    #class1
+    cursor.execute("SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND class.title = '" + _class1 + "';")
+    _class1Mark = cursor.fetchall()
+    _class1Mark = (_class1Mark[0][0])
+    print("Your average mark for " + _class1 + " is" + str(_class1Mark))
+    cursor.execute("SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND class.title = '" + _class2 + "';")
+    _class2Mark = cursor.fetchall()
+    _class2Mark = (_class2Mark[0][0])
+    print("Your average mark for " + _class2 + " is" + str(_class2Mark))
+    cursor.execute("SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND class.title = '" + _class3 + "';")
+    _class3Mark = cursor.fetchall()
+    _class3Mark = (_class3Mark[0][0])
+    print("Your average mark for " + _class3 + " is" + str(_class3Mark))
+
+
+
+ # Pass variables to main page
+    return render_template('tabletests2.html', _userFName = _userFName, _userLName = _userLName, _userEmail= _userEmail, _userClass= _userClass, _nextAssDueDate = _nextAssDueDate, _nextAssDueSub = _nextAssDueSub, _nextAssDueDetail = _nextAssDueDetail, _nextAssDueTask = _nextAssDueTask, _avgMark = _avgMark, _weakMarkSub = _weakMarkSub, _weakMark = _weakMark, _strongMarkSub=_strongMarkSub, _strongMark = _strongMark, _userType = _userType)
 
 
 @app.route('/modaltest')
