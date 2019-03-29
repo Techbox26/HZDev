@@ -55,30 +55,71 @@
     <div class="container">
     <canvas height="50" id="SubjectMarks" width="200"></canvas>
     </div>
-
     </div>
-
-
     <!--Graphs Content Section with useful info-->
     <div class="Graph"><h5>Graphs Here</h5>
         <div align="left">Your Average Mark Grade is:</div>
         <p>{{ _avgMark }}</p>
         <div align="left"><strong>Strongest Subject</strong></div>
-        <p>{{ _strongMarkSub }}%</p>
+        <p>{{ _strongMarkSub }}</p>
         <p> With an average mark of {{ _strongMark }}</p>
         <div align="left"><strong>Weakest Subject</strong></div>
-        <p>{{ _weakMarkSub }}%</p>
+        <p>{{ _weakMarkSub }}</p>
         <p> With an average mark of {{ _weakMark }}</p>
     </div>
-
+        <!------------------------------------>
+        <!--Table showing past due submissions-->
+        <!------------------------------------>
     <!--Current Assignment Content Section with useful info-->
     <div class="Title2"><strong>Assignments Still Due</strong></div>
     <div class="Assignments">
-        <small>Assignments here</small>
-    </div>
-    <div class="Title3"><strong>Previous Assignments</strong></div>
+    <table >
+         <tr>
+    <th>Title</th>
+    <th>Class</th>
+    <th>Grade</th>
+    <th>File</th>
+    </tr>
+                <!--Assignment 1 -->
+    <td>{{ _ass1name }}</td>
+    <td>{{ _ass1class }}</td>
+    <td>{{ _ass1mark }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+        </td>
+        </tr>
+        <!--Assignment 2 -->
+    <td>{{ _ass2name }}</td>
+    <td>{{ _ass2class }}</td>
+    <td>{{ _ass2mark }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+            </tr>
+    <tr>
 
-    <!--Table showing past 3 submissions-->
+        </td>
+        <!--Assignment 3 -->
+    <td>{{ _ass2name }}</td>
+    <td>{{ _ass2class }}</td>
+    <td>{{ _ass2mark }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+        </td>
+  </tr>
+    <tr>
+    </table>
+
+    </div>
+        <!------------------------------------>
+        <!--Table showing past 3 submissions-->
+        <!------------------------------------>
+    <div class="Title3"><strong>Previous Assignments</strong></div>
     <div class="Previous">
      <table class = "asssignment">
     <tr>

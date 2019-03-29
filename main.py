@@ -170,7 +170,7 @@ def showTableTest2():
 
     # cursor.execute("SELECT ")
     cursor.execute("SELECT * FROM user;")
-    # cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark ='';")
+    # cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark ='' ORDER BY assignment.duedate DESC LIMIT 3 ;")
     record = cursor.fetchall()
     # Assignment 1
     _ass1name = (record[0][0])
@@ -194,14 +194,77 @@ def showTableTest2():
     print(_ass3class)
     print(_ass3mark)
 
+    #######################################
+    # VIEW DETAILS OF PAST ASSIGNMENTS AND ADD BUTTONS ETC
+    # RUN SQL TO SELECT ALL DATA FOR 3 DUE ASSIGNMENTS
 
-# Pass variables to main page
-    return render_template('tabletests2.html',_ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
+    # cursor.execute("SELECT ")
+    cursor.execute("SELECT * FROM user;")
+    #cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark !='' ORDER BY assignment.duedate DESC LIMIT 3 ;")
+    record = cursor.fetchall()
+    # Assignment 1
+    _due1name = (record[0][0])
+    _due1class = (record[0][1])
+    _due1mark = (record[0][4])
+    print(_due1name)
+    print(_due1class)
+    print(_due1mark)
+    # Assignment 2
+    _due2name = (record[1][0])
+    _due2class = (record[1][1])
+    _due2mark = (record[1][4])
+    print(_due2name)
+    print(_due2class)
+    print(_due2mark)
+    # Assignment 3
+    _due3name = (record[2][0])
+    _due3class = (record[2][1])
+    _due3mark = (record[2][4])
+    print(_due3name)
+    print(_due3class)
+    print(_due3mark)
+
+    # DETERMINE SUBJECT STATS
+    # DETERMINE STRONGEST SUBJECT MARKS
+    cursor.execute(
+        "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "';")
+    _strongMark = cursor.fetchall()
+    _strongMarkSub = (_strongMark[0][1])
+    _strongMark = (_strongMark[0][0])
+    # DETERMINE AVERAGE MARKS
+    cursor.execute(
+        "SELECT CAST(AVG(finalmark) as int) FROM submission JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "';")
+    _avgMark = cursor.fetchall()
+    _avgMark = (_avgMark[0][0])
+    print(_avgMark)
+    # DETERMINE NUM OF COMPLETED ASSIGNMENTS WIHTIN PAST 9 MONTHS
+    cursor.execute(
+        "SELECT COUNT(*) FROM submission WHERE user_userID ='" + str(_userID) + "' AND submission.date > DATE_SUB(now(), INTERVAL 9 MONTH);")
+    _totalComplete = cursor.fetchall()
+    _totalComplete = (_totalComplete[0][0])
+    print(_totalComplete)
+    # DETERMINE STRONGEST SUBJECT MARKS
+    cursor.execute(
+        "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "';")
+    _strongMark = cursor.fetchall()
+    _strongMarkSub = (_strongMark[0][1])
+    _strongMark = (_strongMark[0][0])
+    # DETERMINE WEAKEST SUBJECT
+    cursor.execute(
+        "SELECT MIN(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "';")
+    _weakMark = cursor.fetchall()
+    _weakMarkSub = (_weakMark[0][1])
+    _weakMark = (_weakMark[0][0])
+
+
+    # Pass variables to main page
+    # _due3name = _due3name, _due3class = _due3class, _due3mark = _due3mark, _due2name = _due2name, _due2class = _due2class, _due2mark = _due2mark, _due1name = _due1name, _due1class = _due1class, _due1mark = _due1mark,
+    return render_template('tabletests2.html', _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
                        _class2Mark=_class2Mark, _class3Mark=_class3Mark, _userFName=_userFName, _userLName=_userLName,
                        _userEmail=_userEmail, _userClass=_userClass, _nextAssDueDate=_nextAssDueDate,
                        _nextAssDueSub=_nextAssDueSub, _nextAssDueDetail=_nextAssDueDetail,
                        _nextAssDueTask=_nextAssDueTask, _avgMark=_avgMark, _weakMarkSub=_weakMarkSub,
-                       _weakMark=_weakMark, _strongMarkSub=_strongMarkSub, _strongMark=_strongMark, _userType=_userType)
+                       _weakMark=_weakMark, _strongMarkSub=_strongMarkSub, _strongMark=_strongMark, _userType=_userType, _totalComplete=_totalComplete)
 
 
 @app.route('/modaltest')
@@ -446,6 +509,43 @@ def detail_check():
     elif _memberID == 3:
         _userType = 'parent'
 
+        # DETERMINE AVERAGE MARKS
+        cursor.execute(
+            "SELECT AVG(finalmark) FROM submission JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
+        _avgMark = cursor.fetchall()
+        print(_avgMark)
+        # DETERMINE NUM OF COMPLETED ASSIGNMENTS WIHTIN PAST 9 MONTHS
+        cursor.execute(
+            "SELECT COUNT(*) FROM submission WHERE user_userID ='" + _userID + "' AND finalmark <>'' AND submission.date > DATE_SUB(now(), INTERVAL 9 MONTH);")
+        _totalComplete = cursor.fetchall()
+        print(_totalComplete)
+
+        # DETERMINE STRONGEST SUBJECT MARKS
+        cursor.execute(
+            "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + _userID + "';")
+        _strongMark = cursor.fetchall()
+        _strongMarkSub = (_strongMark[0][1])
+        _strongMark = (_strongMark[0][0])
+
+        # DETERMINE WEAKEST SUBJECT
+        cursor.execute(
+            "SELECT MIN(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
+        _weakMark = cursor.fetchall()
+        _weakMarkSub = (_weakMark[0][1])
+        _weakMark = (_weakMark[0][0])
+
+        # Find list of all assignments without a mark assigned (INCOMPLETE SUBMISSIONS)
+        cursor.execute(
+            "SELECT inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission WHERE user_userID ='" + _userID + "' AND finalmark ='';")
+        _assignsDue = cursor.fetchall()
+        print(_assignsDue)
+
+        # Find list of all assignments with a mark assigned (COMPLETED SUBMISSIONS)
+        cursor.execute(
+            "SELECT inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission WHERE user_userID ='" + _userID + "' AND finalmark <>'';")
+        _assignsComplete = cursor.fetchall()
+        print(_assignsComplete)
+
     # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
         return showTableTest2()
@@ -456,42 +556,7 @@ def detail_check():
         error = 'Invalid username or password'
         return render_template('loginV3.html', error=error)
 
-    # DETERMINE AVERAGE MARKS
-    cursor.execute(
-        "SELECT AVG(finalmark) FROM SUBMISSION JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
-    _avgMark = cursor.fetchall()
-    print(_avgMark)
-    # DETERMIN NUM OF COMPLETED ASSIGNMENTS WIHTIN PAST 9 MONTHS
-    cursor.execute(
-        "SELECT COUNT(*) FROM submission WHERE user_userID ='" + _userID + "' AND finalmark <>'' AND submission.date > DATE_SUB(now(), INTERVAL 9 MONTH);")
-    _totalComplete = cursor.fetchall()
-    print(_totalComplete)
 
-    # DETERMINE STRONGEST SUBJECT MARKS
-    cursor.execute(
-        "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
-    _strongMark = cursor.fetchall()
-    _strongMarkSub = (_strongMark[0][1])
-    _strongMark = (_strongMark[0][0])
-
-    # DETERMINE WEAKEST SUBJECT
-    cursor.execute(
-        "SELECT MIN(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
-    _weakMark = cursor.fetchall()
-    _weakMarkSub = (_weakMark[0][1])
-    _weakMark = (_weakMark[0][0])
-
-    # Find list of all assignments without a mark assigned (INCOMPLETE SUBMISSIONS)
-    cursor.execute(
-        "SELECT inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission WHERE user_userID ='" + _userID + "' AND finalmark ='';")
-    _assignsDue = cursor.fetchall()
-    print(_assignsDue)
-
-    # Find list of all assignments with a mark assigned (COMPLETED SUBMISSIONS)
-    cursor.execute(
-        "SELECT inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission WHERE user_userID ='" + _userID + "' AND finalmark <>'';")
-    _assignsComplete = cursor.fetchall()
-    print(_assignsComplete)
 
 
 # ADD Students to class(es) VIA NAMES AND CLASS NAME
