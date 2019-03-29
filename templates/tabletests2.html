@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>HomeZone</title>
-    <link rel="shortcut icon" type="image/png" href="../static/images/icon.png">
+    <link href="../static/images/icon.png" rel="shortcut icon" type="image/png">
     <!--Code Begins Here!-->
-
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <!Css File>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
     <link href="../static/test2.css" rel="stylesheet">
-
     <!--Modal Stuff-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 </head>
 <body>
@@ -23,8 +22,8 @@
 <div class="grid-container">
     <!--Alerts Title Section with useful info-->
     <div class="Alerts">
-        <div id="alerthead" align="left">You have completed <strong>{{ _totalComplete }}</strong> within the last 9 months.</div><br>
-        <div id="alerthead" align="left">Your average mark is <strong>{{ _avgMark }} %</strong></div>
+        <div align="left" id="alerthead">You have completed <strong>{{ _totalComplete }}</strong> within the last 9 months.</div><br>
+        <div align="left" id="alerthead">Your average mark is <strong>{{ _avgMark }} %</strong></div>
     </div>
     <!--Alerts Content with useful info-->
     <div class="AlertsText">
@@ -32,18 +31,33 @@
         <div align="left">It is advisable you work on your {{ _nextAssDueSub }} assignment as it is due very soon!</div>
         <div align="center">Your next assignment is due on: <strong> {{ _nextAssDueDate }}</strong></div>
         <div align="center">
-            <button type="button" id="userButton" class="btn btn-info btn-sm" data-toggle="modal"
-                    data-target="#viewAssign">View Assignment
+            <br>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
             </button>
         </div>
     </div>
 
     <!--Graphs Title Section with useful info-->
     <div class="Title1">
-        <div align=left"><h5>Your Performance...Graphed</h5></div>
-        <div id="alerthead" align="left">Graph Here</div>
-        <div id="alerttext" align="center">ASSESSMENT FOR SUBJECT X</div>
+        <div align=left"><h5>Your Average Grades</h5></div>
+
+        <!--DETAILS NEEDED FOR GRAPHS HERE-->
+                <div hidden=hidden>
+                        <p id="subject1Name">{{ _class1 }}</p>
+                        <p id="subject2Name">{{ _class2 }}</p>
+                        <p id="subject3Name">{{ _class3 }}</p>
+                        <p id="sub1Mark">{{ _class1Mark }}</p>
+                        <p id="sub2Mark">{{ _class2Mark }}</p>
+                        <p id="sub3Mark">{{ _class3Mark }}</p>
+                    </div>
+        <!-- ## MAKING A GRAPH ## -->
+    <div class="container">
+    <canvas height="50" id="SubjectMarks" width="200"></canvas>
     </div>
+
+    </div>
+
 
     <!--Graphs Content Section with useful info-->
     <div class="Graph"><h5>Graphs Here</h5>
@@ -58,12 +72,57 @@
     </div>
 
     <!--Current Assignment Content Section with useful info-->
-    <div class="Title2"><strong>Assignments</strong></div>
+    <div class="Title2"><strong>Assignments Still Due</strong></div>
     <div class="Assignments">
         <small>Assignments here</small>
     </div>
-    <div class="Title3"><strong>Assignments</strong></div>
+    <div class="Title3"><strong>Previous Assignments</strong></div>
+
+    <!--Table showing past 3 submissions-->
     <div class="Previous">
+     <table class = "asssignment">
+    <tr>
+    <th>Title</th>
+    <th>Class</th>
+    <th>Grade</th>
+    <th>File</th>
+    </tr>
+    <tr>
+        <!--Assignment 1 -->
+    <td>{{ _ass1name }}</td>
+    <td>{{ _ass1class }}</td>
+    <td>{{ _ass1mark }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+        </td>
+        </tr>
+    <tr>
+        <!--Assignment 2 -->
+    <td>{{ _ass2name }}</td>
+    <td>{{ _ass2class }}</td>
+    <td>{{ _ass2mark }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+            </tr>
+    <tr>
+
+        </td>
+        <!--Assignment 3 -->
+    <td>{{ _ass2name }}</td>
+    <td>{{ _ass2class }}</td>
+    <td>{{ _ass2mark }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+        </td>
+  </tr>
+  <tr>
+</table>
         <small>Previous Assignments Here</small>
         <h3> {{student_data}}</h3>
     </div>
@@ -78,8 +137,8 @@
 
 
             <!--MODAL TEST BUTTON FOR ADDING NEW ASSIGNMENT-->
-            <button type="button" id="userButton" class="btn btn-info btn-sm" data-toggle="modal"
-                    data-target="#addAssign">
+            <button class="btn btn-info btn-sm" data-target="#addAssign" data-toggle="modal" id="userButton"
+                    type="button">
                 Add Assignment
             </button>
         </div>
@@ -119,43 +178,43 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Create New Assignment</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
                     </div>
 
                     <!-- Modal body -->
                     <div>
-                        <form class="form-assign" method="POST" action="addAssign">
+                        <form action="addAssign" class="form-assign" method="POST">
                             <!--Assessment Title-->
-                            <label for="assessTitle" class="sr-only">assessTitle</label>
-                            <input type="assessTitle" name="assessTitle" id="inputTitle" class="form-control"
-                                   placeholder="Assessment Title">
+                            <label class="sr-only" for="assessTitle">assessTitle</label>
+                            <input class="form-control" id="inputTitle" name="assessTitle" placeholder="Assessment Title"
+                                   type="assessTitle">
                             <!--Assessment Details-->
                             <div class="modal-header">
                                 <h6 class="modal-title">Assignment Details</h6>
                             </div>
-                            <label for="taskDetail" class="sr-only">taskDetail</label>
-                            <textarea type="taskDetail" name="taskDetail" id="inputDetail" class="form-control"
-                                      placeholder="Task Details" required autofocus rows="10">
+                            <label class="sr-only" for="taskDetail">taskDetail</label>
+                            <textarea autofocus class="form-control" id="inputDetail" name="taskDetail"
+                                      placeholder="Task Details" required rows="10" type="taskDetail">
                                </textarea>
                             <!--Due Date-->
-                            <label for="dueDate" class="sr-only">Due Date</label>
-                            <input type="due" name="dueDate" id="inputDue" class="form-control" placeholder="Due Date"
-                                   required autofocus>
+                            <label class="sr-only" for="dueDate">Due Date</label>
+                            <input autofocus class="form-control" id="inputDue" name="dueDate" placeholder="Due Date"
+                                   required type="due">
                             <!--Class ID-->
-                            <label for="classID" class="sr-only">classID</label>
-                            <input type="classID" name="classID" id="classID" class="form-control"
-                                   placeholder="Class ID">
+                            <label class="sr-only" for="classID">classID</label>
+                            <input class="form-control" id="classID" name="classID" placeholder="Class ID"
+                                   type="classID">
 
 
                     </div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button id="btnAddAssign" class="btn btn-info btn-primary btn-sm" type="addAssign">Save
+                        <button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addAssign">Save
                             Assignment
                         </button>
                         <!--Commit Data-->
-                        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Close</button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close</button>
                         </form>
                     </div>
 
@@ -173,7 +232,7 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">View {{ _nextAssDueSub }} assignment</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
                     </div>
                     <!-- Modal body -->
                     <div>
@@ -181,7 +240,7 @@
                         <p class="model-signature">{{ _nextAssDueTask }}</p>
                         <!--LINK TO ASSIGNMENT HELP FILE-->
                         <H6>Assignment Task Sheet:</H6>
-                        <a target="_blank" href="../static/images/logo.png">FILE</a>
+                        <a href="../static/images/logo.png" target="_blank">FILE</a>
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
                         <form action="/addSub" enctype="multipart/form-data" method="POST">
@@ -196,7 +255,7 @@
                             <div class="modal-footer">
                                 <p align="left">Remember! Research and ask a friend before asking me!</p>
                                 <div>
-                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Close
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
                                     </button>
                                 </div>
                             </div>
@@ -395,5 +454,55 @@
             </div>
         </div>
     </div>
+<script>
+var ctx = document.getElementById('SubjectMarks').getContext('2d');
+var _subject1Name = document.getElementById("subject1Name").innerHTML;
+var _subject2Name = document.getElementById("subject2Name").innerHTML;
+var _subject3Name = document.getElementById("subject3Name").innerHTML;
+var _sub1Mark = document.getElementById("sub1Mark").innerHTML;
+var _sub2Mark = document.getElementById("sub2Mark").innerHTML;
+var _sub3Mark = document.getElementById("sub3Mark").innerHTML;
+
+
+
+var SubjectMarks = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [_subject1Name, _subject2Name, _subject3Name],
+        datasets: [{
+            label: 'Average Percentage',
+            data: [_sub1Mark, _sub2Mark, _sub3Mark],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+window.alert("sometext");
+</script>
+
 </body>
 </html>

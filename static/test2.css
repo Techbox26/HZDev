@@ -1,14 +1,14 @@
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1.2fr 0.8fr 1fr;
-  grid-template-rows: 0.3fr 1fr 0.3fr 2fr 0.3fr 1fr 0.3fr 1fr;
+  grid-template-rows: 0.15fr 0.2fr 0.3fr 1fr 0.15fr 0.3fr 0.15fr 0.3fr;
   grid-template-areas: "Sidebar Alerts Alerts Alerts" "Sidebar AlertsText AlertsText AlertsText" "Sidebar Title1 Title1 Title1" "Sidebar Graph Graph Graph" "Sidebar Title2 Title2 Title2" "Sidebar Assignments Assignments Assignments" "Sidebar Title3 Title3 Title3" "Sidebar Previous Previous Previous";
-  padding: 1vw;
+    padding: 3vw;
 }
 
 .AlertsText{ grid-area: AlertsText;
 border: 1px solid black;
-    padding: 1vw;
+    padding: 3vw;
 }
 
 .Alerts { grid-area: Alerts;
@@ -16,25 +16,31 @@ border: 1px solid black;
 padding: 1vw;}
 
 .Title1 { grid-area: Title1;
-border: 1px solid black;}
+border: 1px solid black;
+padding: 1vw;}
 
 .Graph { grid-area: Graph;
-border: 1px solid black;}
+border: 1px solid black;
+padding: 1vw;}
 
 .Title2 { grid-area: Title2;
-border: 1px solid black;}
+border: 1px solid black;
+padding: 1vw;}
 
 .Assignments { grid-area: Assignments;
-border: 1px solid black;}
+border: 1px solid black;
+padding: 1vw;}
 
 .Title3 { grid-area: Title3;
-border: 1px solid black;}
+border: 1px solid black;
+padding: 1vw;}
 
 .Sidebar { grid-area: Sidebar;
 border: 1px solid black;}
 
 .Previous { grid-area: Previous;
-border: 1px solid black;}
+border: 1px solid black;
+padding: 1vw;}
 
 #logo {
   max-width: 25vw;
@@ -82,5 +88,20 @@ border: 1px solid black;}
     padding: 1vw;
 }
 
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 
 
