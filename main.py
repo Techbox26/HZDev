@@ -140,6 +140,10 @@ def showTableTest2():
     global _class1Mark
     global _class2Mark
     global _class3Mark
+    global _ass1file
+    global _ass2file
+    global _ass3file
+
     # Determine 3 class details and marks
     _class1 = (_graphClasses[0][0])
     _class2 = (_graphClasses[1][0])
@@ -196,6 +200,16 @@ def showTableTest2():
     print(_ass3name)
     print(_ass3class)
     print(_ass3mark)
+    # FIND FILE DETAIL TO LINK FILES TO BUTTONS
+    _ass1file = "EERD_v2.png"
+    #_ass1file = (record[0][2])
+    _ass2file = (record[1][2])
+    _ass3file = (record[2][2])
+    print("FILE NAMES")
+    print(_ass1file)
+    print(_ass2file)
+    print(_ass2file)
+
 
     #######################################
     # VIEW DETAILS OF PAST ASSIGNMENTS AND ADD BUTTONS ETC
@@ -262,7 +276,7 @@ def showTableTest2():
 
     # Pass variables to main page
     # _due3name = _due3name, _due3class = _due3class, _due3mark = _due3mark, _due2name = _due2name, _due2class = _due2class, _due2mark = _due2mark, _due1name = _due1name, _due1class = _due1class, _due1mark = _due1mark,
-    return render_template('tabletests2.html', _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
+    return render_template('tabletests2.html',  _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
                        _class2Mark=_class2Mark, _class3Mark=_class3Mark, _userFName=_userFName, _userLName=_userLName,
                        _userEmail=_userEmail, _userClass=_userClass, _nextAssDueDate=_nextAssDueDate,
                        _nextAssDueSub=_nextAssDueSub, _nextAssDueDetail=_nextAssDueDetail,
