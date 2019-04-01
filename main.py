@@ -7,8 +7,11 @@ import json
 import os
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-UPLOAD_PATH_ASSIGN = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Assignments'
-UPLOAD_PATH_SUBMISSION = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Submissions'
+#UPLOAD_PATH_ASSIGN = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Assignments'
+#UPLOAD_PATH_SUBMISSION = '/Users/Lenovo/PycharmProjects/HZdev/UPLOADS/Submissions'
+UPLOAD_PATH_ASSIGN = '/Users/Lenovo/PycharmProjects/HZdev/static/UPLOADS/Assignments'
+UPLOAD_PATH_SUBMISSION = '/Users/Lenovo/PycharmProjects/HZdev/static/UPLOADS/Submissions'
+
 
 app = Flask(__name__)
 mysql = MySQL()

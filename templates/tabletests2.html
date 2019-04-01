@@ -22,7 +22,7 @@
 <div class="grid-container">
     <!--Alerts Title Section with useful info-->
     <div class="Alerts">
-        <div align="left" id="alerthead">You have completed <strong>{{ _totalComplete }}</strong> within the last 9 months.</div><br>
+        <div align="left" id="alerthead">You have completed <strong>{{ _totalComplete }}</strong> assignments within the last 9 months.</div><br>
         <div align="left" id="alerthead">Your average mark is <strong>{{ _avgMark }} %</strong></div>
     </div>
     <!--Alerts Content with useful info-->
@@ -189,14 +189,16 @@
 
         <h4 align="middle">{{ _userFName }} {{ _userLName }}</h4>
         <p align="middle">{{ _userEmail }}</p>
+            <br>
         <h5>Your Classes</h5>
         <p>{{ _userClass }}</p>
-        <p>Class Y</p>
-        <p>Class Z</p>
+            <br>
         <h5>Next Assignment Due</h5>
+            <br>
         <p>Subject: {{ _nextAssDueSub }}</p>
         <p>Assignment: {{ _nextAssDueDetail }}</p>
         <p>Date Due: {{ _nextAssDueDate }}</p>
+            <br>
     </div>
     <!--Help Buttons-->
     <div align="center">
@@ -281,7 +283,7 @@
                         <p class="model-signature">{{ _nextAssDueTask }}</p>
                         <!--LINK TO ASSIGNMENT HELP FILE-->
                         <H6>Assignment Task Sheet:</H6>
-                        <a href="../static/images/logo.png" target="_blank">FILE</a>
+                        <a href="../static/UPLOADS/Assignments/EERD_v2.png" target="_blank">FILE</a>
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
                         <form action="/addSub" enctype="multipart/form-data" method="POST">
