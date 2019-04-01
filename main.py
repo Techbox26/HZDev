@@ -121,12 +121,13 @@ def showTableTest2():
     # MAYBE USE LOOPS TO COUNT NUMBER OF ELEMENTS TO ADD?
     global _nextAssDue
     cursor.execute(
-        "SELECT class.title, assTitle, dueDate, taskdetails FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
+        "SELECT class.title, assTitle, dueDate, taskdetails, assignmentFileName FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
     _nextAssDue = cursor.fetchall()
     _nextAssDueDate = (_nextAssDue[0][2])
     _nextAssDueDetail = (_nextAssDue[0][1])
     _nextAssDueSub = (_nextAssDue[0][0])
     _nextAssDueTask = (_nextAssDue[0][3])
+    _nextAssDueFile = (_nextAssDue[0][4])
     print(_nextAssDue)
 
     # cursor.execute("INSERT INTO classregister(users_userID, class_classID) values(2,2);")
@@ -276,7 +277,7 @@ def showTableTest2():
 
     # Pass variables to main page
     # _due3name = _due3name, _due3class = _due3class, _due3mark = _due3mark, _due2name = _due2name, _due2class = _due2class, _due2mark = _due2mark, _due1name = _due1name, _due1class = _due1class, _due1mark = _due1mark,
-    return render_template('tabletests2.html',  _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
+    return render_template('tabletests2.html', _nextAssDueFile=_nextAssDueFile, _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
                        _class2Mark=_class2Mark, _class3Mark=_class3Mark, _userFName=_userFName, _userLName=_userLName,
                        _userEmail=_userEmail, _userClass=_userClass, _nextAssDueDate=_nextAssDueDate,
                        _nextAssDueSub=_nextAssDueSub, _nextAssDueDetail=_nextAssDueDetail,

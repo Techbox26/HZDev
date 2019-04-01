@@ -243,10 +243,7 @@
                             <label class="sr-only" for="classID">classID</label>
                             <input class="form-control" id="classID" name="classID" placeholder="Class ID"
                                    type="classID">
-
-
                     </div>
-
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addAssign">Save
@@ -279,7 +276,7 @@
                         <p class="model-signature">{{ _nextAssDueTask }}</p>
                         <!--LINK TO ASSIGNMENT HELP FILE-->
                         <H6>Assignment Task Sheet:</H6>
-                        <a href="../static/UPLOADS/Assignments/EERD_v2.png" target="_blank">FILE</a>
+                        <a href="../static/UPLOADS/Assignments/{{ _nextAssDueFile }}" target="_blank">FILE</a>
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
                         <form action="/addSub" enctype="multipart/form-data" method="POST">
