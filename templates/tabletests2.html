@@ -75,43 +75,45 @@
     <div class="Assignments">
     <table >
          <tr>
-    <th>Title</th>
     <th>Class</th>
-    <th>Grade</th>
-    <th>File</th>
+    <th>Title</th>
+    <th>Task</th>
+    <th>Subject</th>
+             <th>Task</th>
+              <th>File</th>
     </tr>
-                <!--Assignment 1 -->
-    <td>{{ _ass1name }}</td>
-    <td>{{ _ass1class }}</td>
-    <td>{{ _ass1mark }}</td>
+        <!--Assignment 1 -->
+    <td>{{ _ass1DueName }}</td>
+    <td>{{ _ass1DueTitle }}</td>
+    <td>{{ _ass1DueDetail }}</td>
+    <td>    {{ _ass1DueSub }} </td>
+     <td>   {{ _ass1DueTask }}</td>
         <td>
-            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
-                    type="button">View Assignment
-            </button>
+            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _ass1DueFile }}" target="_blank">View Assignment
         </td>
         </tr>
         <!--Assignment 2 -->
-    <td>{{ _ass2name }}</td>
-    <td>{{ _ass2class }}</td>
-    <td>{{ _ass2mark }}</td>
+   <td>{{ _ass2DueName }}</td>
+    <td>{{ _ass2DueTitle }}</td>
+    <td>{{ _ass2DueDetail }}</td>
+    <td>    {{ _ass2DueSub }} </td>
+     <td>   {{ _ass2DueTask }}</td>
         <td>
-            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
-                    type="button">View Assignment
-            </button>
-            </tr>
-    <tr>
+            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _ass2DueFile }}" target="_blank">View Assignment
+        </td>
+        </tr>
 
         </td>
         <!--Assignment 3 -->
-    <td>{{ _ass2name }}</td>
-    <td>{{ _ass2class }}</td>
-    <td>{{ _ass2mark }}</td>
+   <td>{{ _ass3DueName }}</td>
+    <td>{{ _ass3DueTitle }}</td>
+    <td>{{ _ass3DueDetail }}</td>
+    <td>    {{ _ass3DueSub }} </td>
+     <td>   {{ _ass3DueTask }}</td>
         <td>
-            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
-                    type="button">View Assignment
-            </button>
+            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _ass3DueFile }}" target="_blank">View Assignment
         </td>
-  </tr>
+        </tr>
     <tr>
     </table>
 
@@ -130,32 +132,32 @@
     </tr>
     <tr>
         <!--Assignment 1 -->
-    <td>{{ _ass1name }}</td>
+     <td>{{ _ass1name }}</td>
     <td>{{ _ass1class }}</td>
     <td>{{ _ass1mark }}</td>
         <td>
-            <a class ="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass1file }}" target="_blank">View Submission</a>
+           <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass1file }}" target="_blank">View Submission
+            </a>
         </td>
-        </tr>
     <tr>
         <!--Assignment 2 -->
     <td>{{ _ass2name }}</td>
     <td>{{ _ass2class }}</td>
     <td>{{ _ass2mark }}</td>
         <td>
-            <a class ="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass2file }}" target="_blank">View Submission</a>
-
+           <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass2file }}" target="_blank">View Submission
+            </a>
             </tr>
     <tr>
 
         </td>
         <!--Assignment 3 -->
-    <td>{{ _ass2name }}</td>
-    <td>{{ _ass2class }}</td>
-    <td>{{ _ass2mark }}</td>
+    <td>{{ _ass3name }}</td>
+    <td>{{ _ass3class }}</td>
+    <td>{{ _ass3mark }}</td>
         <td>
-            <a class ="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass3file }}" target="_blank">View Submission</a>
-
+            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass3file }}" target="_blank">View Submission
+            </a>
         </td>
   </tr>
   <tr>

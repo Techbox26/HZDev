@@ -177,10 +177,11 @@ def showTableTest2():
     # RUN SQL TO SELECT ALL DATA FOR PAST 3 ASSIGNMENTS
 
     # cursor.execute("SELECT ")
-    cursor.execute("SELECT * FROM user;")
-    # cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark ='' ORDER BY assignment.duedate DESC LIMIT 3 ;")
+    #cursor.execute("SELECT * FROM user;")
+    cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark !='' ORDER BY assignment.dueDate DESC LIMIT 3 ;")
     record = cursor.fetchall()
     # Assignment 1
+
     _ass1name = (record[0][0])
     _ass1class = (record[0][1])
     _ass1mark = (record[0][4])
@@ -198,24 +199,32 @@ def showTableTest2():
     _ass3name = (record[2][0])
     _ass3class = (record[2][1])
     _ass3mark = (record[2][4])
+
     print(_ass3name)
     print(_ass3class)
     print(_ass3mark)
+
     # FIND FILE DETAIL TO LINK FILES TO BUTTONS
     _ass1file = "EERD_v2.png"
-    #_ass1file = (record[0][2])
+    # _ass1file = (record[0][2])
     _ass2file = (record[1][2])
     _ass3file = (record[2][2])
     print("FILE NAMES")
     print(_ass1file)
     print(_ass2file)
-    print(_ass2file)
+    print(_ass3file)
+
+
+
+
+
+
 
 
     #######################################
-    # VIEW DETAILS OF PAST ASSIGNMENTS AND ADD BUTTONS ETC
+    # VIEW DETAILS OF DUE ASSIGNMENTS AND ADD BUTTONS ETC
     # RUN SQL TO SELECT ALL DATA FOR 3 DUE ASSIGNMENTS
-
+    # DUE ASSIGNMENTS - ONES THAT ARE INCOMPLETE
     # cursor.execute("SELECT ")
     cursor.execute("SELECT * FROM user;")
     #cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark !='' ORDER BY assignment.duedate DESC LIMIT 3 ;")
@@ -224,6 +233,15 @@ def showTableTest2():
     _due1name = (record[0][0])
     _due1class = (record[0][1])
     _due1mark = (record[0][4])
+
+    #_ass1DueName
+    #_ass1DueTitle
+    #_ass1DueDetail
+    #_ass1DueSub
+    #_ass1DueTask
+    #_ass1DueFile
+
+
     print(_due1name)
     print(_due1class)
     print(_due1mark)
@@ -231,6 +249,15 @@ def showTableTest2():
     _due2name = (record[1][0])
     _due2class = (record[1][1])
     _due2mark = (record[1][4])
+
+    #_ass1DueName
+    #_ass1DueTitle
+    #_ass1DueDetail
+    #_ass1DueSub
+    #_ass1DueTask
+    #_ass1DueFile
+
+
     print(_due2name)
     print(_due2class)
     print(_due2mark)
@@ -238,9 +265,20 @@ def showTableTest2():
     _due3name = (record[2][0])
     _due3class = (record[2][1])
     _due3mark = (record[2][4])
+
+    #_ass1DueName
+    #_ass1DueTitle
+    #_ass1DueDetail
+    #_ass1DueSub
+    #_ass1DueTask
+    #_ass1DueFile
+
+
     print(_due3name)
     print(_due3class)
     print(_due3mark)
+
+
 
     # DETERMINE SUBJECT STATS
     # DETERMINE STRONGEST SUBJECT MARKS
@@ -263,16 +301,20 @@ def showTableTest2():
     print(_totalComplete)
     # DETERMINE STRONGEST SUBJECT MARKS
     cursor.execute(
-        "SELECT MAX(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "';")
+        "SELECT finalmark, class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "' ORDER BY finalmark DESC;")
     _strongMark = cursor.fetchall()
     _strongMarkSub = (_strongMark[0][1])
+    print(_strongMarkSub)
     _strongMark = (_strongMark[0][0])
     # DETERMINE WEAKEST SUBJECT
     cursor.execute(
         "SELECT MIN(finalmark), class.title FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE user.userID='" + str(_userID) + "';")
     _weakMark = cursor.fetchall()
     _weakMarkSub = (_weakMark[0][1])
+    print(_weakMarkSub)
+    print("WEAKEST MARK")
     _weakMark = (_weakMark[0][0])
+    print(_weakMark)
 
 
     # Pass variables to main page
