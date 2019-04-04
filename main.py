@@ -78,6 +78,64 @@ def showTableTest():
     return render_template('tabletests.html')
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Navigate to teachers landing
+@app.route('/showTeachTables')
+def showteachtables():
+    print('ENTERED TEACHER ACCOUNT')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return render_template('teachtables.html',_userType=_userType, _userFName=_userFName,_userLName=_userLName,_userEmail=_userEmail)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # pass all details to landing page to build screen correctly STUDENTS ONLY
 @app.route('/tabletests2')
 def showTableTest2():
@@ -327,7 +385,6 @@ def showTableTest2():
                        _nextAssDueSub=_nextAssDueSub, _nextAssDueDetail=_nextAssDueDetail,
                        _nextAssDueTask=_nextAssDueTask, _avgMark=_avgMark, _weakMarkSub=_weakMarkSub,
                        _weakMark=_weakMark, _strongMarkSub=_strongMarkSub, _strongMark=_strongMark, _userType=_userType, _totalComplete=_totalComplete)
-
 
 @app.route('/modaltest')
 def showModalTest():
@@ -610,13 +667,43 @@ def detail_check():
 
     # DETERMINE IF PASSWORD MATCHES PASSWORD STORED IN DATABASE
     if _inputpass == _verifiypass:
-        return showTableTest2()
+        if _memberID == 1:
+            return showTableTest2()
+        elif _memberID == 2:
+            return showteachtables()
+        elif _memberID == 3:
+            error = 'Invalid username or password'
+            return render_template('loginV3.html', error=error)
     elif _inputpass == '':
         error = 'Invalid username or password'
         return render_template('loginV3.html', error=error)
     elif _inputEmail != _verifiypass:
         error = 'Invalid username or password'
         return render_template('loginV3.html', error=error)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -670,12 +757,30 @@ def manageClassRemoveName():  # WORKS
     return render_template('tabletests2.html')
 
 
+# REMOVE students from classes VIA STUDENT NAME AND CLASS TITLE
+@app.route('/passManage', methods=['GET', 'POST'])
+def passManage():  # WORKS
+    # GET DATA FROM FORMS
+    _stuFname = request.form['stuFname']
+    _stuLname = request.form['stuLname']
+    _stuEmail = request.form['stuEmail']
+    _stuNewPass = request.form['stuNewPass']
+    print(_stuNewPass)
+    # GET STUDENT DATA FROM FORMS
+    cursor.execute(
+        "UPDATE user SET user.password = 'Example' WHERE user.email = 'a';")
+    print("Successfully updated password")
+    #cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.email = ('" + _stuEmail + "');")
+    #cursor.execute("UPDATE `project`.`user` SET `password` = '(" + _stuNewPass + "')' WHERE `lname` = '('" + _stuLname + "')' AND `fname` = '('" + _stuFname + "' )' AND `email` = '('" + _stuEmail + "' )';")
+    conn.commit()
+    return render_template('teachtables.html')
+
+
 # TEACHERS VARIABLE SETTING
 # def teachervar():
 
 @app.route('/addSubmission2', methods=['GET', 'POST'])
 #THIS WORKS FOR NEXT DUE ONLY
-
 def addSubmission2():
     global _userID
     global _nextAssDueID
@@ -780,6 +885,10 @@ def addSubmission4():
             print(data)
             conn.commit()
     return render_template('tabletests2.html')
+
+
+
+
 
 
 if __name__ == "__main__":
