@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomeZone</title>
+    <link href="../static/images/icon.png" rel="shortcut icon" type="image/png">
+    <!--Code Begins Here!-->
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!Css File>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <link href="../static/test2.css" rel="stylesheet">
+    <!--Modal Stuff-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+</head>
+<body>
+
+<div class="grid-container">
+    <!--Alerts Title Section with useful info-->
+    <div class="Alerts">
+        <div align="left" id="alerthead">You have completed <strong>{{ _totalComplete }}</strong> assignments within the last 9 months.</div><br>
+        <div align="left" id="alerthead">Your average mark is <strong>{{ _avgMark }} %</strong></div>
+    </div>
+    <!--Alerts Content with useful info-->
+    <div class="AlertsText">
+        <h4>Important Information</h4>
+        <div align="left">It is advisable you work on your {{ _nextAssDueSub }} assignment as it is due very soon!</div>
+        <div align="center">Your next assignment is due on: <strong> {{ _nextAssDueDate }}</strong></div>
+        <div align="center">
+            <br>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button>
+        </div>
+    </div>
+
+    <!--Graphs Title Section with useful info-->
+    <div class="Title1">
+        <div align=left"><h5>Your Average Grades</h5></div>
+
+        <!--DETAILS NEEDED FOR GRAPHS HERE-->
+                <div hidden=hidden>
+                        <p id="subject1Name">{{ _class1 }}</p>
+                        <p id="subject2Name">{{ _class2 }}</p>
+                        <p id="subject3Name">{{ _class3 }}</p>
+                        <p id="sub1Mark">{{ _class1Mark }}</p>
+                        <p id="sub2Mark">{{ _class2Mark }}</p>
+                        <p id="sub3Mark">{{ _class3Mark }}</p>
+                    </div>
+        <!-- ## MAKING A GRAPH ## -->
+    <div class="container">
+    <canvas height="50" id="SubjectMarks" width="200"></canvas>
+    </div>
+    </div>
+    <!--Graphs Content Section with useful info-->
+    <div class="Graph"><h5>Graphs Here</h5>
+        <div align="left">Your Average Mark Grade is:</div>
+        <p>{{ _avgMark }}</p>
+        <div align="left"><strong>Strongest Subject</strong></div>
+        <p>{{ _strongMarkSub }}</p>
+        <p> With an average mark of {{ _strongMark }}</p>
+        <div align="left"><strong>Weakest Subject</strong></div>
+        <p>{{ _weakMarkSub }}</p>
+        <p> With an average mark of {{ _weakMark }}</p>
+    </div>
+        <!------------------------------------>
+        <!--Table showing due submissions-->
+        <!------------------------------------>
+    <!--Current Assignment Content Section with useful info-->
+    <div class="Title2"><strong>Assignments Still Due</strong></div>
+    <div class="Assignments">
+    <table >
+         <tr>
+    <th>Title</th>
+    <th>Task</th>
+    <th>Subject</th>
+             <th>Due</th>
+              <th>File</th>
+    </tr>
+        <!--Assignment 1 -->
+    <td>{{ _ass1DueTitle }}</td>
+    <td>{{ _ass1DueDetail }}</td>
+    <td>    {{ _ass1DueSub }} </td>
+     <td>   {{ _ass1DueDate }}</td>
+        <td>
+             <button class="btn btn-info btn-sm" data-target="#viewAssign1" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button></td>
+        </tr>
+        <!--Assignment 2 -->
+    <td>{{ _ass2DueTitle }}</td>
+    <td>{{ _ass2DueDetail }}</td>
+    <td>    {{ _ass2DueSub }} </td>
+     <td>   {{ _ass2DueDate }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign2" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button></td>
+        </tr>
+
+        </td>
+        <!--Assignment 3 -->
+    <td>{{ _ass3DueTitle }}</td>
+    <td>{{ _ass3DueDetail }}</td>
+    <td>    {{ _ass3DueSub }} </td>
+     <td>   {{ _ass3DueDate }}</td>
+        <td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign3" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button></td>
+        </tr>
+    <tr>
+    </table>
+
+    </div>
+        <!------------------------------------>
+        <!--Table showing past 3 submissions-->
+        <!------------------------------------>
+    <div class="Title3"><strong>Previous Assignments</strong></div>
+    <div class="Previous">
+     <table class = "asssignment">
+    <tr>
+    <th>Title</th>
+    <th>Class</th>
+    <th>Grade</th>
+    <th>View</th>
+    </tr>
+    <tr>
+        <!--Assignment 1 -->
+     <td>{{ _ass1name }}</td>
+    <td>{{ _ass1class }}</td>
+    <td>{{ _ass1mark }}</td>
+        <td>
+           <button class="btn btn-info btn-sm" data-target="#viewPast1" data-toggle="modal" id="userButton"
+                    type="button">View
+            </button>
+        </td>
+    <tr>
+        <!--Assignment 2 -->
+    <td>{{ _ass2name }}</td>
+    <td>{{ _ass2class }}</td>
+    <td>{{ _ass2mark }}</td>
+        <td>
+           <button class="btn btn-info btn-sm" data-target="#viewPast2" data-toggle="modal" id="userButton"
+                    type="button">View
+            </button>
+        </td>
+    <tr>
+        <!--Assignment 3 -->
+    <td>{{ _ass3name }}</td>
+    <td>{{ _ass3class }}</td>
+    <td>{{ _ass3mark }}</td>
+        <td>
+           <button class="btn btn-info btn-sm" data-target="#viewPast3" data-toggle="modal" id="userButton"
+                    type="button">View
+            </button>
+        </td>
+  </tr>
+  <tr>
+</table>
+    </div>
+
+
+    <!--Sidebar items here-->
+    <div class="Sidebar"><img alt id="logo" src="../static/images/logo.png""Test Logo">
+        <!-- Control Buttons -->
+        <div align="center" id="controlB">
+            <p>This is a {{ _userType }} account</p>
+            <a class="btn btn-info btn-sm " href="login">Logout</a>
+
+
+            <!--MODAL TEST BUTTON FOR ADDING NEW ASSIGNMENT-->
+            <button class="btn btn-info btn-sm" data-target="#addAssign" data-toggle="modal" id="userButton"
+                    type="button">
+                Add Assignment
+            </button>
+        </div>
+        <p align="middle"><img alt="Persons face" id="stuFace" src="../static/images/Blank-Person-Image.png"></p>
+        <!--Variables-->
+        <div align="center" id="studentVariables">
+
+        <h4 align="middle">{{ _userFName }} {{ _userLName }}</h4>
+        <p align="middle">{{ _userEmail }}</p>
+            <br>
+        <h5>Your Classes</h5>
+        <p>{{ _userClass }}</p>
+            <br>
+        <h5>Next Assignment Due</h5>
+            <br>
+        <p>Subject: {{ _nextAssDueSub }}</p>
+        <p>Assignment: {{ _nextAssDueDetail }}</p>
+        <p>Date Due: {{ _nextAssDueDate }}</p>
+            <br>
+    </div>
+    <!--Help Buttons-->
+    <div align="center">
+        <div class="inline-block"><a href="login"><img alt="Exit" height="32" src="../static/images/exit.png"
+                                                       title="Exit" width="32"></a>
+            <div class="inline-block"><a href="login"><img alt="Help" height="32" src="../static/images/question.png"
+                                                           title="Help" width="32"></a>
+                <div class="inline-block"><a href="login"><img alt="Gear" height="32" src="../static/images/gear.png"
+                                                               title="Gear" width="32"></a>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal Box for adding new assignments-->
+        <!-- The Modal -->
+        <div class="modal fade" id="addAssign2">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Create New Assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div>
+                        <form action="addAssign" class="form-assign" method="POST">
+                            <!--Assessment Title-->
+                            <label class="sr-only" for="assessTitle">assessTitle</label>
+                            <input class="form-control" id="inputTitle" name="assessTitle" placeholder="Assessment Title"
+                                   type="assessTitle">
+                            <!--Assessment Details-->
+                            <div class="modal-header">
+                                <h6 class="modal-title">Assignment Details</h6>
+                            </div>
+                            <label class="sr-only" for="taskDetail">taskDetail</label>
+                            <textarea autofocus class="form-control" id="inputDetail" name="taskDetail"
+                                      placeholder="Task Details" required rows="10" type="taskDetail">
+                               </textarea>
+                            <!--Due Date-->
+                            <label class="sr-only" for="dueDate">Due Date</label>
+                            <input autofocus class="form-control" id="inputDue" name="dueDate" placeholder="Due Date"
+                                   required type="due">
+                            <!--Class ID-->
+                            <label class="sr-only" for="classID">classID</label>
+                            <input class="form-control" id="classID" name="classID" placeholder="Class ID"
+                                   type="classID">
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addAssign">Save
+                            Assignment
+                        </button>
+                        <!--Commit Data-->
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--Modal Box for viewing next due assignments-->
+        <!-- The Modal -->
+        <div class="modal fade" id="viewAssign">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _nextAssDueSub }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _nextAssDueTask }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _nextAssDueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+         <!--Modal Box for adding new assignments WITH FILE UPLOAD ENABLED-->
+    <!-- The Modal -->
+    <div class="modal fade" id="addAssign">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Create New Assignment</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div>
+
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h6>File Input</h6>
+                        <form action="/addSub" enctype="multipart/form-data" method="POST">
+                            <div class="form-group">
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Assignment title-->
+                                <label class="sr-only" for="assTitle">assTitle</label>
+                                <input class="form-control" id="assTitle" name="assTitle" placeholder="Assignment Title"
+                                       type="assTitle">
+                                <!--Date-->
+                                <label class="sr-only" for="date">date</label>
+                                <input class="form-control datepicker" id="date" name="date" placeholder="Submission Date"
+                                       type="date">
+                                <!--task details-->
+                                <div class="modal-header">
+                                     <h6 class="modal-title">Task Details</h6>
+                                </div>
+                                <label class="sr-only" for="taskDetails">taskDetails</label>
+                                <textarea autofocus  class="form-control" id="taskDetails" name="taskDetails" placeholder="taskDetails" required rows ="10" type="taskDetails">
+                                </textarea>
+                               <!--User ID-->
+                                <label class="sr-only" for="classID">classID</label>
+                                <input class="form-control" id="classID" name="classID" placeholder="classID"
+                                       type="classID">
+                            </div>
+                            <!--<button class="btn btn-default" type="btnAddSub">Submit</button>-->
+                            <button class="btn btn-info btn-primary btn-sm" id="btnAddSub" type="addSub">Save Submission
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <!--<button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addSub">Save Submission
+                    </button>
+                    <!--Commit Data-->
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="addSub">Close</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Modal Box for class management-->
+        <!--ADDING AND REMOVING STUDENTS-->
+    <button class="btn btn-info btn-sm" data-target="#classManager" data-toggle="modal" id="userButton" type="button">
+        Class Manager
+    </button>
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManager">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Manager</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <div class="container">
+                        <h6>Remove Students from Classes</h6>
+                        <button class="btn btn-info btn-sm" data-target="#classManageRemoveName" data-toggle="modal" id="userButton" type="button">
+                        Remove Class Members
+                        </button>
+                             <button class="btn btn-info btn-sm" data-target="#classManageAddName" data-toggle="modal" id="userButton" type="button">
+                            Add Class Members
+                        </button>
+                        <br>
+                       <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManager">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Removing Students from classes-->
+         <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManageRemoveName">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Class Member Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <div class="container">
+                        <h5>Remove Students from Classes</h5>
+                        <h6>Enter Student and Class Details</h6>
+                        <form action="/classManageRemoveName" enctype="multipart/form-data" method="POST">
+                          <!--  ########################-->
+                            <!--Student Name-->
+                            <label class="sr-only" for="stuFname">Student First Name</label>
+                                <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
+                                       type="stuFname">
+                            <label class="sr-only" for="stuLname">Student Last Name</label>
+                                <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
+                                       type="stuLname">
+                            <label class="sr-only" for="className">Class Name</label>
+                                <input class="form-control" id="className" name="className" placeholder="Class Name"
+                                       type="className">
+                           <!-- ########################-->
+                            <!--Commit Data-->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-primary btn-sm" id="btnClassManageRemove" type="classManageRemove">Save Change
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">Close</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Adding Students to classes-->
+    <!-- Button to Open the Modal -->
+
+     <!--Modal Box for class management-->
+    <!-- The Modal -->
+    <div class="modal fade" id="classManageAddName">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header"><
+                    <h4 class="modal-title">Class Member Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <!--LONGBLOB FILE UPLOAD-->
+                    <div class="container">
+                        <h5>Add Students to Classes</h5>
+                        <h6>Enter Student and Class Details</h6>
+                        <form action="/classManageAddName" enctype="multipart/form-data" method="POST">
+                            <!--Student Name-->
+                            <label class="sr-only" for="stuFname">Student First Name</label>
+                                <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
+                                       type="stuFname">
+                            <label class="sr-only" for="stuLname">Student Last Name</label>
+                                <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
+                                       type="stuLname">
+                            <label class="sr-only" for="className">Class Name</label>
+                                <input class="form-control" id="className" name="className" placeholder="Class Name"
+                                       type="className">
+                            <!-- ########################-->
+                            <!--Commit Data-->
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-info btn-sm" type="classManageAddName">Submit</button>
+                          <!--Commit Data-->
+                          <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageAddName">Close</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--VIEWING ASSIGNMENTS THAT STILL NEED COMPLETING -->
+    <!--#################################################
+    <! --Modal Box for viewing next due assignments------->
+
+
+    <!-- The Modal -->
+        <div class="modal fade" id="viewAssign1" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass1DueClass }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass1DueDetail }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _ass1DueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="viewAssign2" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass2DueClass }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass2DueDetail }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _ass2DueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission3" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission3" type="addSubmissio32">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="viewAssign3" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass3DueClass }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass3DueDetail }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _ass3DueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission4" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission4" type="addSubmission4">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <!--################################################# -->
+    <!--################################################# -->
+    <!--################################################# -->
+         <div class="modal fade" id="viewPast3" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass3class }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass3name }}</p>
+                        <H6>Assignment Mark:</H6>
+                        <p class="model-signature">{{ _ass3mark }}</p>
+                         <H6>Teacher Comment:</H6>
+                        <p class="model-signature">{{ _ass3Comm }}</p>
+                        <H6>Submission</H6>
+                        <div>
+                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass3file }}" target="_blank">View Submission</a>
+                                </div>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+
+                </div>
+            </div>
+         </div>
+             <div class="modal fade" id="viewPast2" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass2class }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass2name }}</p>
+                        <H6>Assignment Mark:</H6>
+                        <p class="model-signature">{{ _ass2mark }}</p>
+                         <H6>Teacher Comment:</H6>
+                        <p class="model-signature">{{ _ass2Comm }}</p>
+                        <H6>Submission</H6>
+                        <div>
+                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass2file }}" target="_blank">View Submission</a>
+                                </div>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                     </div>
+                </div>
+            </div>
+      <div class="modal fade" id="viewPast1" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass1class }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass1name }}</p>
+                        <H6>Assignment Mark:</H6>
+                        <p class="model-signature">{{ _ass1mark }}</p>
+                         <H6>Teacher Comment:</H6>
+                        <p class="model-signature">{{ _ass1Comm }}</p>
+                        <H6>Submission</H6>
+                        <div>
+                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass1file }}" target="_blank">View Submission</a>
+                                </div>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+
+
+<script>
+var ctx = document.getElementById('SubjectMarks').getContext('2d');
+var _subject1Name = document.getElementById("subject1Name").innerHTML;
+var _subject2Name = document.getElementById("subject2Name").innerHTML;
+var _subject3Name = document.getElementById("subject3Name").innerHTML;
+var _sub1Mark = document.getElementById("sub1Mark").innerHTML;
+var _sub2Mark = document.getElementById("sub2Mark").innerHTML;
+var _sub3Mark = document.getElementById("sub3Mark").innerHTML;
+
+
+
+var SubjectMarks = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [_subject1Name, _subject2Name, _subject3Name],
+        datasets: [{
+            label: 'Average Percentage',
+            data: [_sub1Mark, _sub2Mark, _sub3Mark],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+window.alert("sometext");
+</script>
+
+</body>
+</html>
