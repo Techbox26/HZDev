@@ -68,51 +68,50 @@
         <p> With an average mark of {{ _weakMark }}</p>
     </div>
         <!------------------------------------>
-        <!--Table showing past due submissions-->
+        <!--Table showing due submissions-->
         <!------------------------------------>
     <!--Current Assignment Content Section with useful info-->
     <div class="Title2"><strong>Assignments Still Due</strong></div>
     <div class="Assignments">
     <table >
          <tr>
-    <th>Class</th>
     <th>Title</th>
     <th>Task</th>
     <th>Subject</th>
-             <th>Task</th>
+             <th>Due</th>
               <th>File</th>
     </tr>
         <!--Assignment 1 -->
-    <td>{{ _ass1DueName }}</td>
     <td>{{ _ass1DueTitle }}</td>
     <td>{{ _ass1DueDetail }}</td>
     <td>    {{ _ass1DueSub }} </td>
-     <td>   {{ _ass1DueTask }}</td>
+     <td>   {{ _ass1DueDate }}</td>
         <td>
-            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _ass1DueFile }}" target="_blank">View Assignment
-        </td>
+             <button class="btn btn-info btn-sm" data-target="#viewAssign1" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button></td>
         </tr>
         <!--Assignment 2 -->
-   <td>{{ _ass2DueName }}</td>
     <td>{{ _ass2DueTitle }}</td>
     <td>{{ _ass2DueDetail }}</td>
     <td>    {{ _ass2DueSub }} </td>
-     <td>   {{ _ass2DueTask }}</td>
+     <td>   {{ _ass2DueDate }}</td>
         <td>
-            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _ass2DueFile }}" target="_blank">View Assignment
-        </td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign2" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button></td>
         </tr>
 
         </td>
         <!--Assignment 3 -->
-   <td>{{ _ass3DueName }}</td>
     <td>{{ _ass3DueTitle }}</td>
     <td>{{ _ass3DueDetail }}</td>
     <td>    {{ _ass3DueSub }} </td>
-     <td>   {{ _ass3DueTask }}</td>
+     <td>   {{ _ass3DueDate }}</td>
         <td>
-            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _ass3DueFile }}" target="_blank">View Assignment
-        </td>
+            <button class="btn btn-info btn-sm" data-target="#viewAssign3" data-toggle="modal" id="userButton"
+                    type="button">View Assignment
+            </button></td>
         </tr>
     <tr>
     </table>
@@ -266,7 +265,6 @@
         <div class="modal fade" id="viewAssign">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">View {{ _nextAssDueSub }} assignment</h4>
@@ -281,8 +279,8 @@
                         <a href="../static/UPLOADS/Assignments/{{ _nextAssDueFile }}" target="_blank">FILE</a>
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
-                        <form action="/addSub" enctype="multipart/form-data" method="POST">
-                            <div class="form-group">
+                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
                                 <label>File Upload</label>
                                 <input name="inputfile" type='file'>
                             </div>
@@ -290,6 +288,10 @@
                                 <!--Collect Data-->
                             </div>
                             <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                            Assignment
+                        </button>
+                            <br>
                             <div class="modal-footer">
                                 <p align="left">Remember! Research and ask a friend before asking me!</p>
                                 <div>
@@ -324,7 +326,6 @@
                         <h6>File Input</h6>
                         <form action="/addSub" enctype="multipart/form-data" method="POST">
                             <div class="form-group">
-
                                 <input name="inputfile" type='file'>
                             </div>
                             <div>
@@ -455,7 +456,6 @@
     <div class="modal fade" id="classManageAddName">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header"><
                     <h4 class="modal-title">Class Member Management</h4>
@@ -492,6 +492,151 @@
             </div>
         </div>
     </div>
+
+
+
+    <!--VIEWING ASSIGNMENTS THAT STILL NEED COMPLETING -->
+    <!--#################################################
+    <! --Modal Box for viewing next due assignments------->
+
+
+    <!-- The Modal -->
+        <div class="modal fade" id="viewAssign1" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass1DueClass }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass1DueDetail }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _ass1DueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="viewAssign2" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass2DueClass }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass2DueDetail }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _ass2DueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="viewAssign3" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass3DueClass }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass3DueDetail }}</p>
+                        <!--LINK TO ASSIGNMENT HELP FILE-->
+                        <H6>Assignment Task Sheet:</H6>
+                        <a href="../static/UPLOADS/Assignments/{{ _ass3DueFile }}" target="_blank">FILE</a>
+                        <!-- File Submission -->
+                        <H6>Ready to submit your work?</H6>
+                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                            <div class="form-group" align="center">
+                                <label>File Upload</label>
+                                <input name="inputfile" type='file'>
+                            </div>
+                            <div>
+                                <!--Collect Data-->
+                            </div>
+                            <!-- Modal footer -->
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                            Assignment
+                        </button>
+                            <br>
+                            <div class="modal-footer">
+                                <p align="left">Remember! Research and ask a friend before asking me!</p>
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <!--################################################# -->
+    <!--################################################# -->
+    <!--################################################# -->
+
+
+
 <script>
 var ctx = document.getElementById('SubjectMarks').getContext('2d');
 var _subject1Name = document.getElementById("subject1Name").innerHTML;
