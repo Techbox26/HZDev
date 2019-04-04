@@ -22,53 +22,53 @@
 <div class="grid-container">
     <!--Alerts Title Section with useful info-->
     <div class="Alerts">
-        <div align="left" id="alerthead">You have completed <strong>{{ _totalComplete }}</strong> assignments within the
-            last 9 months.
+        <div align="left" id="alerthead">You have <strong>{{ _outstanding }}</strong> assignments due to mark
         </div>
         <br>
         <div align="left" id="alerthead">Your average mark is <strong>{{ _avgMark }} %</strong></div>
     </div>
     <!--Alerts Content with useful info-->
     <div class="AlertsText">
-        <h4>Important Information</h4>
-        <div align="left">It is advisable you work on your {{ _nextAssDueSub }} assignment as it is due very soon!</div>
-        <div align="center">Your next assignment is due on: <strong> {{ _nextAssDueDate }}</strong></div>
+        <h4>Important Information - Next Assignment</h4>
+        <div align="center">Students must submit their {{ _nextUpClass }} assignment by {{ _nextUpDate }}!</div>
         <div align="center">
             <br>
             <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
-                    type="button">View Assignment
+                    type="button">View Assignment -- MAKE THIS BUTTON WORK??
             </button>
         </div>
     </div>
 
     <!--Graphs Title Section with useful info-->
     <div class="Title1">
-        <div align=left"><h5>Your Average Grades</h5></div>
+        <div align=left"><h5>Overall Average Grades</h5></div>
 
         <!--DETAILS NEEDED FOR GRAPHS HERE-->
         <div hidden=hidden>
-            <p id="subject1Name">{{ _class1 }}</p>
-            <p id="subject2Name">{{ _class2 }}</p>
-            <p id="subject3Name">{{ _class3 }}</p>
-            <p id="sub1Mark">{{ _class1Mark }}</p>
-            <p id="sub2Mark">{{ _class2Mark }}</p>
-            <p id="sub3Mark">{{ _class3Mark }}</p>
+            <p id="class1Name">{{ _class1Name }}</p>
+            <p id="class2Name">{{ _class2Name }}</p>
+            <p id="class3Name">{{ _class3Name }}</p>
+            <p id="class1Avg">{{ _class1Avg }}</p>
+            <p id="class2Avg">{{ _class2Avg }}</p>
+            <p id="class3Avg">{{ _class3Avg }}</p>
         </div>
         <!-- ## MAKING A GRAPH ## -->
         <div class="container">
-            <canvas height="50" id="SubjectMarks" width="200"></canvas>
+            <canvas height="50" id="AverageGrades" width="200"></canvas>
         </div>
     </div>
     <!--Graphs Content Section with useful info-->
-    <div class="Graph"><h5>Graphs Here</h5>
-        <div align="left">Your Average Mark Grade is:</div>
-        <p>{{ _avgMark }}</p>
-        <div align="left"><strong>Strongest Subject</strong></div>
-        <p>{{ _strongMarkSub }}</p>
-        <p> With an average mark of {{ _strongMark }}</p>
-        <div align="left"><strong>Weakest Subject</strong></div>
-        <p>{{ _weakMarkSub }}</p>
-        <p> With an average mark of {{ _weakMark }}</p>
+    <div class="Graph"><h5>Class Specific Statstics</h5>
+        <div align="left">{{ _class1Name }}:</div>
+        <h6>The strongest student (on average): <strong> {{ _class1HighStu }}</strong></h6>
+        <h6>With and average mark of: <strong> {{ _class1HighStuMark }}</strong></h6>
+        <div align="left">{{ _class2Name }}:</div>
+        <h6>The strongest student (on average): <strong> {{ _class2HighStu }}</strong></h6>
+        <h6>With and average mark of: <strong> {{ _class2HighStuMark }}</strong></h6>
+        <div align="left">{{ _class3Name }}:</div>
+        <h6>The strongest student (on average): <strong> {{ _class3HighStu }}</strong></h6>
+        <h6>With and average mark of: <strong> {{ _class3HighStuMark }}</strong></h6>
+
     </div>
     <!------------------------------------>
     <!--Table showing due submissions-->
@@ -524,16 +524,16 @@
 </div>
 
 <script>
-    var ctx = document.getElementById('SubjectMarks').getContext('2d');
-    var _subject1Name = document.getElementById("subject1Name").innerHTML;
-    var _subject2Name = document.getElementById("subject2Name").innerHTML;
-    var _subject3Name = document.getElementById("subject3Name").innerHTML;
-    var _sub1Mark = document.getElementById("sub1Mark").innerHTML;
-    var _sub2Mark = document.getElementById("sub2Mark").innerHTML;
-    var _sub3Mark = document.getElementById("sub3Mark").innerHTML;
+    var ctx = document.getElementById('AverageGrades').getContext('2d');
+    var _subject1Name = document.getElementById("class1Name").innerHTML;
+    var _subject2Name = document.getElementById("class2Name").innerHTML;
+    var _subject3Name = document.getElementById("class3Name").innerHTML;
+    var _sub1Mark = document.getElementById("class1Avg").innerHTML;
+    var _sub2Mark = document.getElementById("class2Avg").innerHTML;
+    var _sub3Mark = document.getElementById("class3Avg").innerHTML;
 
 
-    var SubjectMarks = new Chart(ctx, {
+    var AverageGrades = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: [_subject1Name, _subject2Name, _subject3Name],

@@ -98,25 +98,81 @@ def showTableTest():
 @app.route('/showTeachTables')
 def showteachtables():
     print('ENTERED TEACHER ACCOUNT')
+#GET AVERAGE MARKS FOR ALL CLASSES (3 CLASSES)
+    _class1Avg =""
+    _class1Name =""
+    _class2Avg =""
+    _class2Name = ""
+    _class3Avg =""
+    _class3Name=""
+    cursor.execute(
+    "SELECT CAST(AVG(finalmark) AS DECIMAL(10,2))as FINAL, class.title FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID GROUP BY class.title ORDER BY FINAL DESC;")
+    _class = cursor.fetchall()
+    _class1Avg = (_class[0][0])
+    _class1Name = (_class[0][1])
+    _class2Avg = (_class[1][0])
+    _class2Name = (_class[1][1])
+    _class3Avg = (_class[2][0])
+    _class3Name = (_class[2][1])
+    #Class specific stats - Find highest and lowest prefomers for each class
+    #CLASS 1
+    cursor.execute(
+        "SELECT CAST(AVG(finalmark)AS DECIMAL(10,2))AS MARK, CONCAT(user.fname, '" + " " + "', user.lname)AS STUDENT FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE class.title =('" + _class1Name + "' ) ORDER BY MARK DESC LIMIT 1;")
+    _class1High = cursor.fetchall()
+    _class1HighStu = (_class1High[0][1])
+    _class1HighStuMark = (_class1High[0][0])
+    print(_class1HighStu)
+    cursor.execute("SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK, CONCAT(user.fname, '" + " " + "'  , user.lname)AS STUDENT FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE class.title =('" + _class1Name + "' ) ORDER BY MARK ASC LIMIT 1;")
+    _class1Low = cursor.fetchall()
+    _class1LowStu = (_class1Low[0][1])
+    _class1LowStuMark = (_class1Low[0][0])
+    print(_class1LowStu)
+    # CLASS 2
+    cursor.execute(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK, CONCAT(user.fname, '" + " " + "'  , user.lname)AS STUDENT FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE class.title =('" + _class2Name + "' ) ORDER BY MARK DESC LIMIT 1;")
+    _class2High = cursor.fetchall()
+    _class2HighStu = (_class2High[0][1])
+    _class2HighStuMark = (_class2High[0][0])
+    print(_class2HighStu)
+    cursor.execute(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK, CONCAT(user.fname, '" + " " + "'  , user.lname)AS STUDENT FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE class.title =('" + _class2Name + "' ) ORDER BY MARK ASC LIMIT 1;")
+    _class2Low = cursor.fetchall()
+    _class2LowStu = (_class2Low[0][1])
+    _class2LowStuMark = (_class2Low[0][0])
+    print(_class1LowStu)
+    # CLASS 3
+    cursor.execute(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK, CONCAT(user.fname, '" + " " + "'  , user.lname)AS STUDENT FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE class.title =('" + _class3Name + "' ) ORDER BY MARK DESC LIMIT 1;")
+    _class3High = cursor.fetchall()
+    _class3HighStu = (_class3High[0][1])
+    _class3HighStuMark = (_class3High[0][0])
+    print(_class3HighStu)
+    cursor.execute(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK, CONCAT(user.fname, '" + " " + "'  , user.lname)AS STUDENT FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID JOIN user on submission.user_userID = user.userID WHERE class.title =('" + _class3Name + "' ) ORDER BY MARK ASC LIMIT 1;")
+    _class3Low = cursor.fetchall()
+    _class3LowStu = (_class3Low[0][1])
+    _class3LowStuMark = (_class3Low[0][0])
+    print(_class3LowStu)
+    print(_class1Name)
+   # _class3HighStu
+   # _class3HighStuMark
+   # _class3LowStu
+   # _class3LowStuMark
 
 
+#SELECT ALL FROM SUBMISSIONS WHERE THERE ARE NO MARKS ASSIGNED
+    cursor.execute("SELECT COUNT(*) FROM submission where finalmark is null;")
+    _outstanding = cursor.fetchall()
+    _outstanding = (_outstanding[0][0])
+
+#SELECT NEXT ASSIGNMENT DUE
+    cursor.execute("SELECT assignment.duedate, class.title FROM assignment JOIN class ON assignment.class_classID = class.classID WHERE duedate > CURDATE() ORDER BY duedate LIMIT 1;")
+    _nextUp = cursor.fetchall()
+    _nextUpDate =(_nextUp[0][0])
+    _nextUpClass = (_nextUp[0][1])
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    return render_template('teachtables.html',_userType=_userType, _userFName=_userFName,_userLName=_userLName,_userEmail=_userEmail)
+    return render_template('teachtables.html',_nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 
@@ -183,7 +239,7 @@ def showTableTest2():
     global _nextAssDue
     global _nextAssDueID
     cursor.execute(
-        "SELECT class.title, assTitle, dueDate, taskdetails, assignmentFileName, assID FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "'ORDER BY assignment.dueDate DESC LIMIT 1;")
+        "SELECT class.title, assTitle, dueDate, taskdetails, assignmentFileName, assID FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister ON classregister.Class_classID = class.classID JOIN user ON classregister.users_userID = user.userID WHERE user.email = '" + _userEmail + "' ORDER BY assignment.dueDate DESC LIMIT 1;")
     _nextAssDue = cursor.fetchall()
     _nextAssDueDate = (_nextAssDue[0][2])
     _nextAssDueDetail = (_nextAssDue[0][1])
