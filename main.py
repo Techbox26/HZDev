@@ -758,7 +758,7 @@ def manageClassRemoveName():  # WORKS
 
 
 # REMOVE students from classes VIA STUDENT NAME AND CLASS TITLE
-@app.route('/passManage', methods=['GET', 'POST'])
+@app.route('/passManage' , methods=['GET', 'POST'])
 def passManage():  # WORKS
     # GET DATA FROM FORMS
     _stuFname = request.form['stuFname']
@@ -767,10 +767,10 @@ def passManage():  # WORKS
     _stuNewPass = request.form['stuNewPass']
     print(_stuNewPass)
     # GET STUDENT DATA FROM FORMS
-    cursor.execute(
-        "UPDATE user SET user.password = 'Example' WHERE user.email = 'a';")
+    #cursor.execute(
+    #   "UPDATE user SET user.password = 'Example' WHERE user.email = 'a';")
     print("Successfully updated password")
-    #cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.email = ('" + _stuEmail + "');")
+    cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.email = ('" + _stuEmail + "');")
     #cursor.execute("UPDATE `project`.`user` SET `password` = '(" + _stuNewPass + "')' WHERE `lname` = '('" + _stuLname + "')' AND `fname` = '('" + _stuFname + "' )' AND `email` = '('" + _stuEmail + "' )';")
     conn.commit()
     return render_template('teachtables.html')

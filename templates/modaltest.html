@@ -139,8 +139,52 @@
         </div>
     </div>
 
-
-
+<button class="btn btn-info btn-sm" data-target="#passManage" data-toggle="modal" id="userButton" type="button">
+        Password Management
+</button>
+    <!--Modal Box for PASSWORD management-->
+    <!-- The Modal -->
+<div class="modal fade" id="passManage">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header"><
+                    <h4 class="modal-title">Password Management</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div>
+                    <div class="container">
+                        <h6>Modify Student Passwords</h6>
+                        <h6>Enter Student Names and Email Address</h6>
+                        <form action="/passManage" enctype="multipart/form-data" method="POST">
+                            <!--  ########################-->
+                            <!--Student Name-->
+                            <label class="sr-only" for="stuFname">Student First Name</label>
+                            <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
+                                   type="stuFname">
+                            <label class="sr-only" for="stuLname">Student Last Name</label>
+                            <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
+                                   type="stuLname">
+                            <label class="sr-only" for="stuEmail">Class Name</label>
+                            <input class="form-control" id="stuEmail" name="stuEmail" placeholder="Student Email"
+                                   type="stuEmail">
+                            <h6>Enter New Password</h6>
+                            <label class="sr-only" for="stuNewPass">Class Name</label>
+                            <input class="form-control" id="stuNewPass" name="stuNewPass" placeholder="New Password"
+                                   type="stuNewPass">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-primary btn-sm" id="passManage" type="passManage">Save Change
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="passManage">Close</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
