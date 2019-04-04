@@ -54,7 +54,9 @@ _class3 = ""
 _class1Mark = ""
 _class2Mark = ""
 _class3Mark = ""
-
+_ass1DueID =""
+_ass2DueID =""
+_ass3DueID =""
 
 @app.route('/')
 def main():
@@ -147,6 +149,9 @@ def showTableTest2():
     global _ass1file
     global _ass2file
     global _ass3file
+    global  _ass1DueID
+    global _ass2DueID
+    global _ass3DueID
 
     # Determine 3 class details and marks
     _class1 = (_graphClasses[0][0])
@@ -188,6 +193,7 @@ def showTableTest2():
     _ass1name = (record[0][0])
     _ass1class = (record[0][1])
     _ass1mark = (record[0][4])
+    _ass1Comm = (record[0][5])
     print(_ass1name)
     print(_ass1class)
     print(_ass1mark)
@@ -195,6 +201,7 @@ def showTableTest2():
     _ass2name = (record[1][0])
     _ass2class = (record[1][1])
     _ass2mark = (record[1][4])
+    _ass2Comm = (record[1][5])
     print(_ass2name)
     print(_ass2class)
     print(_ass2mark)
@@ -202,7 +209,7 @@ def showTableTest2():
     _ass3name = (record[2][0])
     _ass3class = (record[2][1])
     _ass3mark = (record[2][4])
-
+    _ass3Comm = (record[1][5])
     #print(_ass3name)
     #print(_ass3class)
     #print(_ass3mark)
@@ -224,7 +231,7 @@ def showTableTest2():
     # cursor.execute("SELECT ")
     #cursor.execute("SELECT * FROM user;")
     #cursor.execute("SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(_userID) + "' AND finalmark !='' ORDER BY assignment.duedate DESC LIMIT 3 ;")
-    cursor.execute("SELECT assignment.assTitle, class.title, class.classID, assignment.taskdetails,  inputFileName, inputFilePath, assignment_assID, user_userID, dueDate FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_userID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
+    cursor.execute("SELECT assignment.assTitle, class.title, class.classID, assignment.taskdetails,  assignment.assignmentFileName, inputFilePath, assignment_assID, user_userID, dueDate FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_userID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
     record = cursor.fetchall()
     print("DUE ASSIGNMENTS")
     print(record)
@@ -314,7 +321,7 @@ def showTableTest2():
 
     # Pass variables to main page
     # _due3name = _due3name, _due3class = _due3class, _due3mark = _due3mark, _due2name = _due2name, _due2class = _due2class, _due2mark = _due2mark, _due1name = _due1name, _due1class = _due1class, _due1mark = _due1mark,
-    return render_template('tabletests2.html',_ass1DueDate=_ass1DueDate,_ass2DueDate=_ass2DueDate,_ass3DueDate=_ass3DueDate, _ass3DueClass=_ass3DueClass, _ass3DueTitle=_ass3DueTitle, _ass3DueDetail=_ass3DueDetail, _ass3DueSub=_ass3DueSub, _ass3DueFile=_ass3DueFile, _ass2DueClass=_ass2DueClass, _ass2DueTitle=_ass2DueTitle, _ass2DueDetail=_ass2DueDetail, _ass2DueSub=_ass2DueSub, _ass2DueFile=_ass2DueFile, _ass1DueClass=_ass1DueClass, _ass1DueTitle=_ass1DueTitle, _ass1DueDetail=_ass1DueDetail, _ass1DueSub=_ass1DueSub, _ass1DueFile=_ass1DueFile,    _nextAssDueFile=_nextAssDueFile, _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
+    return render_template('tabletests2.html',_ass1Comm = _ass1Comm, _ass2Comm=_ass2Comm, _ass3Comm=_ass3Comm ,_ass1DueDate=_ass1DueDate,_ass2DueDate=_ass2DueDate,_ass3DueDate=_ass3DueDate, _ass3DueClass=_ass3DueClass, _ass3DueTitle=_ass3DueTitle, _ass3DueDetail=_ass3DueDetail, _ass3DueSub=_ass3DueSub, _ass3DueFile=_ass3DueFile, _ass2DueClass=_ass2DueClass, _ass2DueTitle=_ass2DueTitle, _ass2DueDetail=_ass2DueDetail, _ass2DueSub=_ass2DueSub, _ass2DueFile=_ass2DueFile, _ass1DueClass=_ass1DueClass, _ass1DueTitle=_ass1DueTitle, _ass1DueDetail=_ass1DueDetail, _ass1DueSub=_ass1DueSub, _ass1DueFile=_ass1DueFile,    _nextAssDueFile=_nextAssDueFile, _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
                        _class2Mark=_class2Mark, _class3Mark=_class3Mark, _userFName=_userFName, _userLName=_userLName,
                        _userEmail=_userEmail, _userClass=_userClass, _nextAssDueDate=_nextAssDueDate,
                        _nextAssDueSub=_nextAssDueSub, _nextAssDueDetail=_nextAssDueDetail,
@@ -667,7 +674,8 @@ def manageClassRemoveName():  # WORKS
 # def teachervar():
 
 @app.route('/addSubmission2', methods=['GET', 'POST'])
-#THIS WORKS
+#THIS WORKS FOR NEXT DUE ONLY
+
 def addSubmission2():
     global _userID
     global _nextAssDueID
@@ -692,6 +700,8 @@ def addSubmission2():
             print(_inputFilePath)
             # read the posted values from the UI (modal script)
             _assID = _nextAssDueID
+
+
             print(_assID)
             _userID = _userID
             print(_userID)
@@ -701,10 +711,75 @@ def addSubmission2():
             conn.commit()
     return render_template('tabletests2.html')
 
+@app.route('/addSubmission3', methods=['GET', 'POST'])
+#THIS WORKS For assignment 2
+def addSubmission3():
+    global _userID
+    global _nextAssDueID
+    print('FILE UPLOAD')
+    print(_userID)
+    print(_nextAssDueID)
+    #Get data from form
+    if 'inputfile' not in request.files:
+        print("failed")
+    else:
+        print("Success")
+        inputFile = request.files['inputfile']
+        #if inputFile.filename == '':
+        #    flash("No file selected")
+        #    return (redirect('tableTests2'))
+        if inputFile and allowed_files(inputFile.filename):
+            filename = secure_filename(inputFile.filename)
+            inputFile.save(os.path.join(app.config['UPLOAD_FOLDER_SUBMISSION'], filename))
+            _inputFileName = filename
+            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER_SUBMISSION'], filename)
+            print(_inputFileName)
+            print(_inputFilePath)
+            # read the posted values from the UI (modal script)
+            _assID = _ass2DueID
+            print(_assID)
+            _userID = _userID
+            print(_userID)
+            cursor.callproc('addSubmission2', (_inputFileName, _inputFilePath, _assID, _userID))
+            data = cursor.fetchall()
+            print(data)
+            conn.commit()
+    return render_template('tabletests2.html')
 
-
-
-
+@app.route('/addSubmission4', methods=['GET', 'POST'])
+#THIS WORKS For assignment 3
+def addSubmission4():
+    global _userID
+    global _nextAssDueID
+    print('FILE UPLOAD')
+    print(_userID)
+    print(_nextAssDueID)
+    #Get data from form
+    if 'inputfile' not in request.files:
+        print("failed")
+    else:
+        print("Success")
+        inputFile = request.files['inputfile']
+        #if inputFile.filename == '':
+        #    flash("No file selected")
+        #    return (redirect('tableTests2'))
+        if inputFile and allowed_files(inputFile.filename):
+            filename = secure_filename(inputFile.filename)
+            inputFile.save(os.path.join(app.config['UPLOAD_FOLDER_SUBMISSION'], filename))
+            _inputFileName = filename
+            _inputFilePath = os.path.join(app.config['UPLOAD_FOLDER_SUBMISSION'], filename)
+            print(_inputFileName)
+            print(_inputFilePath)
+            # read the posted values from the UI (modal script)
+            _assID = _ass3DueID
+            print(_assID)
+            _userID = _userID
+            print(_userID)
+            cursor.callproc('addSubmission2', (_inputFileName, _inputFilePath, _assID, _userID))
+            data = cursor.fetchall()
+            print(data)
+            conn.commit()
+    return render_template('tabletests2.html')
 
 
 if __name__ == "__main__":

@@ -127,7 +127,7 @@
     <th>Title</th>
     <th>Class</th>
     <th>Grade</th>
-    <th>File</th>
+    <th>View</th>
     </tr>
     <tr>
         <!--Assignment 1 -->
@@ -135,8 +135,9 @@
     <td>{{ _ass1class }}</td>
     <td>{{ _ass1mark }}</td>
         <td>
-           <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass1file }}" target="_blank">View Submission
-            </a>
+           <button class="btn btn-info btn-sm" data-target="#viewPast1" data-toggle="modal" id="userButton"
+                    type="button">View
+            </button>
         </td>
     <tr>
         <!--Assignment 2 -->
@@ -144,25 +145,23 @@
     <td>{{ _ass2class }}</td>
     <td>{{ _ass2mark }}</td>
         <td>
-           <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass2file }}" target="_blank">View Submission
-            </a>
-            </tr>
-    <tr>
-
+           <button class="btn btn-info btn-sm" data-target="#viewPast2" data-toggle="modal" id="userButton"
+                    type="button">View
+            </button>
         </td>
+    <tr>
         <!--Assignment 3 -->
     <td>{{ _ass3name }}</td>
     <td>{{ _ass3class }}</td>
     <td>{{ _ass3mark }}</td>
         <td>
-            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass3file }}" target="_blank">View Submission
-            </a>
+           <button class="btn btn-info btn-sm" data-target="#viewPast3" data-toggle="modal" id="userButton"
+                    type="button">View
+            </button>
         </td>
   </tr>
   <tr>
 </table>
-        <small>Previous Assignments Here</small>
-        <h3> {{student_data}}</h3>
     </div>
 
 
@@ -561,7 +560,7 @@
                         <a href="../static/UPLOADS/Assignments/{{ _ass2DueFile }}" target="_blank">FILE</a>
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
-                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                        <form action="/addSubmission3" enctype="multipart/form-data" method="POST">
                             <div class="form-group" align="center">
                                 <label>File Upload</label>
                                 <input name="inputfile" type='file'>
@@ -570,7 +569,7 @@
                                 <!--Collect Data-->
                             </div>
                             <!-- Modal footer -->
-                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission3" type="addSubmissio32">Submit
                             Assignment
                         </button>
                             <br>
@@ -605,7 +604,7 @@
                         <a href="../static/UPLOADS/Assignments/{{ _ass3DueFile }}" target="_blank">FILE</a>
                         <!-- File Submission -->
                         <H6>Ready to submit your work?</H6>
-                        <form action="/addSubmission2" enctype="multipart/form-data" method="POST">
+                        <form action="/addSubmission4" enctype="multipart/form-data" method="POST">
                             <div class="form-group" align="center">
                                 <label>File Upload</label>
                                 <input name="inputfile" type='file'>
@@ -614,7 +613,7 @@
                                 <!--Collect Data-->
                             </div>
                             <!-- Modal footer -->
-                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission2" type="addSubmission2">Submit
+                               <button class="btn btn-info btn-primary btn-sm" id="addSubmission4" type="addSubmission4">Submit
                             Assignment
                         </button>
                             <br>
@@ -634,7 +633,100 @@
     <!--################################################# -->
     <!--################################################# -->
     <!--################################################# -->
+         <div class="modal fade" id="viewPast3" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass3class }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass3name }}</p>
+                        <H6>Assignment Mark:</H6>
+                        <p class="model-signature">{{ _ass3mark }}</p>
+                         <H6>Teacher Comment:</H6>
+                        <p class="model-signature">{{ _ass3Comm }}</p>
+                        <H6>Submission</H6>
+                        <div>
+                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass3file }}" target="_blank">View Submission</a>
+                                </div>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
 
+                </div>
+            </div>
+         </div>
+             <div class="modal fade" id="viewPast2" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass2class }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass2name }}</p>
+                        <H6>Assignment Mark:</H6>
+                        <p class="model-signature">{{ _ass2mark }}</p>
+                         <H6>Teacher Comment:</H6>
+                        <p class="model-signature">{{ _ass2Comm }}</p>
+                        <H6>Submission</H6>
+                        <div>
+                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass2file }}" target="_blank">View Submission</a>
+                                </div>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                     </div>
+                </div>
+            </div>
+      <div class="modal fade" id="viewPast1" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _ass1class }} assignment</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Assignment Details:</H6>
+                        <p class="model-signature">{{ _ass1name }}</p>
+                        <H6>Assignment Mark:</H6>
+                        <p class="model-signature">{{ _ass1mark }}</p>
+                         <H6>Teacher Comment:</H6>
+                        <p class="model-signature">{{ _ass1Comm }}</p>
+                        <H6>Submission</H6>
+                        <div>
+                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _ass1file }}" target="_blank">View Submission</a>
+                                </div>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
 
 
 <script>
