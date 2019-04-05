@@ -57,6 +57,10 @@ _class3Mark = ""
 _ass1DueID =""
 _ass2DueID =""
 _ass3DueID =""
+_stu1ID =""
+_stu2ID =""
+_stu3ID =""
+_nextUpID =""
 
 @app.route('/')
 def main():
@@ -98,6 +102,10 @@ def showTableTest():
 @app.route('/showTeachTables')
 def showteachtables():
     print('ENTERED TEACHER ACCOUNT')
+    global _stu1ID
+    global _stu2ID
+    global _stu3ID
+    global _nextUpID
 #GET AVERAGE MARKS FOR ALL CLASSES (3 CLASSES)
     _class1Avg =""
     _class1Name =""
@@ -166,13 +174,36 @@ def showteachtables():
     _outstanding = (_outstanding[0][0])
 
 #SELECT NEXT ASSIGNMENT DUE
-    cursor.execute("SELECT assignment.duedate, class.title FROM assignment JOIN class ON assignment.class_classID = class.classID WHERE duedate > CURDATE() ORDER BY duedate LIMIT 1;")
+    cursor.execute("SELECT assignment.duedate, class.title, assignment.assID, class.classID FROM assignment JOIN class ON assignment.class_classID = class.classID WHERE duedate > CURDATE() ORDER BY duedate LIMIT 1;")
     _nextUp = cursor.fetchall()
     _nextUpDate =(_nextUp[0][0])
     _nextUpClass = (_nextUp[0][1])
+    _nextUpID = (_nextUp[0][2])
+    _nextUpClassID = (_nextUp[0][3])
+
+#COUNT NUMBER OF SUBMISSIONS DUE FOR MARKING FOR NEXT ASSIGNMENT AND TOTAL STUDENTS
+    cursor.execute("SELECT COUNT(*), (SELECT COUNT(*) FROM user JOIN classregister on user.userID = classregister.users_userID WHERE memberID ='1' AND classregister.class_classID ='" + str(
+            _nextUpClassID) + "') FROM submission WHERE finalmark IS NULL AND assignment_assID = '" + str(
+            _nextUpID) + "';")
+    _submitted = cursor.fetchall()
+    _leftToMark = (_submitted[0][0])
+    _outOfStu = (_submitted[0][1])
+    print(_nextUpClassID)
+#Retrieve details of student awaiting marks for their submission
+    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE submission.assignment_assID ='" + str(_nextUpID) + "' AND finalmark IS NULL;")
+    _submit = cursor.fetchall()
+    _stu1Name = ((_submit[0][0]) + " " + (_submit[0][1]))
+    _stu1File = (_submit[0][2])
+    _stu1ID = (_submit[0][3])
+    _stu2Name = ((_submit[1][0]) + " " + (_submit[1][1]))
+    _stu2File = (_submit[1][2])
+    _stu2ID = (_submit[1][3])
+    _stu3Name = ((_submit[2][0]) + " " + (_submit[2][1]))
+    _stu3File = (_submit[2][2])
+    _stu2ID = (_submit[2][3])
 
 
-    return render_template('teachtables.html',_nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
+    return render_template('teachtables.html',_stu3File=_stu3File, _stu3Name=_stu3Name, _stu2File=_stu2File, _stu2Name=_stu2Name,_stu1File=_stu1File, _stu1Name=_stu1Name, _outOfStu=_outOfStu, _leftToMark=_leftToMark, _nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 
@@ -828,6 +859,48 @@ def passManage():  # WORKS
     print("Successfully updated password")
     cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.email = ('" + _stuEmail + "');")
     #cursor.execute("UPDATE `project`.`user` SET `password` = '(" + _stuNewPass + "')' WHERE `lname` = '('" + _stuLname + "')' AND `fname` = '('" + _stuFname + "' )' AND `email` = '('" + _stuEmail + "' )';")
+    conn.commit()
+    return render_template('teachtables.html')
+
+@app.route('/stu1MarkAdd' , methods=['GET', 'POST'])
+def stu1AddMark():  # WORKS
+    # GET DATA FROM FORMS
+    _mark = request.form['stu1Mark']
+    print(_mark)
+    print(_stu1ID)
+    print(_nextUpID)
+    # GET STUDENT DATA FROM FORMS
+    #cursor.execute(
+    print("Successfully Added Grade")
+    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "') WHERE submission.user_userID = ('" + str(_stu1ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
+    conn.commit()
+    return render_template('teachtables.html')
+
+@app.route('/stu2MarkAdd' , methods=['GET', 'POST'])
+def stu2AddMark():  # WORKS
+    # GET DATA FROM FORMS
+    _mark = request.form['stu2Mark']
+    print(_mark)
+    print(_stu2ID)
+    print(_nextUpID)
+    # GET STUDENT DATA FROM FORMS
+    #cursor.execute(
+    print("Successfully Added Grade")
+    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "') WHERE submission.user_userID = ('" + str(_stu2ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
+    conn.commit()
+    return render_template('teachtables.html')
+
+@app.route('/stu3MarkAdd' , methods=['GET', 'POST'])
+def stu3AddMark():  # WORKS
+    # GET DATA FROM FORMS
+    _mark = request.form['stu3Mark']
+    print(_mark)
+    print(_stu3ID)
+    print(_nextUpID)
+    # GET STUDENT DATA FROM FORMS
+    #cursor.execute(
+    print("Successfully Added Grade")
+    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "') WHERE submission.user_userID = ('" + str(_stu3ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
     conn.commit()
     return render_template('teachtables.html')
 

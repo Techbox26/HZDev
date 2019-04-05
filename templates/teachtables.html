@@ -25,7 +25,7 @@
         <div align="left" id="alerthead">You have <strong>{{ _outstanding }}</strong> assignments due to mark
         </div>
         <br>
-        <div align="left" id="alerthead">Your average mark is <strong>{{ _avgMark }} %</strong></div>
+        <div align="left" id="alerthead"><strong>{{ _leftToMark }}</strong> out of  <strong>{{ _outOfStu }} </strong> students have submitted their {{ _nextUpClass }} assignment</div>
     </div>
     <!--Alerts Content with useful info-->
     <div class="AlertsText">
@@ -33,7 +33,7 @@
         <div align="center">Students must submit their {{ _nextUpClass }} assignment by {{ _nextUpDate }}!</div>
         <div align="center">
             <br>
-            <button class="btn btn-info btn-sm" data-target="#viewAssign" data-toggle="modal" id="userButton"
+            <button class="btn btn-info btn-sm" data-target="#markAss1" data-toggle="modal" id="userButton"
                     type="button">View Assignment -- MAKE THIS BUTTON WORK??
             </button>
         </div>
@@ -59,15 +59,24 @@
     </div>
     <!--Graphs Content Section with useful info-->
     <div class="Graph"><h5>Class Specific Statstics</h5>
-        <div align="left">{{ _class1Name }}:</div>
+        <div align="left"><H5>{{ _class1Name }}:</H5></div>
         <h6>The strongest student (on average): <strong> {{ _class1HighStu }}</strong></h6>
         <h6>With and average mark of: <strong> {{ _class1HighStuMark }}</strong></h6>
-        <div align="left">{{ _class2Name }}:</div>
+        <h6>The weakest student (on average): <strong> {{ _class1LowStu }}</strong></h6>
+        <h6>With and average mark of: <strong> {{ _class1LowStuMark }}</strong></h6>
+
+        <div align="left"><h5>{{ _class2Name }}:</h5></div>
         <h6>The strongest student (on average): <strong> {{ _class2HighStu }}</strong></h6>
         <h6>With and average mark of: <strong> {{ _class2HighStuMark }}</strong></h6>
-        <div align="left">{{ _class3Name }}:</div>
+        <h6>The weakest student (on average): <strong> {{ _class2LowStu }}</strong></h6>
+        <h6>With and average mark of: <strong> {{ _class2LowStuMark }}</strong></h6>
+
+
+        <div align="left"><h5>{{ _class3Name }}:</h5></div>
         <h6>The strongest student (on average): <strong> {{ _class3HighStu }}</strong></h6>
         <h6>With and average mark of: <strong> {{ _class3HighStuMark }}</strong></h6>
+        <h6>The weakest student (on average): <strong> {{ _class2LowStu }}</strong></h6>
+        <h6>With and average mark of: <strong> {{ _class2LowStuMark }}</strong></h6>
 
     </div>
     <!------------------------------------>
@@ -515,6 +524,82 @@
                         <button class="btn btn-info btn-primary btn-sm" id="passManage" type="passManage">Save Change
                         </button>
                         <button class="btn btn-info btn-sm" data-dismiss="modal" type="passManage">Close</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Box for Marking Assignment1-->
+<!-- The Modal -->
+<div class="modal fade" id="markAss1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ _nextUpClass }} Assignment Marking</h4>
+                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <div class="modal-body">
+                <P>The table below shows the students who are awaiting marks for their {{ _nextUpClass }} assignment</P>
+                </div>
+                    <!-- Modal body -->
+                <div>
+                    <div class="container">
+                             <table class = "asssignment">
+    <tr>
+    <th>Student</th>
+    <th>Submission</th>
+    <th>Assign Mark</th>
+    <th>Submit</th>
+    </tr>
+    <tr>
+        <!--Assignment 1 -->
+     <td>{{ _stu1Name }}</td>
+    <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu1File }}" target="_blank">View Submission</a>
+                                </td>
+        <form action="/stu1MarkAdd" enctype="multipart/form-data" method="POST">
+    <td><input class="form-control" id="stu1Mark" name="stu1Mark" placeholder="Assign Mark"
+               type="stu1Mark"></td>
+        <td>
+           <button class="btn btn-info btn-primary btn-sm" id="stu1MarkAdd" type="stu1MarkAdd">Save Change
+                        </button>
+        </td>
+        </form>
+    <tr>
+        <!--Assignment 2 -->
+     <td>{{ _stu2Name }}</td>
+    <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu2File }}" target="_blank">View Submission</a>
+                                </td>
+    <form action="/stu2MarkAdd" enctype="multipart/form-data" method="POST">
+    <td><input class="form-control" id="stu2Mark" name="stu2Mark" placeholder="Assign Mark"
+               type="stu2Mark"></td>
+        <td>
+           <button class="btn btn-info btn-primary btn-sm" id="stu2MarkAdd" type="stu2MarkAdd">Save Change
+                        </button>
+        </td>
+        </form>
+                             </tr>
+        <!--Assignment 3 -->
+     <td>{{ _stu3Name }}</td>
+    <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu3File }}" target="_blank">View Submission</a>
+                                </td>
+      <form action="/stu3MarkAdd" enctype="multipart/form-data" method="POST">
+    <td><input class="form-control" id="stu3Mark" name="stu3Mark" placeholder="Assign Mark"
+               type="stu3Mark"></td>
+        <td>
+           <button class="btn btn-info btn-primary btn-sm" id="stu3MarkAdd" type="stu3MarkAdd">Save Change
+                        </button>
+        </td>
+        </form>
+  </tr>
+  <tr>
+</table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="markAss1">Close</button>
                     </div>
                     </form>
                 </div>
