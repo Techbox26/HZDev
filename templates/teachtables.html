@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Teacher Portal</title>
     <link href="../static/images/icon.png" rel="shortcut icon" type="image/png">
     <!--Code Begins Here!-->
@@ -34,7 +35,7 @@
         <div align="center">
             <br>
             <button class="btn btn-info btn-sm" data-target="#markAss1" data-toggle="modal" id="userButton"
-                    type="button">View Assignment -- MAKE THIS BUTTON WORK??
+                    type="button">View Current Submissions
             </button>
         </div>
     </div>
@@ -83,13 +84,18 @@
     <!--Table showing due submissions-->
     <!------------------------------------>
     <!--Current Assignment Content Section with useful info-->
-    <div class="Title2"><strong>Assignments Still Due</strong></div>
+    <div class="Title2"><strong>Students Yet To Submit For {{ _nextUpClass }}</strong>
+        <p hidden="true" id="_dueDate">{{ _nextUpDate }}</p>
+        <br><p>Days Remaining:</p>
+        <div align="center"> <h5 id="demo"></h5>
+        </div>
+    </div>
     <div class="Assignments">
         <table>
             <tr>
-                <th>Title</th>
-                <th>Task</th>
-                <th>Subject</th>
+                <th>Student</th>
+                <th>Email</th>
+                <th>Average Subject Mark</th>
                 <th>Due</th>
                 <th>File</th>
             </tr>
@@ -655,6 +661,40 @@
         }
     });
     window.alert("sometext");
+</script>
+
+<script>
+// Set the date we're counting down to
+window.alert("DateSet");
+
+var countDownTo = document.getElementById('_dueDate').innerHTML;
+var countDownDate = new Date(countDownTo).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is over, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
 </script>
 
 </body>
