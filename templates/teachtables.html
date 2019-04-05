@@ -559,6 +559,7 @@
     <th>Student</th>
     <th>Submission</th>
     <th>Assign Mark</th>
+    <th>Comment</th>
     <th>Submit</th>
     </tr>
     <tr>
@@ -569,11 +570,15 @@
         <form action="/stu1MarkAdd" enctype="multipart/form-data" method="POST">
     <td><input class="form-control" id="stu1Mark" name="stu1Mark" placeholder="Assign Mark"
                type="stu1Mark"></td>
+            <form action="/stu1MarkAdd" enctype="multipart/form-data" method="POST">
+    <td><input class="form-control" id="stu1Comment" name="stu1Comment" placeholder="Add Comment"
+               type="stu1Comment"></td>
         <td>
            <button class="btn btn-info btn-primary btn-sm" id="stu1MarkAdd" type="stu1MarkAdd">Save Change
                         </button>
         </td>
         </form>
+        </tr>
     <tr>
         <!--Assignment 2 -->
      <td>{{ _stu2Name }}</td>
@@ -582,6 +587,9 @@
     <form action="/stu2MarkAdd" enctype="multipart/form-data" method="POST">
     <td><input class="form-control" id="stu2Mark" name="stu2Mark" placeholder="Assign Mark"
                type="stu2Mark"></td>
+        <form action="/stu2MarkAdd" enctype="multipart/form-data" method="POST">
+    <td><input class="form-control" id="stu2Comment" name="stu2Comment" placeholder="Add Comment"
+               type="stu2Comment"></td>
         <td>
            <button class="btn btn-info btn-primary btn-sm" id="stu2MarkAdd" type="stu2MarkAdd">Save Change
                         </button>
@@ -595,13 +603,15 @@
       <form action="/stu3MarkAdd" enctype="multipart/form-data" method="POST">
     <td><input class="form-control" id="stu3Mark" name="stu3Mark" placeholder="Assign Mark"
                type="stu3Mark"></td>
+          <form action="/stu3MarkAdd" enctype="multipart/form-data" method="POST">
+    <td><input class="form-control" id="stu3Comment" name="stu3Comment" placeholder="Add Comment"
+               type="stu3Comment"></td>
         <td>
            <button class="btn btn-info btn-primary btn-sm" id="stu3MarkAdd" type="stu3MarkAdd">Save Change
                         </button>
         </td>
         </form>
   </tr>
-  <tr>
 </table>
                     </div>
                     <div class="modal-footer">

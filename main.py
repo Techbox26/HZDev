@@ -207,6 +207,7 @@ def showteachtables():
     _duedate=(_duedate[0][0])
     print(_duedate)
     return render_template('teachtables.html',_duedate=_duedate ,_stu3File=_stu3File, _stu3Name=_stu3Name, _stu2File=_stu2File, _stu2Name=_stu2Name,_stu1File=_stu1File, _stu1Name=_stu1Name, _outOfStu=_outOfStu, _leftToMark=_leftToMark, _nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
+#Students yet to submit anything for the next due assignment
 
 
 
@@ -869,13 +870,14 @@ def passManage():  # WORKS
 def stu1AddMark():  # WORKS
     # GET DATA FROM FORMS
     _mark = request.form['stu1Mark']
+    _comment = request.form['stu1Comment']
     print(_mark)
     print(_stu1ID)
     print(_nextUpID)
     # GET STUDENT DATA FROM FORMS
     #cursor.execute(
     print("Successfully Added Grade")
-    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "') WHERE submission.user_userID = ('" + str(_stu1ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
+    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "'), submission.teachcomment =('" + str(_comment) + "') WHERE submission.user_userID = ('" + str(_stu1ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
     conn.commit()
     return render_template('teachtables.html')
 
@@ -883,13 +885,14 @@ def stu1AddMark():  # WORKS
 def stu2AddMark():  # WORKS
     # GET DATA FROM FORMS
     _mark = request.form['stu2Mark']
+    _comment = request.form['stu2Comment']
     print(_mark)
     print(_stu2ID)
     print(_nextUpID)
     # GET STUDENT DATA FROM FORMS
     #cursor.execute(
     print("Successfully Added Grade")
-    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "') WHERE submission.user_userID = ('" + str(_stu2ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
+    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "'), submission.teachcomment =('" + str(_comment) + "') WHERE submission.user_userID = ('" + str(_stu2ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
     conn.commit()
     return render_template('teachtables.html')
 
@@ -897,13 +900,14 @@ def stu2AddMark():  # WORKS
 def stu3AddMark():  # WORKS
     # GET DATA FROM FORMS
     _mark = request.form['stu3Mark']
+    _comment = request.form['stu3Comment']
     print(_mark)
     print(_stu3ID)
     print(_nextUpID)
     # GET STUDENT DATA FROM FORMS
     #cursor.execute(
     print("Successfully Added Grade")
-    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "') WHERE submission.user_userID = ('" + str(_stu3ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
+    cursor.execute("UPDATE submission SET submission.finalmark = ('" + str(_mark) + "'), submission.teachcomment =('" + str(_comment) + "') WHERE submission.user_userID = ('" + str(_stu3ID) + "') AND submission.assignment_assID = ('" + str(_nextUpID) + "');")
     conn.commit()
     return render_template('teachtables.html')
 
