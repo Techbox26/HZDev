@@ -188,7 +188,7 @@ def showteachtables():
     _submitted = cursor.fetchall()
     _leftToMark = (_submitted[0][0])
     _outOfStu = (_submitted[0][1])
-    print(_nextUpClassID)
+    print("NEXT DUE" + str(_nextUpClassID))
 #Retrieve details of student awaiting marks for their submission
     cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE submission.assignment_assID ='" + str(_nextUpID) + "' AND finalmark IS NULL;")
     _submit = cursor.fetchall()
@@ -206,10 +206,66 @@ def showteachtables():
     _duedate = cursor.fetchall()
     _duedate=(_duedate[0][0])
     print(_duedate)
-    return render_template('teachtables.html',_duedate=_duedate ,_stu3File=_stu3File, _stu3Name=_stu3Name, _stu2File=_stu2File, _stu2Name=_stu2Name,_stu1File=_stu1File, _stu1Name=_stu1Name, _outOfStu=_outOfStu, _leftToMark=_leftToMark, _nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
-#Students yet to submit anything for the next due assignment
+
+#Get details for 3 current assignments to make edits to if need be
+    cursor.execute("SELECT assID, assTitle, taskdetails, assignmentFileName, assignmentFilePath, class.title, duedate FROM assignment JOIN class ON assignment.class_classID = class.classID WHERE duedate < CURDATE() ORDER BY duedate DESC LIMIT 3;")
+    _curAssignments = cursor.fetchall()
+    #CURRENT ASSIGNMENT 1
+    _curAss1name =(_curAssignments[0][1])
+    _curAss1sub = (_curAssignments[0][5])
+    _curAss1detail = (_curAssignments[0][2])
+    _curAss1file = (_curAssignments[0][3])
+    _curAss1date = (_curAssignments[0][6])
+    #CURRENT ASSIGNMENT 2
+    _curAss2name = (_curAssignments[1][1])
+    _curAss2sub = (_curAssignments[1][5])
+    _curAss2detail = (_curAssignments[1][2])
+    _curAss2file = (_curAssignments[1][3])
+    _curAss2date = (_curAssignments[1][6])
+    # CURRENT ASSIGNMENT 3
+    _curAss3name = (_curAssignments[2][1])
+    _curAss3sub = (_curAssignments[2][5])
+    _curAss3detail = (_curAssignments[2][2])
+    _curAss3file = (_curAssignments[2][3])
+    _curAss3date = (_curAssignments[2][6])
+
+#GET DETAILS OF STUDENTS YET TO SUBMIT ASSIGNMENTS
+    cursor.execute("SELECT user.fname, user.lname, user.email, assignment.assTitle, class.title, class.classID, assignment.taskdetails, assignment.assignmentFileName, assignment.assID, user.userID FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID INNER JOIN classregister ON assignment.class_classID = classregister.class_classID INNER JOIN user ON user.userID = classregister.users_userID WHERE submission.assignment_assID IS NULL AND assignment.class_classID = '" + str(_nextUpClassID) + "';")
+    _student = cursor.fetchall()
+    _user1ID = (_student[0][8])
+    _user2ID = (_student[1][8])
+    _user3ID = (_student[2][8])
+    cursor.execute("SELECT AVG(finalmark) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(_nextUpClassID) + "' AND user.userID = '" + str(_user1ID) + "';")
+    _stu1AVG = cursor.fetchall()
+    _stu1AVG = (_stu1AVG[0][0])
+    cursor.execute(
+        "SELECT AVG(finalmark) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(
+            _nextUpClassID) + "' AND user.userID = '" + str(_user2ID) + "';")
+    _stu2AVG = cursor.fetchall()
+    _stu2AVG = (_stu2AVG[0][0])
+    cursor.execute(
+        "SELECT AVG(finalmark) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(
+            _nextUpClassID) + "' AND user.userID = '" + str(_user3ID) + "';")
+    _stu3AVG = cursor.fetchall()
+    _stu3AVG = (_stu3AVG[0][0])
+    #DETERMINE DETAILS
+    _stu1OutName = ((_student[0][0]) + " " + (_student[0][1]))
+    _stu1Email = (_student[0][2])
+    _stu2OutName = ((_student[1][0]) + " " + (_student[1][1]))
+    _stu2Email = (_student[1][2])
+    _stu3OutName = ((_student[2][0]) + " " + (_student[2][1]))
+    _stu3Email = (_student[2][2])
+    print(_stu1OutName)
+    print(_stu1AVG)
+    print(_stu2OutName)
 
 
+   #Students yet to submit anything for the next due assignment
+
+
+
+
+    return render_template('teachtables.html',_stu3Email=_stu3Email,_stu2Email=_stu2Email,_stu1Email=_stu1Email,_stu3OutName=_stu3OutName,_stu2OutName=_stu2OutName,_stu1OutName=_stu1OutName,_stu3AVG=_stu3AVG,_stu2AVG=_stu2AVG,_stu1AVG=_stu1AVG,_curAss3date=_curAss3date,_curAss3file=_curAss3file,_curAss3detail=_curAss3detail,_curAss3sub=_curAss3sub, _curAss3name=_curAss3name, _curAss2date=_curAss2date,_curAss2file=_curAss2file,_curAss2detail=_curAss2detail,_curAss2sub=_curAss2sub, _curAss2name=_curAss2name, _curAss1date=_curAss1date,_curAss1file=_curAss1file,_curAss1detail=_curAss1detail,_curAss1sub=_curAss1sub, _curAss1name=_curAss1name,_duedate=_duedate ,_stu3File=_stu3File, _stu3Name=_stu3Name, _stu2File=_stu2File, _stu2Name=_stu2Name,_stu1File=_stu1File, _stu1Name=_stu1Name, _outOfStu=_outOfStu, _leftToMark=_leftToMark, _nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 
