@@ -273,14 +273,82 @@ def showteachtables():
 @app.route('/parents')
 def showParentPage():
     #Determine students that the parent is responsible for
-    cursor.execute("SELECT * FROM user WHERE parentID = 10;;")
+    cursor.execute("SELECT * FROM user WHERE parent_parentID = '" + str(_userID) + "';")
     _studentList = cursor.fetchall()
-    _student1details = (_studentList[0])
-    _student2details = (_studentList[1])
-    print(_student1details)
-    print(_student2details)
+    _student1Name = ((_studentList[0][3]) + " " + (_studentList[0][4]))
+    _student2Name = ((_studentList[1][3]) + " " + (_studentList[1][4]))
+    print(_studentList[0][0])
+    _stu1ID = int(_studentList[0][0])
+    _stu2ID = int(_studentList[1][0])
 
-    return render_template('parenttables.html', _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
+
+    #######################################
+    # VIEW DETAILS OF DUE ASSIGNMENTS
+    cursor.execute("SELECT COUNT(assignment.assTitle) FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_stu1ID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
+    _outstanding = cursor.fetchall()
+    _stu1Outstand = (_outstanding[0][0])
+    cursor.execute("SELECT COUNT(assignment.assTitle) FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_stu2ID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
+    _outstanding = cursor.fetchall()
+    _stu2Outstand = (_outstanding[0][0])
+
+
+    # SHOW CLASSES AND AVG MARKS FOR EACH STUDENT
+    #STUDENT 1
+    cursor.execute(
+        "SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + str(_stu1ID) + "' GROUP BY class.title;")
+    _userClass = cursor.fetchall()
+    _stu1Class1 =(_userClass[0][0])
+    _stu1Class2 = (_userClass[1][0])
+    _stu1Class3 = (_userClass[2][0])
+    cursor.execute(
+        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu1ID) + "' AND class.title = '" + _stu1Class1 + "';")
+    _stu1class1Mark = cursor.fetchall()
+    _stu1class1Mark = (_stu1class1Mark[0][0])
+    print("Your average mark for " + _stu1Class1 + " is" + str(_stu1class1Mark))
+    cursor.execute(
+        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu1ID) + "' AND class.title = '" + _stu1Class2 + "';")
+    _stu1class2Mark = cursor.fetchall()
+    _stu1class2Mark = (_stu1class2Mark[0][0])
+    print("Your average mark for " + _stu1Class2 + " is" + str(_stu1class2Mark))
+    cursor.execute(
+        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu1ID) + "' AND class.title = '" + _stu1Class3 + "';")
+    _stu1class3Mark = cursor.fetchall()
+    _stu1class3Mark = (_stu1class3Mark[0][0])
+    print("Your average mark for " + _stu1Class3 + " is" + str(_stu1class3Mark))
+
+
+
+    #STUDENT 2
+    cursor.execute(
+        "SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + str(
+            _stu2ID) + "' GROUP BY class.title;")
+    _userClass = cursor.fetchall()
+    _stu2Class1 = (_userClass[0][0])
+    _stu2Class2 = (_userClass[1][0])
+    _stu2Class3 = (_userClass[2][0])
+    cursor.execute(
+        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu2ID) + "' AND class.title = '" + _stu2Class1 + "';")
+    _stu2class1Mark = cursor.fetchall()
+    _stu2class1Mark = (_stu2class1Mark[0][0])
+    print("Your average mark for " + _stu2Class1 + " is" + str(_stu2class1Mark))
+    cursor.execute(
+        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu2ID) + "' AND class.title = '" + _stu2Class2 + "';")
+    _stu2class2Mark = cursor.fetchall()
+    _stu2class2Mark = (_stu2class2Mark[0][0])
+    print("Your average mark for " + _stu2Class2 + " is" + str(_stu2class2Mark))
+    cursor.execute(
+        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu2ID) + "' AND class.title = '" + _stu2Class3 + "';")
+    _stu2class3Mark = cursor.fetchall()
+    _stu2class3Mark = (_stu2class3Mark[0][0])
+    print("Your average mark for " + _stu2Class3 + " is" + str(_stu2class3Mark))
+
+    return render_template('parenttables.html',_stu2class3Mark=_stu2class3Mark,_stu2Class3=_stu2Class3,_stu1class3Mark=_stu1class3Mark,_stu1Class3=_stu1Class3,_stu2class2Mark=_stu2class2Mark,_stu2Class2=_stu2Class2,_stu1class2Mark=_stu1class2Mark,_stu1Class2=_stu1Class2,_stu2class1Mark=_stu2class1Mark,_stu2Class1=_stu2Class1,_stu1class1Mark=_stu1class1Mark,_stu1Class1=_stu1Class1,_stu2Outstand=_stu2Outstand,_stu1Outstand=_stu1Outstand,_student2Name=_student2Name,_student1Name=_student1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 
@@ -431,7 +499,7 @@ def showTableTest2():
 
     # FIND FILE DETAIL TO LINK FILES TO BUTTONS
     _ass1file = "EERD_v2.png"
-    # _ass1file = (record[0][2])
+    _ass1file = (record[0][2])
     _ass2file = (record[1][2])
     _ass3file = (record[2][2])
     print("FILE NAMES")

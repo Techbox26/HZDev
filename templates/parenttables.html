@@ -22,11 +22,13 @@
 
 <div class="grid-container">
     <!--Alerts Title Section with useful info-->
-    <div class="Alerts">
-        <div align="left" id="alerthead">You have <strong>{{ _outstanding }}</strong> assignments due to mark
+    <div class="Alerts" align="center">
+        <div align="left" id="alerthead">{{ _student1Name }} has <strong>{{ _stu1Outstand }}</strong> assignments left to complete
         </div>
         <br>
-        <div align="left" id="alerthead"><strong>{{ _leftToMark }}</strong> out of  <strong>{{ _outOfStu }} </strong> students have submitted their {{ _nextUpClass }} assignment</div>
+        <div align="left" id="alerthead">{{ _student2Name }} has <strong>{{ _stu2Outstand }}</strong> assignments left to complete
+        </div>
+        <br>
     </div>
     <!--Alerts Content with useful info-->
     <div class="AlertsText">
@@ -59,25 +61,43 @@
         </div>
     </div>
     <!--Graphs Content Section with useful info-->
-    <div class="Graph"><h5>Class Specific Statstics</h5>
-        <div align="left"><H5>{{ _class1Name }}:</H5></div>
-        <h6>The strongest student (on average): <strong> {{ _class1HighStu }}</strong></h6>
-        <h6>With and average mark of: <strong> {{ _class1HighStuMark }}%</strong></h6>
-        <h6>The weakest student (on average): <strong> {{ _class1LowStu }}</strong></h6>
-        <h6>With and average mark of: <strong> {{ _class1LowStuMark }}%</strong></h6>
-
-        <div align="left"><h5>{{ _class2Name }}:</h5></div>
-        <h6>The strongest student (on average): <strong> {{ _class2HighStu }}</strong></h6>
-        <h6>With and average mark of: <strong> {{ _class2HighStuMark }}%</strong></h6>
-        <h6>The weakest student (on average): <strong> {{ _class2LowStu }}</strong></h6>
-        <h6>With and average mark of: <strong> {{ _class2LowStuMark }}%</strong></h6>
-
-
-        <div align="left"><h5>{{ _class3Name }}:</h5></div>
-        <h6>The strongest student (on average): <strong> {{ _class3HighStu }}</strong></h6>
-        <h6>With and average mark of: <strong> {{ _class3HighStuMark }}%</strong></h6>
-        <h6>The weakest student (on average): <strong> {{ _class2LowStu }}</strong></h6>
-        <h6>With and average mark of: <strong> {{ _class2LowStuMark }}%</strong></h6>
+    <div class="Graph"><h5>Classes Students are Enrolled Into and Average Marks</h5>
+    <div class="Assignments">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Class Name</th>
+                <th>Average Mark</th>
+                <th>Name</th>
+                <th>Class Name</th>
+                <th>Average Mark</th>
+            </tr>
+            <tr>
+                <td>{{ _student1Name }}</td>
+                <td>{{ _stu1Class1 }}</td>
+                <td>{{ _stu1class1Mark }}</td>
+                <td>{{ _student2Name }}</td>
+                <td>{{ _stu2Class1 }}</td>
+                <td>{{ _stu2class1Mark}}</td>
+            </tr>
+            <tr>
+                <td>{{ _student1Name }}</td>
+                <td>{{ _stu1Class2 }}</td>
+                <td>{{ _stu1class2Mark }}</td>
+                <td>{{ _student2Name }}</td>
+                <td>{{ _stu2Class2 }}</td>
+                <td>{{ _stu2class2Mark}}</td>
+            </tr>
+            <tr>
+                <td>{{ _student1Name }}</td>
+                <td>{{ _stu1Class3 }}</td>
+                <td>{{ _stu1class3Mark }}</td>
+                <td>{{ _student2Name }}</td>
+                <td>{{ _stu2Class3 }}</td>
+                <td>{{ _stu2class3Mark}}</td>
+            </tr>
+        </table>
+    </div>
 
     </div>
     <!------------------------------------>
@@ -198,21 +218,13 @@
             <h4 align="middle">{{ _userFName }} {{ _userLName }}</h4>
             <p align="middle">{{ _userEmail }}</p>
             <br>
-            <h5>Admin Tasks</h5>
+            <h5>Your Students</h5>
             <div>
-                <button class="btn btn-info btn-sm" data-target="#addAssign" data-toggle="modal" id="userButton"
-                        type="button">
-                    Add Assignment
-                </button>
+                <h6>{{ _student1Name }}</h6>
+
+                <h6> {{ _student2Name }}</h6>
+
             </div>
-            <br>
-            <div>
-                <button class="btn btn-info btn-sm" data-target="#classManager" data-toggle="modal" id="userButton"
-                        type="button">
-                    Class Manager
-                </button>
-            </div>
-            <br>
             <div>
                <button class="btn btn-info btn-sm" data-target="#passManage" data-toggle="modal" id="userButton" type="button">
                     Password Management
