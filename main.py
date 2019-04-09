@@ -295,25 +295,25 @@ def showParentPage():
     # SHOW CLASSES AND AVG MARKS FOR EACH STUDENT
     #STUDENT 1
     cursor.execute(
-        "SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + str(_stu1ID) + "' GROUP BY class.title;")
+        "SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + str(_stu1ID) + "' GROUP BY class.title ORDER BY class.title DESC;")
     _userClass = cursor.fetchall()
     _stu1Class1 =(_userClass[0][0])
     _stu1Class2 = (_userClass[1][0])
     _stu1Class3 = (_userClass[2][0])
     cursor.execute(
-        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
             _stu1ID) + "' AND class.title = '" + _stu1Class1 + "';")
     _stu1class1Mark = cursor.fetchall()
     _stu1class1Mark = (_stu1class1Mark[0][0])
     print("Your average mark for " + _stu1Class1 + " is" + str(_stu1class1Mark))
     cursor.execute(
-        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
             _stu1ID) + "' AND class.title = '" + _stu1Class2 + "';")
     _stu1class2Mark = cursor.fetchall()
     _stu1class2Mark = (_stu1class2Mark[0][0])
     print("Your average mark for " + _stu1Class2 + " is" + str(_stu1class2Mark))
     cursor.execute(
-        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
             _stu1ID) + "' AND class.title = '" + _stu1Class3 + "';")
     _stu1class3Mark = cursor.fetchall()
     _stu1class3Mark = (_stu1class3Mark[0][0])
@@ -324,25 +324,25 @@ def showParentPage():
     #STUDENT 2
     cursor.execute(
         "SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + str(
-            _stu2ID) + "' GROUP BY class.title;")
+            _stu2ID) + "' GROUP BY class.title ORDER BY class.title DESC;")
     _userClass = cursor.fetchall()
     _stu2Class1 = (_userClass[0][0])
     _stu2Class2 = (_userClass[1][0])
     _stu2Class3 = (_userClass[2][0])
     cursor.execute(
-        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
             _stu2ID) + "' AND class.title = '" + _stu2Class1 + "';")
     _stu2class1Mark = cursor.fetchall()
     _stu2class1Mark = (_stu2class1Mark[0][0])
     print("Your average mark for " + _stu2Class1 + " is" + str(_stu2class1Mark))
     cursor.execute(
-        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
             _stu2ID) + "' AND class.title = '" + _stu2Class2 + "';")
     _stu2class2Mark = cursor.fetchall()
     _stu2class2Mark = (_stu2class2Mark[0][0])
     print("Your average mark for " + _stu2Class2 + " is" + str(_stu2class2Mark))
     cursor.execute(
-        "SELECT AVG(finalmark)FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10, 2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID WHERE user_userID ='" + str(
             _stu2ID) + "' AND class.title = '" + _stu2Class3 + "';")
     _stu2class3Mark = cursor.fetchall()
     _stu2class3Mark = (_stu2class3Mark[0][0])

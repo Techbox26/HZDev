@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 </head>
 <body>
@@ -48,16 +49,21 @@
 
         <!--DETAILS NEEDED FOR GRAPHS HERE-->
         <div hidden=hidden>
-            <p id="class1Name">{{ _class1Name }}</p>
-            <p id="class2Name">{{ _class2Name }}</p>
-            <p id="class3Name">{{ _class3Name }}</p>
-            <p id="class1Avg">{{ _class1Avg }}</p>
-            <p id="class2Avg">{{ _class2Avg }}</p>
-            <p id="class3Avg">{{ _class3Avg }}</p>
+            <p id="_student1Name">{{ _student1Name }}</p>
+            <p id="_student2Name">{{ _student2Name }}</p>
+            <p id="_stu1Class1">{{ _stu1Class1 }}</p>
+            <p id="_stu1Class2">{{ _stu1Class2 }}</p>
+            <p id="_stu1Class3">{{ _stu1Class3 }}</p>
+            <p id="_stu1class1Mark">{{ _stu1class1Mark }}</p>
+            <p id="_stu1class2Mark">{{ _stu1class2Mark }}</p>
+            <p id="_stu1class3Mark">{{ _stu1class3Mark }}</p>
+            <p id="_stu2class1Mark">{{ _stu2class1Mark }}</p>
+            <p id="_stu2class2Mark">{{ _stu2class2Mark }}</p>
+            <p id="_stu2class3Mark">{{ _stu2class3Mark }}</p>
         </div>
         <!-- ## MAKING A GRAPH ## -->
         <div class="container">
-            <canvas height="50" id="AverageGrades" width="200"></canvas>
+            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
         </div>
     </div>
     <!--Graphs Content Section with useful info-->
@@ -203,13 +209,12 @@
 
 
     <!--Sidebar items here-->
-    <div class="Sidebar"><img alt id="logo" src="../static/images/logo.png""Test Logo">
+    <div class="Sidebar">
+        <img alt id="logo" src="../static/images/logo.png"Test Logo">
         <!-- Control Buttons -->
         <div align="center" id="controlB">
             <p>This is a {{ _userType }} account</p>
             <a class="btn btn-info btn-sm " href="login">Logout</a>
-            <!--MODAL TEST BUTTON FOR ADDING NEW ASSIGNMENT-->
-
         </div>
         <p align="middle"><img alt="Persons face" id="stuFace" src="../static/images/Blank-Person-Image.png"></p>
         <!--Variables-->
@@ -717,54 +722,41 @@
             </div>
 
 
-
 <script>
-    var ctx = document.getElementById('AverageGrades').getContext('2d');
-    var _subject1Name = document.getElementById("class1Name").innerHTML;
-    var _subject2Name = document.getElementById("class2Name").innerHTML;
-    var _subject3Name = document.getElementById("class3Name").innerHTML;
-    var _sub1Mark = document.getElementById("class1Avg").innerHTML;
-    var _sub2Mark = document.getElementById("class2Avg").innerHTML;
-    var _sub3Mark = document.getElementById("class3Avg").innerHTML;
-
-
-    var AverageGrades = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [_subject1Name, _subject2Name, _subject3Name],
-            datasets: [{
-                label: 'Average Percentage',
-                data: [_sub1Mark, _sub2Mark, _sub3Mark],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+    var _stu1Name = document.getElementById("_student1Name").innerHTML;
+    var _stu2Name = document.getElementById("_student2Name").innerHTML;
+    var _subject1Name = document.getElementById("_stu1Class1").innerHTML;
+    var _subject2Name = document.getElementById("_stu1Class2").innerHTML;
+    var _subject3Name = document.getElementById("_stu1Class3").innerHTML;
+    var _sub1MarkS1 = document.getElementById("_stu1class1Mark").innerHTML;
+    var _sub2MarkS1 = document.getElementById("_stu1class2Mark").innerHTML;
+    var _sub3MarkS1 = document.getElementById("_stu1class3Mark").innerHTML;
+    var _sub1MarkS2 = document.getElementById("_stu2class1Mark").innerHTML;
+    var _sub2MarkS2 = document.getElementById("_stu2class2Mark").innerHTML;
+    var _sub3MarkS2 = document.getElementById("_stu2class3Mark").innerHTML;
+    new Chart(document.getElementById("bar-chart-grouped"), {
+    type: 'bar',
+    data: {
+      labels: [_subject1Name, _subject2Name, _subject3Name],
+      datasets: [
+        {
+          label: _stu1Name,
+          backgroundColor: "#3e95cd",
+          data: [_sub1MarkS1,_sub2MarkS1,_sub3MarkS1]
+        }, {
+          label: _stu2Name,
+          backgroundColor: "#8e5ea2",
+          data: [_sub1MarkS2,_sub2MarkS2,_sub3MarkS2]
         }
-    });
-    window.alert("sometext");
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Subject Average Grades (%)'
+      }
+    },
+});
 </script>
 
 <script>
