@@ -270,7 +270,17 @@ def showteachtables():
 
 
 
+@app.route('/parents')
+def showParentPage():
+    #Determine students that the parent is responsible for
+    cursor.execute("SELECT * FROM user WHERE parentID = 10;;")
+    _studentList = cursor.fetchall()
+    _student1details = (_studentList[0])
+    _student2details = (_studentList[1])
+    print(_student1details)
+    print(_student2details)
 
+    return render_template('parenttables.html', _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 
@@ -774,7 +784,7 @@ def detail_check():
         _userType = 'teacher'
     elif _memberID == 3:
         _userType = 'parent'
-
+        return showParentPage()
         # DETERMINE AVERAGE MARKS
         cursor.execute(
             "SELECT AVG(finalmark) FROM submission JOIN user on submission.user_userID = user.userID WHERE user.email='" + _inputEmail + "';")
@@ -819,8 +829,7 @@ def detail_check():
         elif _memberID == 2:
             return showteachtables()
         elif _memberID == 3:
-            error = 'Invalid username or password'
-            return render_template('loginV3.html', error=error)
+            return showParentPage()
     elif _inputpass == '':
         error = 'Invalid username or password'
         return render_template('loginV3.html', error=error)
