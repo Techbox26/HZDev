@@ -40,6 +40,9 @@
             <button class="btn btn-info btn-sm" data-target="#markAss1" data-toggle="modal" id="userButton"
                     type="button">View Current Submissions
             </button>
+            <button class="btn btn-info btn-sm" data-target="#classManager" data-toggle="modal" id="userButton"
+                    type="button">View Current Submissions
+            </button>
         </div>
     </div>
 
@@ -107,7 +110,7 @@
 
     </div>
     <!------------------------------------>
-    <!--Table showing due submissions-->
+    <!--Table showing previous submissions with comments-->
     <!------------------------------------>
     <!--Current Assignment Content Section with useful info-->
     <div class="Title2"><strong>Students Yet To Submit For {{ _nextUpClass }}</strong>
@@ -163,48 +166,16 @@
     <!------------------------------------>
     <!--Table showing current 3 submissions-->
     <!------------------------------------>
-    <div class="Title3"><strong>Current Assignments</strong></div>
+    <div class="Title3"><h5><strong>Submissions and Feedback</strong></h5></div>
     <div class="Previous">
-        <table class="asssignment">
-            <tr>
-                <th>Title</th>
-                <th>Class</th>
-                <th>Date Due</th>
-                <th>View</th>
-            </tr>
-            <tr>
-                <!--Assignment 1 -->
-                <td>{{ _curAss1name }}</td>
-                <td>{{ _curAss1sub }}</td>
-                <td> {{ _curAss1date }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" data-target="#viewCur1" data-toggle="modal" id="userButton"
-                            type="button">View
-                    </button>
-                </td>
-            <tr>
-                <!--Assignment 2 -->
-                <td>{{ _curAss2name }}</td>
-                <td>{{ _curAss2sub }}</td>
-                <td>{{ _curAss2date }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" data-target="#viewCur2" data-toggle="modal" id="userButton"
-                            type="button">View
-                    </button>
-                </td>
-            <tr>
-                <!--Assignment 3 -->
-                <td>{{ _curAss3name }}</td>
-                <td>{{ _curAss3sub }}</td>
-                <td>{{ _curAss3date }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" data-target="#viewCur3" data-toggle="modal" id="userButton"
-                            type="button">View
-                    </button>
-                </td>
-            </tr>
-            <tr>
-        </table>
+        <div align="center">
+            <button class="btn btn-info btn-sm" data-target="#stu1subs" data-toggle="modal" id="userButton"
+                    type="button">{{ _student1Name }}'s Submissions
+            </button>
+            <button class="btn btn-info btn-sm" data-target="#stu2subs" data-toggle="modal" id="userButton"
+                    type="button">{{ _student2Name }}'s Submissions
+            </button>
+        </div>
     </div>
 
 
@@ -231,10 +202,14 @@
 
             </div>
             <div>
-               <button class="btn btn-info btn-sm" data-target="#passManage" data-toggle="modal" id="userButton" type="button">
-                    Password Management
+               <button class="btn btn-info btn-sm" data-target="#passManageStu1" data-toggle="modal" id="userButton" type="button">
+                    Change {{ _student1Name }}'s Password
                 </button>
                 <br>
+                <br>
+                <button class="btn btn-info btn-sm" data-target="#passManageStu1" data-toggle="modal" id="userButton" type="button">
+                    Change {{ _student2Name }}'s Password
+                </button>
             </div>
 
         </div>
@@ -245,259 +220,10 @@
                                                            title="Exit" width="32"></a>
             </div>
 
-            <!--Modal Box for adding new assignments-->
-            <!-- The Modal -->
-            <div class="modal fade" id="addAssign2">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Create New Assignment</h4>
-                            <button class="close" data-dismiss="modal" type="button">&times;</button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div>
-                            <form action="addAssign" class="form-assign" method="POST">
-                                <!--Assessment Title-->
-                                <label class="sr-only" for="assessTitle">assessTitle</label>
-                                <input class="form-control" id="inputTitle" name="assessTitle"
-                                       placeholder="Assessment Title"
-                                       type="assessTitle">
-                                <!--Assessment Details-->
-                                <div class="modal-header">
-                                    <h6 class="modal-title">Assignment Details</h6>
-                                </div>
-                                <label class="sr-only" for="taskDetail">taskDetail</label>
-                                <textarea autofocus class="form-control" id="inputDetail" name="taskDetail"
-                                          placeholder="Task Details" required rows="10" type="taskDetail">
-                               </textarea>
-                                <!--Due Date-->
-                                <label class="sr-only" for="dueDate">Due Date</label>
-                                <input autofocus class="form-control" id="inputDue" name="dueDate"
-                                       placeholder="Due Date"
-                                       required type="due">
-                                <!--Class ID-->
-                                <label class="sr-only" for="classID">classID</label>
-                                <input class="form-control" id="classID" name="classID" placeholder="Class ID"
-                                       type="classID">
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addAssign">Save
-                                Assignment
-                            </button>
-                            <!--Commit Data-->
-                            <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close</button>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!--Modal Box for adding new assignments WITH FILE UPLOAD ENABLED-->
-            <!-- The Modal -->
-            <div class="modal fade" id="addAssign">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Create New Assignment</h4>
-                            <button class="close" data-dismiss="modal" type="button">&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div>
-                            <!--LONGBLOB FILE UPLOAD-->
-                            <div class="container">
-                                <h6>File Input</h6>
-                                <form action="/addSub" enctype="multipart/form-data" method="POST">
-                                    <div class="form-group">
-                                        <input name="inputfile" type='file'>
-                                    </div>
-                                    <div>
-                                        <!--Assignment title-->
-                                        <label class="sr-only" for="assTitle">assTitle</label>
-                                        <input class="form-control" id="assTitle" name="assTitle"
-                                               placeholder="Assignment Title"
-                                               type="assTitle">
-                                        <!--Date-->
-                                        <label class="sr-only" for="date">Date</label>
-                                        <input class="form-control datepicker" id="date" name="date"
-                                               placeholder="Submission Date"
-                                               type="date">
-                                        <!--task details-->
-                                        <div class="modal-header">
-                                            <h6 class="modal-title">Task Details</h6>
-                                        </div>
-                                        <label class="sr-only" for="taskDetails">taskDetails</label>
-                                        <textarea autofocus class="form-control" id="taskDetails" name="taskDetails"
-                                                  placeholder="taskDetails" required rows="10" type="taskDetails">
-                                </textarea>
-                                        <!--Class ID-->
-                                        <label class="sr-only" for="classID">classID</label>
-                                        <input class="form-control" id="classID" name="classID" placeholder="classID"
-                                               type="classID">
-                                    </div>
-                                    <!--<button class="btn btn-default" type="btnAddSub">Submit</button>-->
-                                    <button class="btn btn-info btn-primary btn-sm" id="btnAddSub" type="addSub">Save
-                                        Submission
-                                    </button>
-                                </form>
-                            </div>
-
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <!--<button class="btn btn-info btn-primary btn-sm" id="btnAddAssign" type="addSub">Save Submission
-                            </button>
-                            <!--Commit Data-->
-                            <button class="btn btn-info btn-sm" data-dismiss="modal" type="addSub">Close</button>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!--Modal Box for class management-->
-            <!--ADDING AND REMOVING STUDENTS-->
-            <!--Modal Box for class management-->
-            <!-- The Modal -->
-            <div class="modal fade" id="classManager">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Class Manager</h4>
-                            <button class="close" data-dismiss="modal" type="button">&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div>
-                            <div class="container">
-                                <h6>Remove Students from Classes</h6>
-                                <button class="btn btn-info btn-sm" data-target="#classManageRemoveName"
-                                        data-toggle="modal" id="userButton" type="button">
-                                    Remove Class Members
-                                </button>
-                                <button class="btn btn-info btn-sm" data-target="#classManageAddName"
-                                        data-toggle="modal" id="userButton" type="button">
-                                    Add Class Members
-                                </button>
-                                <br>
-                                <div class="modal-footer">
-                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManager">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Removing Students from classes-->
-            <!--Modal Box for class management-->
-            <!-- The Modal -->
-            <div class="modal fade" id="classManageRemoveName">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Class Member Management</h4>
-                            <button class="close" data-dismiss="modal" type="button">&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div>
-                            <div class="container">
-                                <h5>Remove Students from Classes</h5>
-                                <h6>Enter Student and Class Details</h6>
-                                <form action="/classManageRemoveName" enctype="multipart/form-data" method="POST">
-                                    <!--  ########################-->
-                                    <!--Student Name-->
-                                    <label class="sr-only" for="stuFname">Student First Name</label>
-                                    <input class="form-control" id="stuFname" name="stuFname"
-                                           placeholder="Student First Name"
-                                           type="stuFname">
-                                    <label class="sr-only" for="stuLname">Student Last Name</label>
-                                    <input class="form-control" id="stuLname" name="stuLname"
-                                           placeholder="Student Last Name"
-                                           type="stuLname">
-                                    <label class="sr-only" for="className">Class Name</label>
-                                    <input class="form-control" id="className" name="className" placeholder="Class Name"
-                                           type="className">
-                                    <!-- ########################-->
-                                    <!--Commit Data-->
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-info btn-primary btn-sm" id="btnClassManageRemove"
-                                        type="classManageRemove">Save Change
-                                </button>
-                                <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageRemove">
-                                    Close
-                                </button>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Adding Students to classes-->
-        <!-- Button to Open the Modal -->
-
-        <!--Modal Box for class management-->
-        <!-- The Modal -->
-        <div class="modal fade" id="classManageAddName">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header"><
-                        <h4 class="modal-title">Class Member Management</h4>
-                        <button class="close" data-dismiss="modal" type="button">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div>
-                        <!--LONGBLOB FILE UPLOAD-->
-                        <div class="container">
-                            <h5>Add Students to Classes</h5>
-                            <h6>Enter Student and Class Details</h6>
-                            <form action="/classManageAddName" enctype="multipart/form-data" method="POST">
-                                <!--Student Name-->
-                                <label class="sr-only" for="stuFname">Student First Name</label>
-                                <input class="form-control" id="stuFname" name="stuFname"
-                                       placeholder="Student First Name"
-                                       type="stuFname">
-                                <label class="sr-only" for="stuLname">Student Last Name</label>
-                                <input class="form-control" id="stuLname" name="stuLname"
-                                       placeholder="Student Last Name"
-                                       type="stuLname">
-                                <label class="sr-only" for="className">Class Name</label>
-                                <input class="form-control" id="className" name="className" placeholder="Class Name"
-                                       type="className">
-                                <!-- ########################-->
-                                <!--Commit Data-->
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-info btn-sm" type="classManageAddName">Submit</button>
-                            <!--Commit Data-->
-                            <button class="btn btn-info btn-sm" data-dismiss="modal" type="classManageAddName">Close
-                            </button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
     <!--Modal Box for PASSWORD management-->
     <!-- The Modal -->
-<div class="modal fade" id="passManage">
+<div class="modal fade" id="passManageStu1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <!-- Modal Header -->
@@ -510,27 +236,23 @@
                     <div class="container">
                         <h6>Modify Student Passwords</h6>
                         <h6>Enter Student Names and Email Address</h6>
-                        <form action="/passManage" enctype="multipart/form-data" method="POST">
+                        <form action="/passManageStu1" enctype="multipart/form-data" method="POST">
                             <!--  ########################-->
                             <!--Student Name-->
-                            <label class="sr-only" for="stuFname">Student First Name</label>
-                            <input class="form-control" id="stuFname" name="stuFname" placeholder="Student First Name"
-                                   type="stuFname">
-                            <label class="sr-only" for="stuLname">Student Last Name</label>
-                            <input class="form-control" id="stuLname" name="stuLname" placeholder="Student Last Name"
-                                   type="stuLname">
-                            <label class="sr-only" for="stuEmail">Class Name</label>
-                            <input class="form-control" id="stuEmail" name="stuEmail" placeholder="Student Email"
-                                   type="stuEmail">
-                            <h6>Enter New Password</h6>
-                            <label class="sr-only" for="stuNewPass">Class Name</label>
-                            <input class="form-control" id="stuNewPass" name="stuNewPass" placeholder="New Password"
-                                   type="stuNewPass">
+                            <table>
+                                <th>Name</th>
+                                <th>New Password</th>
+                                <tr>
+                                    <td>{{ _student1Name }}</td>
+                                    <td><input class="form-control" id="stuNewPass" name="stuNewPass" placeholder="New Password"
+                                   type="stuNewPass"></td>
+                                </tr>
+                            </table>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-info btn-primary btn-sm" id="passManage" type="passManage">Save Change
+                        <button class="btn btn-info btn-primary btn-sm" id="passManageStu1" type="passManageStu1">Save Change
                         </button>
-                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="passManage">Close</button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="passManageStu1">Close</button>
                     </div>
                     </form>
                 </div>
@@ -538,85 +260,37 @@
         </div>
     </div>
 </div>
-
-<!--Modal Box for Marking Assignment1-->
-<!-- The Modal -->
-<div class="modal fade" id="markAss1">
+            <!-- The Modal -->
+<div class="modal fade" id="passManageStu2">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">{{ _nextUpClass }} Assignment Marking</h4>
+                    <h4 class="modal-title">Password Management</h4>
                     <button class="close" data-dismiss="modal" type="button">&times;</button>
                 </div>
-                <div class="modal-body">
-                <P>The table below shows the students who are awaiting marks for their {{ _nextUpClass }} assignment</P>
-                </div>
-                    <!-- Modal body -->
+                <!-- Modal body -->
                 <div>
                     <div class="container">
-                             <table class = "asssignment">
-    <tr>
-    <th>Student</th>
-    <th>Submission</th>
-    <th>Assign Mark</th>
-    <th>Comment</th>
-    <th>Submit</th>
-    </tr>
-    <tr>
-        <!--Assignment 1 -->
-     <td>{{ _stu1Name }}</td>
-    <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu1File }}" target="_blank">View Submission</a>
-                                </td>
-        <form action="/stu1MarkAdd" enctype="multipart/form-data" method="POST">
-    <td><input class="form-control" id="stu1Mark" name="stu1Mark" placeholder="Assign Mark"
-               type="stu1Mark"></td>
-            <form action="/stu1MarkAdd" enctype="multipart/form-data" method="POST">
-    <td><input class="form-control" id="stu1Comment" name="stu1Comment" placeholder="Add Comment"
-               type="stu1Comment"></td>
-        <td>
-           <button class="btn btn-info btn-primary btn-sm" id="stu1MarkAdd" type="stu1MarkAdd">Save Change
-                        </button>
-        </td>
-        </form>
-        </tr>
-    <tr>
-        <!--Assignment 2 -->
-     <td>{{ _stu2Name }}</td>
-    <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu2File }}" target="_blank">View Submission</a>
-                                </td>
-    <form action="/stu2MarkAdd" enctype="multipart/form-data" method="POST">
-    <td><input class="form-control" id="stu2Mark" name="stu2Mark" placeholder="Assign Mark"
-               type="stu2Mark"></td>
-        <form action="/stu2MarkAdd" enctype="multipart/form-data" method="POST">
-    <td><input class="form-control" id="stu2Comment" name="stu2Comment" placeholder="Add Comment"
-               type="stu2Comment"></td>
-        <td>
-           <button class="btn btn-info btn-primary btn-sm" id="stu2MarkAdd" type="stu2MarkAdd">Save Change
-                        </button>
-        </td>
-        </form>
-                             </tr>
-        <!--Assignment 3 -->
-     <td>{{ _stu3Name }}</td>
-    <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu3File }}" target="_blank">View Submission</a>
-                                </td>
-      <form action="/stu3MarkAdd" enctype="multipart/form-data" method="POST">
-    <td><input class="form-control" id="stu3Mark" name="stu3Mark" placeholder="Assign Mark"
-               type="stu3Mark"></td>
-          <form action="/stu3MarkAdd" enctype="multipart/form-data" method="POST">
-    <td><input class="form-control" id="stu3Comment" name="stu3Comment" placeholder="Add Comment"
-               type="stu3Comment"></td>
-        <td>
-           <button class="btn btn-info btn-primary btn-sm" id="stu3MarkAdd" type="stu3MarkAdd">Save Change
-                        </button>
-        </td>
-        </form>
-  </tr>
-</table>
+                        <h6>Modify Student Passwords</h6>
+                        <h6>Enter Student Names and Email Address</h6>
+                        <form action="/passManageStu2" enctype="multipart/form-data" method="POST">
+                            <!--  ########################-->
+                            <!--Student Name-->
+                            <table>
+                                <th>Name</th>
+                                <th>New Password</th>
+                                <tr>
+                                    <td>{{ _student1Name }}</td>
+                                    <td><input class="form-control" id="stuNewPass" name="stuNewPass" placeholder="New Password"
+                                   type="stuNewPass"></td>
+                                </tr>
+                            </table>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="markAss1">Close</button>
+                        <button class="btn btn-info btn-primary btn-sm" id="passManageStu2" type="passManageStu2">Save Change
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" type="passManageStu2">Close</button>
                     </div>
                     </form>
                 </div>
@@ -625,101 +299,111 @@
     </div>
 </div>
 
+      <div class="modal fade" id="stu1subs" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _student1Name }}'s Submissions</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <table>
+                            <th>Class</th>
+                            <th>Assignment Title</th>
+                            <th>Mark Given</th>
+                            <th>Teacher Comment</th>
+                            <th>Submission</th>
+                            <tr>
+                                <td>{{ _stu1ass1class }}</td>
+                                <td>{{ _stu1ass1name }}</td>
+                                <td>{{ _stu1ass1mark }}</td>
+                                <td>{{ _stu1ass1Comm }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu1ass1File }}" target="_blank">View Submission</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ _stu1ass2class }}</td>
+                                <td>{{ _stu1ass2name }}</td>
+                                <td>{{ _stu1ass2mark }}</td>
+                                <td>{{ _stu1ass2Comm }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu1ass2File }}" target="_blank">View Submission</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ _stu1ass3class }}</td>
+                                <td>{{ _stu1ass3name }}</td>
+                                <td>{{ _stu1ass3mark }}</td>
+                                <td>{{ _stu1ass3Comm }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu1ass3File }}" target="_blank">View Submission</a>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+     <div class="modal fade" id="stu2subs" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _student2Name }}'s Submissions</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <table>
+                            <th>Class</th>
+                            <th>Assignment Title</th>
+                            <th>Mark Given</th>
+                            <th>Teacher Comment</th>
+                            <th>Submission</th>
+                            <tr>
+                                <td>{{ _stu2ass1class }}</td>
+                                <td>{{ _stu2ass1name }}</td>
+                                <td>{{ _stu2ass1mark }}</td>
+                                <td>{{ _stu2ass1Comm }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu2ass1File }}" target="_blank">View Submission</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ _stu2ass2class }}</td>
+                                <td>{{ _stu2ass2name }}</td>
+                                <td>{{ _stu2ass2mark }}</td>
+                                <td>{{ _stu2ass2Comm }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu2ass2File }}" target="_blank">View Submission</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ _stu2ass3class }}</td>
+                                <td>{{ _stu2ass3name }}</td>
+                                <td>{{ _stu2ass3mark }}</td>
+                                <td>{{ _stu2ass3Comm }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu2ass3File }}" target="_blank">View Submission</a>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
 
-
-      <div class="modal fade" id="viewCur1" align="center">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">View {{ _curAss1Sub }} assignment</h4>
-                        <button class="close" data-dismiss="modal" type="button">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div>
-                        <H6>Assignment Title:</H6>
-                        <p class="model-signature">{{ _curAss1name }}</p>
-                        <H6>Assignment Details:</H6>
-                        <p class="model-signature">{{ _curAss1detail }}</p>
-                         <H6>Due Date:</H6>
-                        <p class="model-signature">{{ _curAss1date }}</p>
-                        <H6>Task Sheet</H6>
-                        <div>
-                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _curAss1file }}" target="_blank">View Task Sheet</a>
-                                </div>
-                        </div>
-                            <!-- Modal footer -->
-                             <div class="modal-footer">
-                                <div>
-                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                  </div>
-            </div>
-      <div class="modal fade" id="viewCur2" align="center">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">View {{ _curAss2Sub }} assignment</h4>
-                        <button class="close" data-dismiss="modal" type="button">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div>
-                        <H6>Assignment Title:</H6>
-                        <p class="model-signature">{{ _curAss2name }}</p>
-                        <H6>Assignment Details:</H6>
-                        <p class="model-signature">{{ _curAss2detail }}</p>
-                         <H6>Due Date:</H6>
-                        <p class="model-signature">{{ _curAss2date }}</p>
-                        <H6>Task Sheet</H6>
-                        <div>
-                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _curAss2file }}" target="_blank">View Task Sheet</a>
-                                </div>
-                        </div>
-                            <!-- Modal footer -->
-                             <div class="modal-footer">
-                                <div>
-                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                  </div>
-            </div>
-      <div class="modal fade" id="viewCur3" align="center">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">View {{ _curAss3Sub }} assignment</h4>
-                        <button class="close" data-dismiss="modal" type="button">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div>
-                        <H6>Assignment Title:</H6>
-                        <p class="model-signature">{{ _curAss3name }}</p>
-                        <H6>Assignment Details:</H6>
-                        <p class="model-signature">{{ _curAss3detail }}</p>
-                         <H6>Due Date:</H6>
-                        <p class="model-signature">{{ _curAss3date }}</p>
-                        <H6>Task Sheet</H6>
-                        <div>
-                            <a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _curAss3file }}" target="_blank">View Task Sheet</a>
-                                </div>
-                        </div>
-                            <!-- Modal footer -->
-                             <div class="modal-footer">
-                                <div>
-                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                  </div>
-            </div>
 
 
 <script>

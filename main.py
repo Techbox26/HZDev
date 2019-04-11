@@ -61,6 +61,8 @@ _stu1ID =""
 _stu2ID =""
 _stu3ID =""
 _nextUpID =""
+_stu1ID =""
+_stu2ID =""
 
 @app.route('/')
 def main():
@@ -190,7 +192,7 @@ def showteachtables():
     _outOfStu = (_submitted[0][1])
     print("NEXT DUE" + str(_nextUpClassID))
 #Retrieve details of student awaiting marks for their submission
-    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE submission.assignment_assID ='" + str(_nextUpID) + "' AND finalmark IS NULL;")
+    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE finalmark IS NULL;")
     _submit = cursor.fetchall()
     _stu1Name = ((_submit[0][0]) + " " + (_submit[0][1]))
     _stu1File = (_submit[0][2])
@@ -259,12 +261,6 @@ def showteachtables():
     print(_stu1AVG)
     print(_stu2OutName)
 
-
-   #Students yet to submit anything for the next due assignment
-
-
-
-
     return render_template('teachtables.html',_stu3Email=_stu3Email,_stu2Email=_stu2Email,_stu1Email=_stu1Email,_stu3OutName=_stu3OutName,_stu2OutName=_stu2OutName,_stu1OutName=_stu1OutName,_stu3AVG=_stu3AVG,_stu2AVG=_stu2AVG,_stu1AVG=_stu1AVG,_curAss3date=_curAss3date,_curAss3file=_curAss3file,_curAss3detail=_curAss3detail,_curAss3sub=_curAss3sub, _curAss3name=_curAss3name, _curAss2date=_curAss2date,_curAss2file=_curAss2file,_curAss2detail=_curAss2detail,_curAss2sub=_curAss2sub, _curAss2name=_curAss2name, _curAss1date=_curAss1date,_curAss1file=_curAss1file,_curAss1detail=_curAss1detail,_curAss1sub=_curAss1sub, _curAss1name=_curAss1name,_duedate=_duedate ,_stu3File=_stu3File, _stu3Name=_stu3Name, _stu2File=_stu2File, _stu2Name=_stu2Name,_stu1File=_stu1File, _stu1Name=_stu1Name, _outOfStu=_outOfStu, _leftToMark=_leftToMark, _nextUpClass=_nextUpClass,_nextUpDate=_nextUpDate,_outstanding=_outstanding, _class1LowStuMark=_class1LowStuMark, _class1LowStu=_class1LowStu, _class1HighStuMark=_class1HighStuMark, _class1HighStu=_class1HighStu, _class2LowStuMark=_class2LowStuMark, _class2LowStu=_class2LowStu, _class2HighStuMark=_class2HighStuMark, _class2HighStu=_class2HighStu,_class3LowStuMark=_class3LowStuMark, _class3LowStu=_class3LowStu, _class3HighStuMark=_class3HighStuMark, _class3HighStu=_class3HighStu,_class3Avg=_class3Avg, _class2Avg=_class2Avg, _class1Avg=_class1Avg, _class3Name=_class3Name, _class2Name=_class2Name, _class1Name=_class1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
@@ -272,8 +268,16 @@ def showteachtables():
 
 @app.route('/parents')
 def showParentPage():
+    global _stu1ID
+    global _stu2ID
     #Determine students that the parent is responsible for
-    cursor.execute("SELECT * FROM user WHERE parent_parentID = '" + str(_userID) + "';")
+    cursor.execute("SELECT COUNT(*) FROM user WHERE parent_parentID = '" + str(_userID) + "' AND pview = 1;")
+    _possible = cursor.fetchall()
+    _possible = (_possible[0][0])
+    if _possible == 0:
+        error = 'You do not have permission to view student accounts'
+        return render_template('loginV3.html', error=error)
+    cursor.execute("SELECT * FROM user WHERE parent_parentID = '" + str(_userID) + "' AND pview = 1;")
     _studentList = cursor.fetchall()
     _student1Name = ((_studentList[0][3]) + " " + (_studentList[0][4]))
     _student2Name = ((_studentList[1][3]) + " " + (_studentList[1][4]))
@@ -290,7 +294,6 @@ def showParentPage():
     cursor.execute("SELECT COUNT(assignment.assTitle) FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_stu2ID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
     _outstanding = cursor.fetchall()
     _stu2Outstand = (_outstanding[0][0])
-
 
     # SHOW CLASSES AND AVG MARKS FOR EACH STUDENT
     #STUDENT 1
@@ -320,7 +323,6 @@ def showParentPage():
     print("Your average mark for " + _stu1Class3 + " is" + str(_stu1class3Mark))
 
 
-
     #STUDENT 2
     cursor.execute(
         "SELECT title, level FROM class JOIN classregister ON classregister.Class_classID JOIN user ON classregister.users_userID = user.userID WHERE user.userID = '" + str(
@@ -348,7 +350,90 @@ def showParentPage():
     _stu2class3Mark = (_stu2class3Mark[0][0])
     print("Your average mark for " + _stu2Class3 + " is" + str(_stu2class3Mark))
 
-    return render_template('parenttables.html',_stu2class3Mark=_stu2class3Mark,_stu2Class3=_stu2Class3,_stu1class3Mark=_stu1class3Mark,_stu1Class3=_stu1Class3,_stu2class2Mark=_stu2class2Mark,_stu2Class2=_stu2Class2,_stu1class2Mark=_stu1class2Mark,_stu1Class2=_stu1Class2,_stu2class1Mark=_stu2class1Mark,_stu2Class1=_stu2Class1,_stu1class1Mark=_stu1class1Mark,_stu1Class1=_stu1Class1,_stu2Outstand=_stu2Outstand,_stu1Outstand=_stu1Outstand,_student2Name=_student2Name,_student1Name=_student1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
+    #######################################
+    # VIEW DETAILS OF PAST ASSIGNMENTS AND ADD BUTTONS ETC
+    # RUN SQL TO SELECT ALL DATA FOR PAST 3 ASSIGNMENTS
+    # STUDENT 1 ##############
+    cursor.execute(
+        "SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu1ID) + "' AND finalmark !='' ORDER BY assignment.dueDate DESC LIMIT 3 ;")
+    record = cursor.fetchall()
+    # Assignment 1
+    _stu1ass1name = (record[0][0])
+    _stu1ass1class = (record[0][1])
+    _stu1ass1mark = (record[0][4])
+    _stu1ass1Comm = (record[0][5])
+    print(_stu1ass1name)
+    print(_stu1ass1class)
+    print(_stu1ass1mark)
+    # Assignment 2
+    _stu1ass2name = (record[1][0])
+    _stu1ass2class = (record[1][1])
+    _stu1ass2mark = (record[1][4])
+    _stu1ass2Comm = (record[1][5])
+    print(_stu1ass2name)
+    print(_stu1ass2class)
+    print(_stu1ass2mark)
+    # Assignment 3
+    _stu1ass3name = (record[2][0])
+    _stu1ass3class = (record[2][1])
+    _stu1ass3mark = (record[2][4])
+    _stu1ass3Comm = (record[1][5])
+    # FIND FILE DETAIL TO LINK FILES TO BUTTONS
+    _stu1ass1File = (record[0][2])
+    _stu1ass2File = (record[1][2])
+    _stu1ass3File = (record[2][2])
+    print("FILE NAMES")
+    print(_stu1ass1File)
+    print(_stu1ass2File)
+    print(_stu1ass3File)
+
+    #######################################
+    # VIEW DETAILS OF PAST ASSIGNMENTS AND ADD BUTTONS ETC
+    # RUN SQL TO SELECT ALL DATA FOR PAST 3 ASSIGNMENTS
+    # STUDENT 2 ##############
+    cursor.execute(
+        "SELECT assignment.assTitle, class.title, inputFileName, inputFilePath, finalmark, teachcomment, assignment_assID, user_userID FROM submission JOIN assignment on submission.assignment_assID = assignment.assID JOIN class on assignment.class_classID = class.classID WHERE user_userID ='" + str(
+            _stu2ID) + "' AND finalmark !='' ORDER BY assignment.dueDate DESC LIMIT 3 ;")
+    record = cursor.fetchall()
+    # Assignment 1
+    _stu2ass1name = (record[0][0])
+    _stu2ass1class = (record[0][1])
+    _stu2ass1mark = (record[0][4])
+    _stu2ass1Comm = (record[0][5])
+    print(_stu2ass1name)
+    print(_stu2ass1class)
+    print(_stu2ass1mark)
+    # Assignment 2
+    _stu2ass2name = (record[1][0])
+    _stu2ass2class = (record[1][1])
+    _stu2ass2mark = (record[1][4])
+    _stu2ass2Comm = (record[1][5])
+    print(_stu2ass2name)
+    print(_stu2ass2class)
+    print(_stu2ass2mark)
+    # Assignment 3
+    _stu2ass3name = (record[2][0])
+    _stu2ass3class = (record[2][1])
+    _stu2ass3mark = (record[2][4])
+    _stu2ass3Comm = (record[1][5])
+      # FIND FILE DETAIL TO LINK FILES TO BUTTONS
+    _stu2ass1File = (record[0][2])
+    _stu2ass2File = (record[1][2])
+    _stu2ass3File = (record[2][2])
+    print("FILE NAMES")
+    print(_stu2ass1File)
+    print(_stu2ass2File)
+    print(_stu2ass3File)
+
+
+
+
+
+
+
+
+    return render_template('parenttables.html',_stu2ass3File=_stu2ass3File,_stu2ass3Comm=_stu2ass3Comm,_stu2ass3mark=_stu2ass3mark,_stu2ass3name=_stu2ass3name,_stu2ass3class=_stu2ass3class,_stu2ass2File=_stu2ass2File,_stu2ass2Comm=_stu2ass2Comm,_stu2ass2mark=_stu2ass2mark,_stu2ass2name=_stu2ass2name,_stu2ass2class=_stu2ass2class,_stu2ass1File=_stu2ass1File,_stu2ass1Comm=_stu2ass1Comm,_stu2ass1mark=_stu2ass1mark,_stu2ass1name=_stu2ass1name,_stu2ass1class=_stu2ass1class,_stu1ass3File=_stu1ass3File,_stu1ass3Comm=_stu1ass3Comm,_stu1ass3mark=_stu1ass3mark,_stu1ass3name=_stu1ass3name,_stu1ass3class=_stu1ass3class,_stu1ass2File=_stu1ass2File,_stu1ass2Comm=_stu1ass2Comm,_stu1ass2mark=_stu1ass2mark,_stu1ass2name=_stu1ass2name,_stu1ass2class=_stu1ass2class,_stu1ass1File=_stu1ass1File,_stu1ass1Comm=_stu1ass1Comm,_stu1ass1mark=_stu1ass1mark,_stu1ass1name=_stu1ass1name,_stu1ass1class=_stu1ass1class,_stu2class3Mark=_stu2class3Mark,_stu2Class3=_stu2Class3,_stu1class3Mark=_stu1class3Mark,_stu1Class3=_stu1Class3,_stu2class2Mark=_stu2class2Mark,_stu2Class2=_stu2Class2,_stu1class2Mark=_stu1class2Mark,_stu1Class2=_stu1Class2,_stu2class1Mark=_stu2class1Mark,_stu2Class1=_stu2Class1,_stu1class1Mark=_stu1class1Mark,_stu1Class1=_stu1Class1,_stu2Outstand=_stu2Outstand,_stu1Outstand=_stu1Outstand,_student2Name=_student2Name,_student1Name=_student1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 
@@ -998,6 +1083,36 @@ def passManage():  # WORKS
     #cursor.execute("UPDATE `project`.`user` SET `password` = '(" + _stuNewPass + "')' WHERE `lname` = '('" + _stuLname + "')' AND `fname` = '('" + _stuFname + "' )' AND `email` = '('" + _stuEmail + "' )';")
     conn.commit()
     return render_template('teachtables.html')
+
+@app.route('/passManageStu1' , methods=['GET', 'POST'])
+def passManageStu1():  # WORKS
+    # GET DATA FROM FORMS
+    _stuNewPass = request.form['stuNewPass']
+    print(_stuNewPass)
+    # GET STUDENT DATA FROM FORMS
+    #cursor.execute(
+    #   "UPDATE user SET user.password = 'Example' WHERE user.email = 'a';")
+    print("Successfully updated password")
+    cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.userID = ('" + str(_stu1ID) + "');")
+    conn.commit()
+    return render_template('loginV3.html')
+
+@app.route('/passManageStu2' , methods=['GET', 'POST'])
+def passManageStu2():  # WORKS
+    # GET DATA FROM FORMS
+    _stuNewPass = request.form['stuNewPass']
+    print(_stuNewPass)
+    # GET STUDENT DATA FROM FORMS
+    #cursor.execute(
+    #   "UPDATE user SET user.password = 'Example' WHERE user.email = 'a';")
+    print("Successfully updated password")
+    cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.userID = ('" + str(_stu2ID) + "');")
+    conn.commit()
+    return render_template('loginV3.html')
+
+
+
+
 
 @app.route('/stu1MarkAdd' , methods=['GET', 'POST'])
 def stu1AddMark():  # WORKS
