@@ -174,9 +174,9 @@
 
 
             <!--MODAL TEST BUTTON FOR ADDING NEW ASSIGNMENT-->
-            <button class="btn btn-info btn-sm" data-target="#addAssign" data-toggle="modal" id="userButton"
+            <button class="btn btn-info btn-sm" data-target="#parentView" data-toggle="modal" id="userButton"
                     type="button">
-                Add Assignment
+                Parental View
             </button>
         </div>
         <p align="middle"><img alt="Persons face" id="stuFace" src="../static/images/Blank-Person-Image.png"></p>
@@ -207,6 +207,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="parentView" align="center">
+            <div class="modal-dialog modal-lg">
+                <form action="/pViewChange" enctype="multipart/form-data" method="POST">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Change Parental Settings</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <H6>Current Setting:</H6>
+                        <H7>{{ _pview }}</H7>
+                        <BR>
+                        <H7>Change?</H7>
+                        <br>
+                        <button class="btn btn-info btn-primary btn-sm" id="pViewChange" type="pViewChange">Change Setting
+                        </button>
+                        </form>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+    </div>
 
         <!--Modal Box for adding new assignments-->
         <!-- The Modal -->
@@ -722,6 +753,7 @@
                         </div>
                   </div>
             </div>
+
 
 
 <script>

@@ -63,6 +63,7 @@ _stu3ID =""
 _nextUpID =""
 _stu1ID =""
 _stu2ID =""
+_pviewID = ""
 
 @app.route('/')
 def main():
@@ -543,8 +544,23 @@ def showParentPage():
 def showTableTest2():
     global _userFName
     global _userLName
+    global _pviewID
     print("testing")
     print(_userLName)
+
+   #Do parents have access to the information on the account?
+    cursor.execute("SELECT pview FROM user WHERE user.email = '" + str(_userEmail) + "';")
+    _pview = cursor.fetchall()
+    _pview = (_pview[0][0])
+    _pviewID = _pview
+    print("PARENT VIEW = " + str(_pview))
+    if _pview ==1:
+        _pview="Parents/Guardians Can See Your Information"
+    else:
+        _pview ="Parents/Guardians Cannot See Your Information"
+    print(_pview)
+
+
 
     # RETURN USER CLASS INFORMATION
     global _userClass
@@ -781,7 +797,7 @@ def showTableTest2():
 
     # Pass variables to main page
     # _due3name = _due3name, _due3class = _due3class, _due3mark = _due3mark, _due2name = _due2name, _due2class = _due2class, _due2mark = _due2mark, _due1name = _due1name, _due1class = _due1class, _due1mark = _due1mark,
-    return render_template('tabletests2.html',_ass1Comm = _ass1Comm, _ass2Comm=_ass2Comm, _ass3Comm=_ass3Comm ,_ass1DueDate=_ass1DueDate,_ass2DueDate=_ass2DueDate,_ass3DueDate=_ass3DueDate, _ass3DueClass=_ass3DueClass, _ass3DueTitle=_ass3DueTitle, _ass3DueDetail=_ass3DueDetail, _ass3DueSub=_ass3DueSub, _ass3DueFile=_ass3DueFile, _ass2DueClass=_ass2DueClass, _ass2DueTitle=_ass2DueTitle, _ass2DueDetail=_ass2DueDetail, _ass2DueSub=_ass2DueSub, _ass2DueFile=_ass2DueFile, _ass1DueClass=_ass1DueClass, _ass1DueTitle=_ass1DueTitle, _ass1DueDetail=_ass1DueDetail, _ass1DueSub=_ass1DueSub, _ass1DueFile=_ass1DueFile,    _nextAssDueFile=_nextAssDueFile, _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
+    return render_template('tabletests2.html',_pview = _pview,_ass1Comm = _ass1Comm, _ass2Comm=_ass2Comm, _ass3Comm=_ass3Comm ,_ass1DueDate=_ass1DueDate,_ass2DueDate=_ass2DueDate,_ass3DueDate=_ass3DueDate, _ass3DueClass=_ass3DueClass, _ass3DueTitle=_ass3DueTitle, _ass3DueDetail=_ass3DueDetail, _ass3DueSub=_ass3DueSub, _ass3DueFile=_ass3DueFile, _ass2DueClass=_ass2DueClass, _ass2DueTitle=_ass2DueTitle, _ass2DueDetail=_ass2DueDetail, _ass2DueSub=_ass2DueSub, _ass2DueFile=_ass2DueFile, _ass1DueClass=_ass1DueClass, _ass1DueTitle=_ass1DueTitle, _ass1DueDetail=_ass1DueDetail, _ass1DueSub=_ass1DueSub, _ass1DueFile=_ass1DueFile,    _nextAssDueFile=_nextAssDueFile, _ass3file=_ass3file, _ass2file=_ass2file, _ass1file=_ass1file, _ass3mark=_ass3mark ,_ass3class =_ass3class ,_ass3name=_ass3name, _ass2mark=_ass2mark ,_ass2class =_ass2class ,_ass2name=_ass2name,_ass1mark=_ass1mark ,_ass1class =_ass1class ,_ass1name=_ass1name ,_class1=_class1, _class2=_class2, _class3=_class3, _class1Mark=_class1Mark,
                        _class2Mark=_class2Mark, _class3Mark=_class3Mark, _userFName=_userFName, _userLName=_userLName,
                        _userEmail=_userEmail, _userClass=_userClass, _nextAssDueDate=_nextAssDueDate,
                        _nextAssDueSub=_nextAssDueSub, _nextAssDueDetail=_nextAssDueDetail,
@@ -1362,6 +1378,20 @@ def addSubmission4():
             conn.commit()
     return render_template('tabletests2.html')
 
+@app.route('/pViewChange', methods=['GET', 'POST'])
+def pViewChange():  # WORKS
+    # GET DATA FROM FORMS
+    global _pviewID
+    global _userID
+    # GET STUDENT DATA FROM FORMS
+    if _pviewID == 1:
+        _pviewID=0
+    if _pviewID == 0:
+        _pviewID = 1
+    print("Successfully Changed Parent View")
+    cursor.execute("UPDATE user SET user.pview = ('" + str(_pviewID) + "') WHERE user.userID = ('" + str(_userID) + "');")
+    conn.commit()
+    return render_template('tabletests2.html')
 
 
 
