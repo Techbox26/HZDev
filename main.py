@@ -426,14 +426,106 @@ def showParentPage():
     print(_stu2ass2File)
     print(_stu2ass3File)
 
+# DETERMINE NEXT ASSIGNMENT DUE
+    # SELECT NEXT ASSIGNMENT DUE STU1
+    cursor.execute(
+        "SELECT assignment.duedate, class.title, assignment.assID, class.classID FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister on class.classID = classregister.class_classID JOIN user ON classregister.users_userID = user.userID WHERE duedate > CURDATE() AND user.userID ='" + str(_stu1ID) + "' ORDER BY duedate LIMIT 1;")
+    _stu1nextUp = cursor.fetchall()
+    _stu1nextUpDate = (_stu1nextUp[0][0])
+    _stu1nextUpClass = (_stu1nextUp[0][1])
+    _stu1nextUpID = (_stu1nextUp[0][2])
+    _stu1nextUpClassID = (_stu1nextUp[0][3])
+    # SELECT NEXT ASSIGNMENT DUE STU2
+    cursor.execute(
+        "SELECT assignment.duedate, class.title, assignment.assID, class.classID FROM assignment JOIN class ON assignment.class_classID = class.classID JOIN classregister on class.classID = classregister.class_classID JOIN user ON classregister.users_userID = user.userID WHERE duedate > CURDATE() AND user.userID ='" + str(
+            _stu2ID) + "' ORDER BY duedate LIMIT 1;")
+    _stu2nextUp = cursor.fetchall()
+    _stu2nextUpDate = (_stu2nextUp[0][0])
+    _stu2nextUpClass = (_stu2nextUp[0][1])
+    _stu2nextUpID = (_stu2nextUp[0][2])
+    _stu2nextUpClassID = (_stu2nextUp[0][3])
+
+#View assignments that are due
+    #######################################
+    #STUDENT 1
+    # VIEW DETAILS OF DUE ASSIGNMENTS AND ADD BUTTONS ETC
+    # RUN SQL TO SELECT ALL DATA FOR 3 DUE ASSIGNMENTS
+    # DUE ASSIGNMENTS - ONES THAT ARE INCOMPLETE
+    cursor.execute("SELECT assignment.assTitle, class.title, class.classID, assignment.taskdetails,  assignment.assignmentFileName, inputFilePath, assignment_assID, user_userID, dueDate FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_stu1ID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
+    _stu1record = cursor.fetchall()
+    print("DUE ASSIGNMENTS STUDENT 1")
+    print(_stu1record)
+    # Assignment 1
+    _stu1ass1DueClass = (_stu1record[0][1])
+    _stu1ass1DueTitle = (_stu1record[0][0])
+    _stu1ass1DueSub = (_stu1record[0][1])
+    _stu1ass1DueFile =(_stu1record[0][4])
+    _stu1ass1DueID = (_stu1record[0][6])
+    _stu1ass1DueDate = (_stu1record[0][8])
+    print(_stu1ass1DueClass)
+    print(_stu1ass1DueTitle)
+
+    # Assignment 2
+    _stu1ass2DueClass = (_stu1record[1][1])
+    _stu1ass2DueTitle = (_stu1record[1][0])
+    _stu1ass2DueSub = (_stu1record[1][1])
+    _stu1ass2DueFile = (_stu1record[1][4])
+    _stu1ass2DueID = (_stu1record[1][6])
+    _stu1ass2DueDate = (_stu1record[1][8])
+    print(_stu1ass2DueClass)
+    print(_stu1ass2DueTitle)
+
+    # Assignment 3
+    _stu1ass3DueClass = (_stu1record[2][1])
+    _stu1ass3DueTitle = (_stu1record[2][0])
+    _stu1ass3DueSub = (_stu1record[2][1])
+    _stu1ass3DueFile = (_stu1record[2][4])
+    _stu1ass3DueID = (_stu1record[2][6])
+    _stu1ass3DueDate = (_stu1record[2][8])
+    print(_stu1ass3DueClass)
+    print(_stu1ass3DueTitle)
+#######################################
+    #STUDENT 2
+    # VIEW DETAILS OF DUE ASSIGNMENTS AND ADD BUTTONS ETC
+    # RUN SQL TO SELECT ALL DATA FOR 3 DUE ASSIGNMENTS
+    # DUE ASSIGNMENTS - ONES THAT ARE INCOMPLETE
+    cursor.execute("SELECT assignment.assTitle, class.title, class.classID, assignment.taskdetails,  assignment.assignmentFileName, inputFilePath, assignment_assID, user_userID, dueDate FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID AND submission.user_userID = '" + str(_stu2ID) + "' JOIN class ON assignment.class_classID = class.classID LEFT JOIN user ON user.userID = submission.user_userID WHERE submission.assignment_assID is null;")
+    _stu2record = cursor.fetchall()
+    print("DUE ASSIGNMENTS STUDENT 2")
+    print(_stu2record)
+    # Assignment 1
+    _stu2ass1DueClass = (_stu2record[0][1])
+    _stu2ass1DueTitle = (_stu2record[0][0])
+    _stu2ass1DueSub = (_stu2record[0][1])
+    _stu2ass1DueFile =(_stu2record[0][4])
+    _stu2ass1DueID = (_stu2record[0][6])
+    _stu2ass1DueDate = (_stu2record[0][8])
+    print(_stu2ass1DueClass)
+    print(_stu2ass1DueTitle)
+
+    # Assignment 2
+    _stu2ass2DueClass = (_stu2record[1][1])
+    _stu2ass2DueTitle = (_stu2record[1][0])
+    _stu2ass2DueSub = (_stu2record[1][1])
+    _stu2ass2DueFile = (_stu2record[1][4])
+    _stu2ass2DueID = (_stu2record[1][6])
+    _stu2ass2DueDate = (_stu2record[1][8])
+    print(_stu2ass2DueClass)
+    print(_stu2ass2DueTitle)
+
+    # Assignment 3
+    _stu2ass3DueClass = (_stu2record[2][1])
+    _stu2ass3DueTitle = (_stu2record[2][0])
+    _stu2ass3DueSub = (_stu2record[2][1])
+    _stu2ass3DueFile = (_stu2record[2][4])
+    _stu2ass3DueID = (_stu2record[2][6])
+    _stu2ass3DueDate = (_stu2record[2][8])
+    print(_stu2ass3DueClass)
+    print(_stu2ass3DueTitle)
 
 
 
-
-
-
-
-    return render_template('parenttables.html',_stu2ass3File=_stu2ass3File,_stu2ass3Comm=_stu2ass3Comm,_stu2ass3mark=_stu2ass3mark,_stu2ass3name=_stu2ass3name,_stu2ass3class=_stu2ass3class,_stu2ass2File=_stu2ass2File,_stu2ass2Comm=_stu2ass2Comm,_stu2ass2mark=_stu2ass2mark,_stu2ass2name=_stu2ass2name,_stu2ass2class=_stu2ass2class,_stu2ass1File=_stu2ass1File,_stu2ass1Comm=_stu2ass1Comm,_stu2ass1mark=_stu2ass1mark,_stu2ass1name=_stu2ass1name,_stu2ass1class=_stu2ass1class,_stu1ass3File=_stu1ass3File,_stu1ass3Comm=_stu1ass3Comm,_stu1ass3mark=_stu1ass3mark,_stu1ass3name=_stu1ass3name,_stu1ass3class=_stu1ass3class,_stu1ass2File=_stu1ass2File,_stu1ass2Comm=_stu1ass2Comm,_stu1ass2mark=_stu1ass2mark,_stu1ass2name=_stu1ass2name,_stu1ass2class=_stu1ass2class,_stu1ass1File=_stu1ass1File,_stu1ass1Comm=_stu1ass1Comm,_stu1ass1mark=_stu1ass1mark,_stu1ass1name=_stu1ass1name,_stu1ass1class=_stu1ass1class,_stu2class3Mark=_stu2class3Mark,_stu2Class3=_stu2Class3,_stu1class3Mark=_stu1class3Mark,_stu1Class3=_stu1Class3,_stu2class2Mark=_stu2class2Mark,_stu2Class2=_stu2Class2,_stu1class2Mark=_stu1class2Mark,_stu1Class2=_stu1Class2,_stu2class1Mark=_stu2class1Mark,_stu2Class1=_stu2Class1,_stu1class1Mark=_stu1class1Mark,_stu1Class1=_stu1Class1,_stu2Outstand=_stu2Outstand,_stu1Outstand=_stu1Outstand,_student2Name=_student2Name,_student1Name=_student1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
+    return render_template('parenttables.html',_stu2ass3DueDate=_stu2ass3DueDate,_stu2ass3DueFile=_stu2ass3DueFile,_stu2ass3DueTitle=_stu2ass3DueTitle,_stu2ass3DueClass=_stu2ass3DueClass,_stu2ass2DueDate=_stu2ass2DueDate,_stu2ass2DueFile=_stu2ass2DueFile,_stu2ass2DueTitle=_stu2ass2DueTitle,_stu2ass2DueClass=_stu2ass2DueClass,_stu2ass1DueDate=_stu2ass1DueDate,_stu2ass1DueFile=_stu2ass1DueFile,_stu2ass1DueTitle=_stu2ass1DueTitle,_stu2ass1DueClass=_stu2ass1DueClass,_stu1ass3DueDate=_stu1ass3DueDate,_stu1ass3DueFile=_stu1ass3DueFile,_stu1ass3DueTitle=_stu1ass3DueTitle,_stu1ass3DueClass=_stu1ass3DueClass,_stu1ass2DueDate=_stu1ass2DueDate,_stu1ass2DueFile=_stu1ass2DueFile,_stu1ass2DueTitle=_stu1ass2DueTitle,_stu1ass2DueClass=_stu1ass2DueClass,_stu1ass1DueDate=_stu1ass1DueDate,_stu1ass1DueFile=_stu1ass1DueFile,_stu1ass1DueTitle=_stu1ass1DueTitle,_stu1ass1DueClass=_stu1ass1DueClass,_stu2ass3File=_stu2ass3File,_stu2ass3Comm=_stu2ass3Comm,_stu2ass3mark=_stu2ass3mark,_stu2ass3name=_stu2ass3name,_stu2ass3class=_stu2ass3class,_stu2ass2File=_stu2ass2File,_stu2ass2Comm=_stu2ass2Comm,_stu2ass2mark=_stu2ass2mark,_stu2ass2name=_stu2ass2name,_stu2ass2class=_stu2ass2class,_stu2ass1File=_stu2ass1File,_stu2ass1Comm=_stu2ass1Comm,_stu2ass1mark=_stu2ass1mark,_stu2ass1name=_stu2ass1name,_stu2ass1class=_stu2ass1class,_stu1ass3File=_stu1ass3File,_stu1ass3Comm=_stu1ass3Comm,_stu1ass3mark=_stu1ass3mark,_stu1ass3name=_stu1ass3name,_stu1ass3class=_stu1ass3class,_stu1ass2File=_stu1ass2File,_stu1ass2Comm=_stu1ass2Comm,_stu1ass2mark=_stu1ass2mark,_stu1ass2name=_stu1ass2name,_stu1ass2class=_stu1ass2class,_stu1ass1File=_stu1ass1File,_stu1ass1Comm=_stu1ass1Comm,_stu1ass1mark=_stu1ass1mark,_stu1ass1name=_stu1ass1name,_stu1ass1class=_stu1ass1class,_stu2class3Mark=_stu2class3Mark,_stu2Class3=_stu2Class3,_stu1class3Mark=_stu1class3Mark,_stu1Class3=_stu1Class3,_stu2class2Mark=_stu2class2Mark,_stu2Class2=_stu2Class2,_stu1class2Mark=_stu1class2Mark,_stu1Class2=_stu1Class2,_stu2class1Mark=_stu2class1Mark,_stu2Class1=_stu2Class1,_stu1class1Mark=_stu1class1Mark,_stu1Class1=_stu1Class1,_stu2Outstand=_stu2Outstand,_stu1Outstand=_stu1Outstand,_student2Name=_student2Name,_student1Name=_student1Name, _userType=_userType, _userFName=_userFName, _userLName=_userLName, _userEmail=_userEmail)
 
 
 

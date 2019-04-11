@@ -9,7 +9,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <!Css File>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
-    <link href="../static/test2.css" rel="stylesheet">
+    <link href="../static/parent.css" rel="stylesheet">
     <!--Modal Stuff-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -33,15 +33,17 @@
     </div>
     <!--Alerts Content with useful info-->
     <div class="AlertsText">
-        <h4>Important Information - Next Assignment</h4>
-        <div align="center">Students must submit their {{ _nextUpClass }} assignment by {{ _nextUpDate }}!</div>
+        <h4>Important Information - Next Assignments </h4>
+        <div align="center">{{ _student1Name }} must submit their {{ _stu1nextUpClass }} assignment by {{ _stu1nextUpDate }}!</div>
+        <div align="center">{{ _student2Name }} must submit their {{ _stu2nextUpClass }} assignment by {{ _stu2nextUpDate }}!</div>
+
         <div align="center">
             <br>
-            <button class="btn btn-info btn-sm" data-target="#markAss1" data-toggle="modal" id="userButton"
-                    type="button">View Current Submissions
+            <button class="btn btn-info btn-sm" data-target="#stu1Assignments" data-toggle="modal" id="userButton"
+                    type="button">View {{ _student1Name }}'s Assignments
             </button>
-            <button class="btn btn-info btn-sm" data-target="#classManager" data-toggle="modal" id="userButton"
-                    type="button">View Current Submissions
+            <button class="btn btn-info btn-sm" data-target="#stu2Assignments" data-toggle="modal" id="userButton"
+                    type="button">View {{ _student2Name }}'s Assignments
             </button>
         </div>
     </div>
@@ -112,62 +114,12 @@
     <!------------------------------------>
     <!--Table showing previous submissions with comments-->
     <!------------------------------------>
-    <!--Current Assignment Content Section with useful info-->
-    <div class="Title2"><strong>Students Yet To Submit For {{ _nextUpClass }}</strong>
-        <p hidden="true" id="_dueDate">{{ _nextUpDate }}</p>
-        <br><p>Days Remaining:</p>
-        <div align="center"> <h5 id="demo"></h5>
-        </div>
-    </div>
-    <div class="Assignments">
-        <table>
-            <tr>
-                <th>Student</th>
-                <th>Email</th>
-                <th>Average Subject Mark</th>
-                <th>Send Email</th>
-            </tr>
-            <!--Assignment 1 -->
-            <td>{{ _stu1OutName }}</td>
-            <td>{{ _stu1Email }}</td>
-            <td> {{ _stu1AVG }}</td>
-            <td>
-                <button class="btn btn-info btn-sm">
-                  <a href="mailto:student@student.com?subject=Subject%20Submission%20Reminder&amp;body=Please%20submit%20your%20assignment%20">Send Mail</a>
-                </button>
-            </td>
-            </tr>
-            <!--Assignment 2 -->
-            <td>{{ _stu2OutName }}</td>
-            <td>{{ _stu2Email }}</td>
-            <td> {{ _stu2AVG }}</td>
-            <td>
-                <button class="btn btn-info btn-sm">
-                  <a href="mailto:student@student.com?subject=Subject%20Submission%20Reminder&amp;body=Please%20submit%20your%20assignment%20">Send Mail</a>
-                </button>
-            </td>
-            </tr>
 
-            </td>
-            <!--Assignment 3 -->
-            <td>{{ _stu3OutName }}</td>
-            <td>{{ _stu3Email }}</td>
-            <td> {{ _stu3AVG }}</td>
-            <td>
-                <button class="btn btn-info btn-sm">
-                  <a href="mailto:student@student.com?subject=Subject%20Submission%20Reminder&amp;body=Please%20submit%20your%20assignment%20">Send Mail</a>
-                </button>
-            </td>
-            </tr>
-            <tr>
-        </table>
-
-    </div>
     <!------------------------------------>
     <!--Table showing current 3 submissions-->
     <!------------------------------------>
-    <div class="Title3"><h5><strong>Submissions and Feedback</strong></h5></div>
-    <div class="Previous">
+    <div class="Title2"><h5><strong>Submissions and Feedback</strong></h5></div>
+    <div class="Assignments">
         <div align="center">
             <button class="btn btn-info btn-sm" data-target="#stu1subs" data-toggle="modal" id="userButton"
                     type="button">{{ _student1Name }}'s Submissions
@@ -234,8 +186,8 @@
                 <!-- Modal body -->
                 <div>
                     <div class="container">
-                        <h6>Modify Student Passwords</h6>
-                        <h6>Enter Student Names and Email Address</h6>
+                        <h6>Modify Student Password</h6>
+                        <h6>Enter New Password</h6>
                         <form action="/passManageStu1" enctype="multipart/form-data" method="POST">
                             <!--  ########################-->
                             <!--Student Name-->
@@ -272,8 +224,8 @@
                 <!-- Modal body -->
                 <div>
                     <div class="container">
-                        <h6>Modify Student Passwords</h6>
-                        <h6>Enter Student Names and Email Address</h6>
+                        <h6>Modify Student Password</h6>
+                        <h6>Enter New Password</h6>
                         <form action="/passManageStu2" enctype="multipart/form-data" method="POST">
                             <!--  ########################-->
                             <!--Student Name-->
@@ -390,6 +342,102 @@
                                 <td>{{ _stu2ass3Comm }}</td>
                                 <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Submissions/{{ _stu2ass3File }}" target="_blank">View Submission</a>
                                 </td>
+                            </tr>
+                        </table>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+     <div class="modal fade" id="stu1Assignments" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _student1Name }}'s Due Assignemnts</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <table>
+                            <th>Class</th>
+                            <th>Assignment Title</th>
+                            <th>Task Sheet</th>
+                            <th>Due Date</th>
+                            <tr>
+                                <td>{{ _stu1ass1DueClass }}</td>
+                                <td>{{ _stu1ass1DueTitle }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _stu1ass1DueFile }}" target="_blank">View Submission</a>
+                                </td>
+                                <td>{{ _stu1ass1DueDate }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ _stu1ass2DueClass }}</td>
+                                <td>{{ _stu1ass2DueTitle }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _stu1ass2DueFile }}" target="_blank">View Submission</a>
+                                </td>
+                                <td>{{ _stu1ass2DueDate }}</td>
+                            </tr>
+                            <tr>
+                               <td>{{ _stu1ass3DueClass }}</td>
+                                <td>{{ _stu1ass3DueTitle }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _stu1ass3DueFile }}" target="_blank">View Submission</a>
+                                </td>
+                                <td>{{ _stu1ass3DueDate }}</td>
+                            </tr>
+                        </table>
+                        </div>
+                            <!-- Modal footer -->
+                             <div class="modal-footer">
+                                <div>
+                                    <button class="btn btn-info btn-sm" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+     <div class="modal fade" id="stu2Assignments" align="center">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">View {{ _student2Name }}'s Due Assignemnts</h4>
+                        <button class="close" data-dismiss="modal" type="button">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div>
+                        <table>
+                            <th>Class</th>
+                            <th>Assignment Title</th>
+                            <th>Task Sheet</th>
+                            <th>Due Date</th>
+                            <tr>
+                                <td>{{ _stu2ass1DueClass }}</td>
+                                <td>{{ _stu2ass1DueTitle }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _stu2ass1DueFile }}" target="_blank">View Submission</a>
+                                </td>
+                                <td>{{ _stu2ass1DueDate }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ _stu2ass2DueClass }}</td>
+                                <td>{{ _stu2ass2DueTitle }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _stu2ass2DueFile }}" target="_blank">View Submission</a>
+                                </td>
+                                <td>{{ _stu2ass2DueDate }}</td>
+                            </tr>
+                            <tr>
+                               <td>{{ _stu2ass3DueClass }}</td>
+                                <td>{{ _stu2ass3DueTitle }}</td>
+                                <td><a class="btn btn-info btn-sm" href="../static/UPLOADS/Assignments/{{ _stu2ass3DueFile }}" target="_blank">View Submission</a>
+                                </td>
+                                <td>{{ _stu2ass3DueDate }}</td>
                             </tr>
                         </table>
                         </div>
