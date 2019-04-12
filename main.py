@@ -193,7 +193,7 @@ def showteachtables():
     _outOfStu = (_submitted[0][1])
     print("NEXT DUE" + str(_nextUpClassID))
 #Retrieve details of student awaiting marks for their submission
-    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE finalmark IS NULL;")
+    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE finalmark IS NULL ORDER BY submission.date DESC;")
     _submit = cursor.fetchall()
     _stu1Name = ((_submit[0][0]) + " " + (_submit[0][1]))
     _stu1File = (_submit[0][2])
