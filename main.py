@@ -193,7 +193,8 @@ def showteachtables():
     _outOfStu = (_submitted[0][1])
     print("NEXT DUE" + str(_nextUpClassID))
 #Retrieve details of student awaiting marks for their submission
-    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID WHERE finalmark IS NULL ORDER BY submission.date DESC;")
+    cursor.execute("SELECT user.fname, user.lname, submission.inputFileName, user.userID FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID JOIN user ON submission.user_userID = user.userID ORDER BY submission.date DESC;")
+
     _submit = cursor.fetchall()
     _stu1Name = ((_submit[0][0]) + " " + (_submit[0][1]))
     _stu1File = (_submit[0][2])
@@ -211,7 +212,7 @@ def showteachtables():
     print(_duedate)
 
 #Get details for 3 current assignments to make edits to if need be
-    cursor.execute("SELECT assID, assTitle, taskdetails, assignmentFileName, assignmentFilePath, class.title, duedate FROM assignment JOIN class ON assignment.class_classID = class.classID WHERE duedate < CURDATE() ORDER BY duedate DESC LIMIT 3;")
+    cursor.execute("SELECT assID, assTitle, taskdetails, assignmentFileName, assignmentFilePath, class.title, duedate FROM assignment JOIN class ON assignment.class_classID = class.classID WHERE duedate > CURDATE() ORDER BY duedate DESC LIMIT 3;")
     _curAssignments = cursor.fetchall()
     #CURRENT ASSIGNMENT 1
     _curAss1name =(_curAssignments[0][1])
@@ -235,19 +236,19 @@ def showteachtables():
 #GET DETAILS OF STUDENTS YET TO SUBMIT ASSIGNMENTS
     cursor.execute("SELECT user.fname, user.lname, user.email, assignment.assTitle, class.title, class.classID, assignment.taskdetails, assignment.assignmentFileName, assignment.assID, user.userID FROM assignment LEFT JOIN submission ON submission.assignment_assID = assignment.assID JOIN class ON assignment.class_classID = class.classID INNER JOIN classregister ON assignment.class_classID = classregister.class_classID INNER JOIN user ON user.userID = classregister.users_userID WHERE submission.assignment_assID IS NULL AND assignment.class_classID = '" + str(_nextUpClassID) + "';")
     _student = cursor.fetchall()
-    _user1ID = (_student[0][8])
-    _user2ID = (_student[1][8])
-    _user3ID = (_student[2][8])
-    cursor.execute("SELECT AVG(finalmark) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(_nextUpClassID) + "' AND user.userID = '" + str(_user1ID) + "';")
+    _user1ID = (_student[0][9])
+    _user2ID = (_student[1][9])
+    _user3ID = (_student[2][9])
+    cursor.execute("SELECT CAST(AVG(finalmark) AS DECIMAL(10,2)) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(_nextUpClassID) + "' AND user.userID = '" + str(_user1ID) + "';")
     _stu1AVG = cursor.fetchall()
     _stu1AVG = (_stu1AVG[0][0])
     cursor.execute(
-        "SELECT AVG(finalmark) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10,2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(
             _nextUpClassID) + "' AND user.userID = '" + str(_user2ID) + "';")
     _stu2AVG = cursor.fetchall()
     _stu2AVG = (_stu2AVG[0][0])
     cursor.execute(
-        "SELECT AVG(finalmark) FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(
+        "SELECT CAST(AVG(finalmark) AS DECIMAL(10,2))AS MARK FROM submission JOIN assignment ON submission.assignment_assID = assignment.assID JOIN classregister ON assignment.class_classID = classregister.class_classID JOIN class on classregister.class_classID = class.classID JOIN user on classregister.users_userID = user.userID WHERE assignment.class_classID = '" + str(
             _nextUpClassID) + "' AND user.userID = '" + str(_user3ID) + "';")
     _stu3AVG = cursor.fetchall()
     _stu3AVG = (_stu3AVG[0][0])
