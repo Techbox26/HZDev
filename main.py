@@ -247,13 +247,14 @@ def showParentPage():
     cursor.execute("SELECT COUNT(*) FROM user WHERE parent_parentID = '" + str(_userID) + "' AND pview = 1;")
     _possible = cursor.fetchall()
     _possible = (_possible[0][0])
-    if _possible == 0:
+    if _possible <2:
         error = 'You do not have permission to view student accounts'
         return render_template('loginV3.html', error=error)
     cursor.execute("SELECT * FROM user WHERE parent_parentID = '" + str(_userID) + "' AND pview = 1;")
     _studentList = cursor.fetchall()
     _student1Name = ((_studentList[0][3]) + " " + (_studentList[0][4]))
     _student2Name = ((_studentList[1][3]) + " " + (_studentList[1][4]))
+
     print(_studentList[0][0])
     _stu1ID = int(_studentList[0][0])
     _stu2ID = int(_studentList[1][0])
@@ -1032,10 +1033,9 @@ def passManage():  # WORKS
     _stuNewPass = request.form['stuNewPass']
     print(_stuNewPass)
     # GET STUDENT DATA FROM FORMS
-
     print("Successfully updated password")
     cursor.execute("UPDATE user SET user.password = ('" + _stuNewPass + "') WHERE user.email = ('" + _stuEmail + "');")
-   conn.commit()
+    conn.commit()
     return render_template('teachtables.html')
 
 @app.route('/passManageStu1' , methods=['GET', 'POST'])
@@ -1224,15 +1224,16 @@ def pViewChange():  # WORKS
     # GET STUDENT DATA FROM FORMS
     if _pviewID == 1:
         _pviewID=0
+        cursor.execute(
+            "UPDATE user SET user.pview = ('" + str(_pviewID) + "') WHERE user.userID = ('" + str(_userID) + "');")
+        conn.commit()
+        return render_template('tabletests2.html')
     if _pviewID == 0:
         _pviewID = 1
     print("Successfully Changed Parent View")
     cursor.execute("UPDATE user SET user.pview = ('" + str(_pviewID) + "') WHERE user.userID = ('" + str(_userID) + "');")
     conn.commit()
     return render_template('tabletests2.html')
-
-
-
 
 
 if __name__ == "__main__":
