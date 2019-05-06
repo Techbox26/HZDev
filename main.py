@@ -62,7 +62,7 @@ _pviewID = ""
 
 @app.route('/')
 def main():
-    return render_template('index.html')
+    return render_template('loginV3.html')
 
 
 @app.route('/showModalTest')
@@ -73,11 +73,6 @@ def showmodaltest():
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signup.html')
-
-
-@app.route('/testtables')
-def showTableTest():
-    return render_template('tabletests.html')
 
 # Navigate to teachers landing
 @app.route('/showTeachTables')
@@ -507,7 +502,6 @@ def showTableTest2():
     global _userFName
     global _userLName
     global _pviewID
-    print("testing")
     print(_userLName)
 
    #Do parents have access to the information on the account?
@@ -1237,4 +1231,4 @@ def pViewChange():  # WORKS
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
